@@ -45,7 +45,7 @@
     ]
   },
   "build": {
-    "productName": "prose-pro",
+    "productName": "ProsePro",
     "appId": "me.drewatkinson.ProsePro",
     "files": [
       "dist/",
