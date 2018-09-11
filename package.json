@@ -1,8 +1,8 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "ElectronReact",
-  "version": "0.14.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "name": "prose-pro",
+  "productName": "ProsePro",
+  "version": "0.1.0",
+  "description": "Writing for Nerds",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
@@ -88,7 +88,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chentsulin/electron-react-boilerplate.git"
+    "url": "git+https://github.com/drewatk/prose-pro.git"
   },
   "author": {
     "name": "C. T. Lin",
@@ -97,7 +97,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chentsulin/electron-react-boilerplate/issues"
+    "url": "https://github.com/drewatk/prose-pro/issues"
   },
   "keywords": [
     "electron",
@@ -110,7 +110,7 @@
     "hot",
     "reload"
   ],
-  "homepage": "https://github.com/chentsulin/electron-react-boilerplate#readme",
+  "homepage": "https://github.com/drewatk/prose-pro/#readme",
   "jest": {
     "testURL": "http://localhost/",
     "moduleNameMapper": {
