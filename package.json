@@ -45,8 +45,8 @@
     ]
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.develar.ElectronReact",
+    "productName": "prose-pro",
+    "appId": "me.drewatkinson.ProsePro",
     "files": [
       "dist/",
       "node_modules/",
@@ -91,9 +91,9 @@
     "url": "git+https://github.com/drewatk/prose-pro.git"
   },
   "author": {
-    "name": "C. T. Lin",
-    "email": "chentsulin@gmail.com",
-    "url": "https://github.com/chentsulin"
+    "name": "Drew Atkinson",
+    "email": "drewatkinson5@gmail.com",
+    "url": "https://github.com/drewatk"
   },
   "license": "MIT",
   "bugs": {
