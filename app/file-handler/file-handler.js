@@ -10,7 +10,7 @@ export default class {
      * Creates a branch for the given file name
      * @param {String} fileName 
      */
-    const createFile = (fileName) => {
+    createFile = (fileName) => {
         //create branch
 
         //update project.json
@@ -22,7 +22,7 @@ export default class {
      * Deletes branch for the given file name
      * @param {String} fileName 
      */
-    const deleteFile = (fileName) => {
+    deleteFile = (fileName) => {
         //switch branch
 
         //delete branch
@@ -34,7 +34,7 @@ export default class {
      * Switches branch to the one mapped to the given file name
      * @param {String} fileName 
      */
-    const openFile = (fileName) => {
+    openFile = (fileName) => {
         //get branch from project.json
 
         //save current state of branch
@@ -47,7 +47,7 @@ export default class {
      * @param {String} fileName 
      * @param {String} versionName 
      */
-    const saveFile = (fileName, versionName) => {
+    saveFile = (fileName, versionName) => {
         //if version name is null, save commit as is
 
         //else save current state as a tagged commit
@@ -60,7 +60,7 @@ export default class {
      * @param {String} fileName 
      * @param {String} versionName 
      */
-    const switchVersion = (fileName, versionName) => {
+    switchVersion = (fileName, versionName) => {
         //ensure current branch is fileName's branch
 
         //get tag name for version from project.json
