@@ -1,6 +1,6 @@
 //TODO decide on where the editor interaction comes in.
 
-export default class {
+export default class FileHandler {
 
     constructor(projectPath) {
         this.projectPath = projectPath;
