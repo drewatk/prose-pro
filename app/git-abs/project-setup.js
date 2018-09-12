@@ -1,47 +1,60 @@
+import path from 'path';
+import _ from './utils';
+import { projectConstants } from './constants';
+
 /**
  * Creates a project folder for the given project name
- * @param {String} projectName 
+ * @param {String} projectName
  */
-const createProject = (projectName) => {
-    //check if project name can be used
+async function createProject(projectName) {
+  const projectPath = projectName; // TODO get path from electron app thingy
 
-    //create project folder with name as projectName
+  // check if project name can be used
+  // create directory for project
+  // initialize project
 
-    //init project
+  _.pathExists(projectPath)
+    .then(() => _.createDirectory(projectPath))
+    .then(() => initProject(projectPath))
+    .catch(err => Promise.reject(err));
 }
 
 /**
  * Initializes the project for the given project name
- * @param {String} projectName 
+ * @param {String} projectName
  */
-const initProject = (projectName) => {
+async function initProject(projectPath) {
+  // create project.json
+  // create git repo
 
-    //create project.json
-
-    //create project_repo
-        //init git 
+  Promise.all([createProjectJSON(projectPath), createGitRepo(projectPath)])
+    .then(() => Promise.resolve()) // Done to remove array return from promise all
+    .catch(err => Promise.reject(err));
 }
 
 /**
  * Creates a project JSON for the given project name
- * @param {String} projectName 
+ * @param {String} projectName
  */
-const createProjectJSON = (projectName) => {
-    //create file
-    
-    //add project name
+async function createProjectJSON(projectPath) {
+  // create file
+  const filePath = path.join(projectPath, projectConstants.projectFile);
 
-    //add objects to track branches and versions
+  // TODO: set up basic obj in project.json
+
+  return _.createFile(filePath);
 }
 
 /**
  * Creates the git repo for the given project name
- * @param {String} projectName 
+ * @param {String} projectName
  */
-const createGitRepo = (projectName) => {
-    //create folder
+async function createGitRepo(projectPath) {
+  // create folder
+  const repoPath = path.join(projectPath, projectConstants.projectRepo);
 
-    //initialize git in folder
+  // TODO: init git in repo folder.
+  return _.createFile(repoPath);
 }
 
 export default createProject;
