@@ -129,6 +129,9 @@
     },
     "setupFiles": [
       "./internals/scripts/CheckBuiltsExist.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
     ]
   },
   "devDependencies": {
