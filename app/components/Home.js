@@ -1,7 +1,5 @@
 // @flow
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import routes from '../constants/routes.json';
 import styles from './Home.css';
 import ProseEditor from './ProseEditor';
 
@@ -14,7 +12,6 @@ export default class Home extends Component<Props> {
     return (
       <div className={styles.container} data-tid="container">
         <ProseEditor />
-        <Link to={routes.COUNTER}>to Counter</Link>
       </div>
     );
   }

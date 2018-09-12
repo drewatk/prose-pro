@@ -5,11 +5,18 @@ export default class ProseEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = { editorState: EditorState.createEmpty() };
-    this.onChange = editorState => this.setState({ editorState });
   }
+
+  onChange = editorState => this.setState({ editorState });
 
   render() {
     const { editorState } = this.state;
-    return <Editor editorState={editorState} onChange={this.onChange} />;
+    return (
+      <Editor
+        editorState={editorState}
+        onChange={this.onChange}
+        placeholder="Start entering text"
+      />
+    );
   }
 }
