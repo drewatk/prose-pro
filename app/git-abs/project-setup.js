@@ -1,5 +1,5 @@
 import path from 'path';
-import _ from './utils';
+import utils from './utils';
 import { projectConstants } from './constants';
 
 /**
@@ -13,8 +13,9 @@ async function createProject(projectName) {
   // create directory for project
   // initialize project
 
-  _.pathExists(projectPath)
-    .then(() => _.createDirectory(projectPath))
+  utils
+    .pathExists(projectPath)
+    .then(() => utils.createDirectory(projectPath))
     .then(() => initProject(projectPath))
     .catch(err => Promise.reject(err));
 }
@@ -42,7 +43,7 @@ async function createProjectJSON(projectPath) {
 
   // TODO: set up basic obj in project.json
 
-  return _.createFile(filePath);
+  return utils.createFile(filePath);
 }
 
 /**
@@ -54,7 +55,7 @@ async function createGitRepo(projectPath) {
   const repoPath = path.join(projectPath, projectConstants.projectRepo);
 
   // TODO: init git in repo folder.
-  return _.createFile(repoPath);
+  return utils.createFile(repoPath);
 }
 
 export default createProject;
