@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import CreateCheckpoint from './CreateCheckpoint';
+import CheckpointForm from './Forms/CheckpointForm';
 
 import routes from '../constants/routes.json';
 import styles from './Home.css';
@@ -17,7 +17,11 @@ export default class Home extends Component<Props> {
         <h2>Home</h2>
         <Link to={routes.COUNTER}>to Counter</Link>
 
-        <CreateCheckpoint />
+        <CheckpointForm
+          onSubmit={({ commitMessage }) =>
+            console.log('Submitted new checkpoint: ', commitMessage)
+          }
+        />
       </div>
     );
   }
