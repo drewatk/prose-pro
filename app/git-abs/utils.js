@@ -1,5 +1,9 @@
 const fs = require('fs-extra');
 
+/**
+ * Resolves if path exists, rejects if it doesn't
+ * @param {String} path
+ */
 async function pathExists(path) {
   fs.pathExists(path)
     .then(
@@ -15,6 +19,10 @@ async function pathExists(path) {
     .catch(err => Promise.reject(err));
 }
 
+/**
+ * Creates a directory for the given path
+ * @param {String} path
+ */
 async function createDirectory(path) {
   fs.mkdirp(path)
     .then(() => Promise.resolve())
@@ -25,6 +33,10 @@ async function createDirectory(path) {
     );
 }
 
+/**
+ * Creates a File for the given path
+ * @param {String} path
+ */
 async function createFile(path) {
   fs.ensureFile(path)
     .then(() => Promise.resolve())
@@ -33,8 +45,27 @@ async function createFile(path) {
     );
 }
 
+/**
+ * Write given object to file in given path
+ * @param {String} path
+ * @param {Object} obj
+ */
+async function writeJSONToFile(path, obj) {
+  return fs.writeJSON(path, obj);
+}
+
+/**
+ * Read JSON obj from given path
+ * @param {String} path
+ */
+async function readJSONFromFile(path) {
+  return fs.readJSON(path);
+}
+
 export default {
   pathExists,
   createDirectory,
-  createFile
+  createFile,
+  writeJSONToFile,
+  readJSONFromFile
 };

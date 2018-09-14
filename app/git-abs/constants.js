@@ -1,9 +1,10 @@
-const projectConstants = {
-  projectFile: 'settings.JSON',
-  projectRepo: 'repo',
-  editorFile: 'text.JSON'
+const projCons = {
+  metadataDir: 'metadata',
+  gitDir: 'repo',
+  projFile: 'settings.JSON',
+  editFile: 'text.JSON'
 };
 
-const gitConstants = {};
+const gitCons = {};
 
-export { projectConstants, gitConstants };
+export { projCons, gitCons };
