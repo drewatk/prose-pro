@@ -1,18 +1,13 @@
 // @flow
-import React, { Component } from 'react';
-import styles from './Home.css';
+import React from 'react';
 import ProseEditor from './ProseEditor';
 
-type Props = {};
+const Home = () => {
+  return (
+    <div>
+      <ProseEditor />
+    </div>
+  );
+};
 
-export default class Home extends Component<Props> {
-  props: Props;
-
-  render() {
-    return (
-      <div className={styles.container} data-tid="container">
-        <ProseEditor />
-      </div>
-    );
-  }
-}
+export default Home;

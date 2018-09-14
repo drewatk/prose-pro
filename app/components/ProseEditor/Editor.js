@@ -1,6 +1,9 @@
 import React from 'react';
 import { Editor, EditorState, RichUtils, getDefaultKeyBinding } from 'draft-js';
 
+import InlineStyleControls from './InlineStyleControls';
+import BlockStyleControls from './BlockStyleControls';
+
 import styles from './ProseEditor.css';
 
 const MAX_TAB_DEPTH = 4;
@@ -123,87 +126,3 @@ function getBlockStyle(block) {
       return null;
   }
 }
-
-class StyleButton extends React.Component {
-  constructor() {
-    super();
-    this.onToggle = e => {
-      e.preventDefault();
-      this.props.onToggle(this.props.style);
-    };
-  }
-
-  render() {
-    const { active, label } = this.props;
-    return (
-      <span
-        className={`${styles.styleButton} ${active ? styles.activeButton : ''}`}
-        onMouseDown={this.onToggle}
-        role="button"
-      >
-        {label}
-      </span>
-    );
-  }
-}
-
-const BLOCK_TYPES = [
-  { label: 'H1', style: 'header-one' },
-  { label: 'H2', style: 'header-two' },
-  { label: 'H3', style: 'header-three' },
-  // { label: 'H4', style: 'header-four' },
-  // { label: 'H5', style: 'header-five' },
-  // { label: 'H6', style: 'header-six' },
-  { label: 'Blockquote', style: 'blockquote' },
-  { label: 'UL', style: 'unordered-list-item' },
-  { label: 'OL', style: 'ordered-list-item' },
-  { label: 'Code Block', style: 'code-block' }
-];
-
-const BlockStyleControls = props => {
-  const { editorState, onToggle } = props;
-  const selection = editorState.getSelection();
-  const blockType = editorState
-    .getCurrentContent()
-    .getBlockForKey(selection.getStartKey())
-    .getType();
-  return (
-    <div className={styles.controls}>
-      {BLOCK_TYPES.map(type => (
-        <StyleButton
-          key={type.label}
-          active={type.style === blockType}
-          label={type.label}
-          onToggle={onToggle}
-          style={type.style}
-        />
-      ))}
-    </div>
-  );
-};
-
-const INLINE_STYLES = [
-  { label: 'Bold', style: 'BOLD' },
-  { label: 'Italic', style: 'ITALIC' },
-  { label: 'Underline', style: 'UNDERLINE' },
-  { label: 'Monospace', style: 'CODE' }
-];
-
-const InlineStyleControls = props => {
-  const { editorState, onToggle } = props;
-  const currentStyle = editorState.getCurrentInlineStyle();
-
-  return (
-    <div className={styles.controls}>
-      {INLINE_STYLES.map(type => (
-        <StyleButton
-          key={type.label}
-          active={currentStyle.has(type.style)}
-          label={type.label}
-          onToggle={onToggle}
-          style={type.style}
-        />
-      ))}
-    </div>
-  );
-};
