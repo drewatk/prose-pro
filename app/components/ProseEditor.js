@@ -1,7 +1,7 @@
 import React from 'react';
 import { Editor, EditorState, RichUtils, getDefaultKeyBinding } from 'draft-js';
 
-import './ProseEditor.global.css';
+import styles from './ProseEditor.css';
 
 const MAX_TAB_DEPTH = 4;
 
@@ -60,7 +60,7 @@ export default class ProseEditor extends React.Component {
     const { editorState } = this.state;
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
-    let className = 'ProseEditor-editor';
+    let hidePlaceholderClass = false;
     const contentState = editorState.getCurrentContent();
     if (!contentState.hasText()) {
       if (
@@ -69,11 +69,11 @@ export default class ProseEditor extends React.Component {
           .first()
           .getType() !== 'unstyled'
       ) {
-        className += ' ProseEditor-hidePlaceholder';
+        hidePlaceholderClass = true;
       }
     }
     return (
-      <div className="ProseEditor-root">
+      <div className={styles.root}>
         <BlockStyleControls
           editorState={editorState}
           onToggle={this.toggleBlockType}
@@ -82,7 +82,12 @@ export default class ProseEditor extends React.Component {
           editorState={editorState}
           onToggle={this.toggleInlineStyle}
         />
-        <div className={className} onClick={this.focus}>
+        <div
+          className={`${styles.editor} ${
+            hidePlaceholderClass ? styles.hidePlaceholder : ''
+          }`}
+          onClick={this.focus}
+        >
           <Editor
             blockStyleFn={getBlockStyle}
             customStyleMap={styleMap}
@@ -113,7 +118,7 @@ const styleMap = {
 function getBlockStyle(block) {
   switch (block.getType()) {
     case 'blockquote':
-      return 'ProseEditor-blockquote';
+      return styles.blockquote;
     default:
       return null;
   }
@@ -130,12 +135,12 @@ class StyleButton extends React.Component {
 
   render() {
     const { active, label } = this.props;
-    let className = 'ProseEditor-styleButton';
-    if (active) {
-      className += ' ProseEditor-activeButton';
-    }
     return (
-      <span className={className} onMouseDown={this.onToggle} role="button">
+      <span
+        className={`${styles.styleButton} ${active ? styles.activeButton : ''}`}
+        onMouseDown={this.onToggle}
+        role="button"
+      >
         {label}
       </span>
     );
@@ -163,7 +168,7 @@ const BlockStyleControls = props => {
     .getBlockForKey(selection.getStartKey())
     .getType();
   return (
-    <div className="ProseEditor-controls">
+    <div className={styles.controls}>
       {BLOCK_TYPES.map(type => (
         <StyleButton
           key={type.label}
@@ -189,7 +194,7 @@ const InlineStyleControls = props => {
   const currentStyle = editorState.getCurrentInlineStyle();
 
   return (
-    <div className="ProseEditor-controls">
+    <div className={styles.controls}>
       {INLINE_STYLES.map(type => (
         <StyleButton
           key={type.label}
