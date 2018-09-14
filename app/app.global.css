@@ -14,6 +14,7 @@
 body {
   height: 100vh;
   background-color: #eeeeee;
-  font-family: Arial, Helvetica, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Roboto",
+    "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
   overflow: hidden;
 }
