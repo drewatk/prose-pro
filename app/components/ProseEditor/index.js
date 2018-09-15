@@ -1,1 +1,3 @@
-export { default as ProseEditor } from './Editor';
+import ProseEditor from './Editor';
+
+export default ProseEditor;

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Editor, EditorState, RichUtils, getDefaultKeyBinding } from 'draft-js';
-
 import InlineStyleControls from './InlineStyleControls';
 import BlockStyleControls from './BlockStyleControls';
 
@@ -12,7 +11,7 @@ const MAX_TAB_DEPTH = 4;
  * Adapted from draft-js rich editor example
  * https://github.com/facebook/draft-js/blob/master/examples/draft-0-10-0/rich/rich.html
  */
-export default class ProseEditor extends React.Component {
+class ProseEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = { editorState: EditorState.createEmpty() };
@@ -126,3 +125,5 @@ function getBlockStyle(block) {
       return null;
   }
 }
+
+export default ProseEditor;

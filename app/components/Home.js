@@ -3,11 +3,7 @@ import React from 'react';
 import ProseEditor from './ProseEditor';
 
 const Home = () => {
-  return (
-    <div>
-      <ProseEditor />
-    </div>
-  );
+  return <ProseEditor />;
 };
 
 export default Home;
