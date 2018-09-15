@@ -23,12 +23,20 @@ const styles = {
   }
 };
 
-const CheckpointForm = ({ handleSubmit }) => (
+/*
+  TODO: avoid relying on disablement of submit button to enforce validation
+*/
+
+const CheckpointForm = ({ handleSubmit, submitting, pristine }) => (
   <form style={styles.form} onSubmit={handleSubmit}>
     <h4>Create Checkpoint</h4>
-    <label>Checkpoint Message (required)</label>
     <Field name="commitMessage" component={Input} type="text" />
-    <Button type="submit" text="Create" style={styles.button} />
+    <Button
+      type="submit"
+      text="Create"
+      disabled={submitting || pristine}
+      style={styles.button}
+    />
   </form>
 );
 
