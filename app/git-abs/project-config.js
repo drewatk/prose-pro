@@ -42,6 +42,9 @@ export default class ProjectConfig {
     return utils.writeJSONToFile(filePath, emptyObj);
   }
 
+  /**
+   * Generates empty config object
+   */
   static genEmptyConfig() {
     return {
       branches: {}
