@@ -6,17 +6,6 @@ import { configureStore, history } from './store/configureStore';
 import './app.global.css';
 import './Draft.global.css';
 
-import utils from './git-abs/utils';
-
-async function test() {
-  console.log('---Here---');
-  const filePath = './tempFile.txt';
-  const exists = await utils.pathExists(filePath);
-  console.log(`result: ${exists}`);
-}
-
-test();
-
 const store = configureStore();
 
 render(
