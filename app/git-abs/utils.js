@@ -5,18 +5,10 @@ const fs = require('fs-extra');
  * @param {String} path
  */
 async function pathExists(path) {
-  fs.pathExists(path)
-    .then(
-      exists =>
-        new Promise((resolve, reject) => {
-          if (exists) {
-            reject(new Error(`Path already exists: ${path}`));
-          } else {
-            resolve();
-          }
-        })
-    )
-    .catch(err => Promise.reject(err));
+  const exists = fs.existsSync(path);
+  return exists
+    ? Promise.reject(new Error(`Path already exists: ${path}`))
+    : Promise.resolve();
 }
 
 /**
@@ -38,11 +30,7 @@ async function createDirectory(path) {
  * @param {String} path
  */
 async function createFile(path) {
-  fs.ensureFile(path)
-    .then(() => Promise.resolve())
-    .catch(err =>
-      Promise.reject(new Error(`Error creating file at path:${path}\n ${err}`))
-    );
+  await fs.ensureFile(path);
 }
 
 /**

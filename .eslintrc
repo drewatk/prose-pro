@@ -14,7 +14,8 @@
   "env": {
     "browser": true,
     "node": true,
-    "es6": true
+    "es6": true,
+    "jest/globals": true
   },
   "rules": {
     "compat/compat": "error",
@@ -69,7 +70,7 @@
     "react/prefer-stateless-function": "off",
     "react/no-string-refs": "warn"
   },
-  "plugins": ["flowtype", "import", "promise", "compat", "react"],
+  "plugins": ["flowtype", "import", "promise", "compat", "react", "jest"],
   "settings": {
     "import/resolver": {
       "node": {
