@@ -44,7 +44,8 @@ export default merge.smart(baseConfig, {
           {
             loader: 'css-loader',
             options: {
-              sourceMap: true
+              sourceMap: true,
+              camelCase: true
             }
           }
         ]
@@ -61,7 +62,8 @@ export default merge.smart(baseConfig, {
             options: {
               modules: true,
               localIdentName: '[name]__[local]__[hash:base64:5]',
-              sourceMap: true
+              sourceMap: true,
+              camelCase: true
             }
           }
         ]
@@ -77,7 +79,8 @@ export default merge.smart(baseConfig, {
             loader: 'css-loader',
             options: {
               sourceMap: true,
-              importLoaders: 1
+              importLoaders: 1,
+              camelCase: true
             }
           },
           {
@@ -101,7 +104,8 @@ export default merge.smart(baseConfig, {
               modules: true,
               importLoaders: 1,
               localIdentName: '[name]__[local]__[hash:base64:5]',
-              sourceMap: true
+              sourceMap: true,
+              camelCase: true
             }
           },
           {
