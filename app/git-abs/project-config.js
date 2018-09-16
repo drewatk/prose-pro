@@ -3,19 +3,14 @@ import utils from './utils';
 export default class ProjectConfig {
   constructor(filePath) {
     this.filePath = filePath;
+    this.projConfig = null;
   }
 
   /**
    * reads project config from json file
    */
   async init() {
-    try {
-      this.projConfig = await this.getConfigFromFile();
-    } catch (err) {
-      throw new Error(
-        `File Path to project config is incorrect: ${this.filePath}`
-      );
-    }
+    this.projConfig = await this.getConfigFromFile();
   }
 
   /**
@@ -23,6 +18,10 @@ export default class ProjectConfig {
    * @param {String} fileName
    */
   async addFile(fileName, branchName) {
+    if (!this.projConfig) {
+      throw new Error('Project Config not initialized');
+    }
+
     const { branches } = this.projConfig;
     if (branches[fileName]) {
       throw new Error('File Already exists');
@@ -37,7 +36,7 @@ export default class ProjectConfig {
    * To set up an empty config file
    * @param {String} filePath
    */
-  static initEmptyConfig(filePath) {
+  static async initEmptyConfig(filePath) {
     const emptyObj = ProjectConfig.genEmptyConfig();
     return utils.writeJSONToFile(filePath, emptyObj);
   }
@@ -54,14 +53,14 @@ export default class ProjectConfig {
   /**
    * write the current state of the project config to config file
    */
-  updateConfigFile() {
+  async updateConfigFile() {
     return utils.writeJSONToFil(this.filePath, this.projConfig);
   }
 
   /**
    * read config file to get the object
    */
-  getConfigFromFile() {
+  async getConfigFromFile() {
     return utils.readJSONFromFile(this.filePath);
   }
 }
