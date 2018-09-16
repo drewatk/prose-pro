@@ -7,10 +7,6 @@ import projectJSON from './project-json';
  * @param {String} projectName
  */
 async function createProject(projPath) {
-  // check if project path exists
-  // create directory for project
-  // initialize project
-
   return utils
     .pathNotExist(projPath)
     .then(() => utils.createDirectory(projPath))

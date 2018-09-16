@@ -9,7 +9,6 @@ import { projCons } from '../constants';
 async function create(projPath) {
   const repoPath = path.join(projPath, projCons.gitDir);
 
-  // create folder
   // TODO: init git in repo folder.
   return utils.createDirectory(repoPath);
 }
