@@ -13,7 +13,7 @@ async function createProject(projPath) {
   // initialize project
 
   utils
-    .pathExists(projPath)
+    .pathNotExist(projPath)
     .then(() => utils.createDirectory(projPath))
     .then(() => initProject(projPath))
     .catch(err => Promise.reject(err));
