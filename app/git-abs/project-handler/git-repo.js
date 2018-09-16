@@ -14,4 +14,4 @@ async function create(projPath) {
   return utils.createDirectory(repoPath);
 }
 
-export { create };
+export default { create };

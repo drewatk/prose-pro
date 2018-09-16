@@ -47,7 +47,7 @@ function readJSONFromFile(path) {
   return fs.readJSON(path);
 }
 
-module.exports = {
+export default {
   pathNotExist,
   createDirectory,
   createFile,
