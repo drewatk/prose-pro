@@ -7,4 +7,4 @@ const projCons = {
 
 const gitCons = {};
 
-export { projCons, gitCons };
+export default { projCons, gitCons };
