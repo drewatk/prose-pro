@@ -17,4 +17,4 @@ async function create(projPath) {
     .then(() => ProjectConfig.initEmptyConfig(filePath));
 }
 
-export { create };
+export default { create };

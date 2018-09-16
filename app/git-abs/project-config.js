@@ -38,10 +38,14 @@ export default class ProjectConfig {
    * @param {String} filePath
    */
   static initEmptyConfig(filePath) {
-    const emptyObj = {
+    const emptyObj = ProjectConfig.genEmptyConfig();
+    return utils.writeJSONToFile(filePath, emptyObj);
+  }
+
+  static genEmptyConfig() {
+    return {
       branches: {}
     };
-    return utils.writeJSONToFile(filePath, emptyObj);
   }
 
   /**
