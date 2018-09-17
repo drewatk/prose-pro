@@ -15,7 +15,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "nodegit": "^0.22.2",
-    "fs-extra": "^7.0.0"
+    "nodegit": "^0.22.2"
   }
 }
