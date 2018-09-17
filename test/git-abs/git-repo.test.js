@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
-import gitRepo from './git-repo';
-import { projCons } from '../constants';
+import gitRepo from '../../app/git-abs/project-handler/git-repo';
+import { projCons } from '../../app/git-abs/constants';
 
 test('Git Repo create valid test', async () => {
   /* set up */

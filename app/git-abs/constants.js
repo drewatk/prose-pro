@@ -1,8 +1,8 @@
 const projCons = {
   metadataDir: 'metadata',
   gitDir: 'repo',
-  projFile: 'settings.JSON',
-  editFile: 'text.JSON'
+  projFile: 'settings.json',
+  editFile: 'text.json'
 };
 
 const gitCons = {};

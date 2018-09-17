@@ -1,7 +1,7 @@
 import fs from 'fs-extra';
-import projectJSON from './project-json';
-import { projCons } from '../constants';
-import ProjectConfig from '../project-config';
+import projectJSON from '../../app/git-abs/project-handler/project-json';
+import { projCons } from '../../app/git-abs/constants';
+import ProjectConfig from '../../app/git-abs/project-config';
 
 test('Project JSON create should make file', async () => {
   /* set up */

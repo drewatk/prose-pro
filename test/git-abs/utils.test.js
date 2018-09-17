@@ -1,5 +1,5 @@
 import fs from 'fs-extra';
-import utils from '../utils';
+import utils from '../../app/git-abs/utils';
 
 test('Path exists should resolve', async () => {
   const filePath = './temp-test.txt';

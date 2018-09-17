@@ -54,7 +54,7 @@ export default class ProjectConfig {
    * write the current state of the project config to config file
    */
   async updateConfigFile() {
-    return utils.writeJSONToFil(this.filePath, this.projConfig);
+    return utils.writeJSONToFile(this.filePath, this.projConfig);
   }
 
   /**
