@@ -1,68 +1,80 @@
 import fs from 'fs-extra';
 import utils from '../../app/git-abs/utils';
 
-test('Path exists should resolve', async () => {
-  const filePath = './temp-test.txt';
+describe('PathNotExist() tests', () => {
+  test('Path exists should resolve', async () => {
+    const filePath = './temp-test.txt';
 
-  await unlinkIgnoreError(filePath);
+    await unlinkIgnoreError(filePath);
 
-  await expect(utils.pathNotExist(filePath)).resolves.toBe();
+    await expect(utils.pathNotExist(filePath)).resolves.toBe();
+  });
+
+  test('Path exists should reject', async () => {
+    const filePath = './temp-test.txt';
+
+    await fs.ensureFile(filePath);
+
+    await expect(utils.pathNotExist(filePath)).rejects.toThrow(
+      expect.any(Error)
+    );
+
+    await unlinkIgnoreError(filePath);
+  });
 });
 
-test('Path exists should reject', async () => {
-  const filePath = './temp-test.txt';
+describe('CreateDirectory() tests', () => {
+  test('Create Directory should resolve', async () => {
+    const filePath = './temp-folder';
 
-  await fs.ensureFile(filePath);
+    await unlinkIgnoreError(filePath);
 
-  await expect(utils.pathNotExist(filePath)).rejects.toThrow(expect.any(Error));
-
-  await unlinkIgnoreError(filePath);
+    await expect(utils.createDirectory(filePath)).resolves.toBe(null);
+  });
 });
 
-test('Create Directory should resolve', async () => {
-  const filePath = './temp-folder';
+describe('CreateFile() tests', () => {
+  test('Create File valid test', async () => {
+    const filePath = './temp-file.txt';
 
-  await unlinkIgnoreError(filePath);
+    await utils.createFile(filePath);
 
-  await expect(utils.createDirectory(filePath)).resolves.toBe(null);
+    await expect(fs.existsSync(filePath)).toEqual(true);
+
+    await unlinkIgnoreError(filePath);
+  });
 });
 
-test('Create File valid test', async () => {
-  const filePath = './temp-file.txt';
+describe('WriteJSONToFile() tests', () => {
+  test('Write Json valid test', async () => {
+    const filePath = './temp.json';
+    const testObj = { key: 'value' };
 
-  await utils.createFile(filePath);
+    await utils.writeJSONToFile(filePath, testObj);
 
-  await expect(fs.existsSync(filePath)).toEqual(true);
+    const jsonString = await fs.readFile(filePath);
 
-  await unlinkIgnoreError(filePath);
+    await expect(JSON.parse(jsonString)).toMatchObject(testObj);
+
+    await unlinkIgnoreError(filePath);
+  });
 });
 
-test('Write Json valid test', async () => {
-  const filePath = './temp.json';
-  const testObj = { key: 'value' };
+describe('ReadJSONFromFole() tests', () => {
+  test('Read Json valid test', async () => {
+    const filePath = './temp.json';
+    const testObj = { key: 'value' };
 
-  await utils.writeJSONToFile(filePath, testObj);
+    await unlinkIgnoreError(filePath);
 
-  const jsonString = await fs.readFile(filePath);
+    await fs.writeFile(filePath, JSON.stringify(testObj));
 
-  await expect(JSON.parse(jsonString)).toMatchObject(testObj);
+    await expect(utils.readJSONFromFile(filePath)).resolves.toMatchObject(
+      testObj
+    );
 
-  await unlinkIgnoreError(filePath);
-});
-
-test('Read Json valid test', async () => {
-  const filePath = './temp.json';
-  const testObj = { key: 'value' };
-
-  await unlinkIgnoreError(filePath);
-
-  await fs.writeFile(filePath, JSON.stringify(testObj));
-
-  await expect(utils.readJSONFromFile(filePath)).resolves.toMatchObject(
-    testObj
-  );
-
-  await unlinkIgnoreError(filePath);
+    await unlinkIgnoreError(filePath);
+  });
 });
 
 async function unlinkIgnoreError(filePath) {
