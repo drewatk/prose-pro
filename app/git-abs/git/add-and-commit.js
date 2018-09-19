@@ -6,7 +6,7 @@ import { gitCons } from 'app/git-abs/constants';
 const { GIT_CONFIG_PATH, AUTHOR, EMAIL, HEAD_REF } = gitCons;
 
 /**
- * Adds changes made to file: fileName to the index, stages them, and makes a commit
+ * Adds changes made to a file to the index, stages them, and makes a commit with the provided message.
  * @param {String} fileName
  * @param {String} commitMessage
  *
@@ -37,10 +37,7 @@ const addAndCommit = filename => commitMessage => {
         index = indexResult;
       })
       .then(() => index.addByPath(filename))
-      .then(() => {
-        // write all added files to index
-        return index.write();
-      })
+      .then(() => index.write())
       .then(() => {
         // writes index into file tree, retuning the OID(SHA hash)
         return index.writeTree();
@@ -51,7 +48,7 @@ const addAndCommit = filename => commitMessage => {
       })
       .then(head => repo.getCommit(head))
       .then(parent => {
-        /* When should committer be different than author? */
+        /* TODO: When should committer be different than author? */
         const author = nodegit.Signature.now(AUTHOR, EMAIL);
         const committer = nodegit.Signature.now(AUTHOR, EMAIL);
 
@@ -66,7 +63,7 @@ const addAndCommit = filename => commitMessage => {
       })
       .then(commitId => resolve(commitId))
       .catch(err => {
-        console.error('Error in add_and_commit:');
+        console.error('Error in addAndCommit:');
         reject(err);
       });
   });
