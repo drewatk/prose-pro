@@ -1,9 +1,11 @@
 import nodegit from 'nodegit';
 import path from 'path';
-import { gitCons } from 'app/git-abs/constants';
+import createInitialCommit from './create-initial-commit';
 
-const { AUTHOR, EMAIL, HEAD_REF } = gitCons;
-
+/**
+ * Initializes a git repo at the given path, and creates an initial commit
+ * @param {String} repoPath
+ */
 const init = repoPath => {
   const pathToRepo = path.resolve(repoPath);
   const isBare = 0; /* create .git subdirectory */
@@ -16,18 +18,6 @@ const init = repoPath => {
         reject(`Error initialising repository in path: ${repoPath} \n ${err}`)
       );
   });
-};
-
-const createInitialCommit = repo => {
-  const author = nodegit.Signature.now(AUTHOR, EMAIL);
-  const committer = nodegit.Signature.now(AUTHOR, EMAIL);
-
-  return repo
-    .refreshIndex()
-    .then(index => index.writeTree())
-    .then(oid =>
-      repo.createCommit(HEAD_REF, author, committer, 'initial commit', oid, [])
-    );
 };
 
 export default init;
