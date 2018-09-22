@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 import path from 'path';
-import { init } from '../../../app/git-abs/git';
+import { init } from 'app/git-abs/git';
 
 describe('Git init tests', () => {
   test('init() valid test', async () => {
