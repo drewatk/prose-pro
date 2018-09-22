@@ -1,6 +1,6 @@
-import utils from '../utils';
-import { gitRepo } from './git-repo';
-import projectJSON from './project-json';
+import utils from "../utils";
+import gitRepo from "./git-repo";
+import projectJSON from "./project-json";
 
 /**
  * Creates a project folder for the given project name
