@@ -1,7 +1,7 @@
-import utils from '../utils';
+import utils from 'app/git-abs/utils';
 import path from 'path';
-import { projCons } from '../constants';
-import { init } from '../git';
+import { projCons } from 'app/git-abs/constants';
+import { init } from 'app/git-abs/git';
 
 /**
  * Creates the git repo for the given project name
