@@ -14,7 +14,7 @@ const MAX_TAB_DEPTH = 4;
  * https://github.com/facebook/draft-js/blob/master/examples/draft-0-10-0/rich/rich.html
  * Also referenced this article to connect to Redux: https://reactrocket.com/post/draft-js-and-redux/
  */
-class ProseEditor extends React.Component {
+export class ProseEditor extends React.Component {
   constructor(props) {
     super(props);
     this.editorRef = React.createRef();
