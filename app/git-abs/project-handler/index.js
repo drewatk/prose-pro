@@ -1,5 +1,5 @@
 import utils from '../utils';
-import gitRepo from './git-repo';
+import { gitRepo } from './git-repo';
 import projectJSON from './project-json';
 
 /**
