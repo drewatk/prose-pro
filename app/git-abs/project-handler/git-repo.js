@@ -1,6 +1,7 @@
-import utils from '../utils';
+import utils from 'app/git-abs/utils';
 import path from 'path';
-import { projCons } from '../constants';
+import { projCons } from 'app/git-abs/constants';
+import { init } from 'app/git-abs/git';
 
 /**
  * Creates the git repo for the given project name
@@ -9,8 +10,13 @@ import { projCons } from '../constants';
 async function create(projPath) {
   const repoPath = path.join(projPath, projCons.gitDir);
 
-  // TODO: init git in repo folder.
-  return utils.createDirectory(repoPath);
+  return new Promise((resolve, reject) => {
+    utils
+      .createDirectory(repoPath)
+      .then(() => init(repoPath))
+      .then(() => resolve())
+      .catch(err => reject(err));
+  });
 }
 
 export default { create };
