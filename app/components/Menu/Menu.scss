@@ -1,15 +1,19 @@
 .menu {
   background-color: #333;
   color: white;
-  &-header {
-    display: inline;
-    font-size: 20px;
+  padding: 0.3rem 0.3rem;
+
+  &-header,
+  &-dropdown {
+    display: inline-block;
   }
 
-  &-button {
-    text-align: center;
-    padding: 14px 20px;
-    text-decoration: none;
-    font-size: 14px;
+  &-header {
+    margin-bottom: 0;
+    font-size: 1.5rem;
+  }
+
+  &-dropdown {
+    padding: 0 10px;
   }
 }
