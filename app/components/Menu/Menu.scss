@@ -1,0 +1,15 @@
+.menu {
+  background-color: #333;
+  color: white;
+  &-header {
+    display: inline;
+    font-size: 20px;
+  }
+
+  &-button {
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    font-size: 14px;
+  }
+}
