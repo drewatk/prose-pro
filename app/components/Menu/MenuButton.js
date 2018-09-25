@@ -25,6 +25,7 @@ export default class MenuButton extends React.Component {
   }
 
   render() {
+    const { name } = this.props;
     return (
       <Dropdown
         isOpen={this.state.dropdownOpen}
@@ -37,7 +38,7 @@ export default class MenuButton extends React.Component {
           data-toggle="dropdown"
           aria-expanded={this.state.dropdownOpen}
         >
-          File
+          {name}
         </DropdownToggle>
 
         <DropdownMenu>
