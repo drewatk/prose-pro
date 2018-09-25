@@ -10,9 +10,11 @@ const ProjectList = props => {
           <Label for="projectListLabel">Project List</Label>
         </FormGroup>
       </Form>
-      {projects.map((project, index) => {
-        return <ProjectListItem project={project} key={index} />;
-      })}
+      <div>
+        {projects.map((project, index) => {
+          return <ProjectListItem project={project} key={index} />;
+        })}
+      </div>
     </div>
   );
 };
