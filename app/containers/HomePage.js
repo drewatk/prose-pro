@@ -1,13 +1,15 @@
-// @flow
-import React, { Component } from 'react';
-import Home from 'app/components/Home';
+import React from "react";
+import Home from "app/components/Home";
+import Menu from "app/components/Menu";
 
-type Props = {};
+const HomePage = () => {
+  return (
+    <div>
+      <Menu />
+      <Home />
+    </div>
+  );
+};
 
-export default class HomePage extends Component<Props> {
-  props: Props;
-
-  render() {
-    return <Home />;
-  }
-}
+HomePage.displayName = "HomePage";
+export default HomePage;

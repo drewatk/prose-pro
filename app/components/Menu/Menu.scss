@@ -1,0 +1,19 @@
+.menu {
+  background-color: #333;
+  color: white;
+  padding: 0.3rem 0.3rem;
+
+  &-header,
+  &-dropdown {
+    display: inline-block;
+  }
+
+  &-header {
+    margin-bottom: 0;
+    font-size: 1.5rem;
+  }
+
+  &-dropdown {
+    padding: 0 10px;
+  }
+}
