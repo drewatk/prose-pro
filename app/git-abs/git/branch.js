@@ -17,7 +17,7 @@ const create = repo => branchName => {
 const checkOut = repo => branchName => {
   return repo
     .getBranch(branchName)
-    .then(reference => repo.checkOutRef(reference));
+    .then(reference => repo.checkoutBranch(reference));
 };
 
 export default {

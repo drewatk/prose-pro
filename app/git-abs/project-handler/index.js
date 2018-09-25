@@ -7,14 +7,13 @@ import projectJSON from "./project-json";
  * @param {String} projectName
  */
 async function createProject(projPath) {
-  return utils
-    .pathNotExist(projPath)
-    .then(() => utils.createDirectory(projPath))
-    .then(() =>
-      Promise.all([projectJSON.create(projPath), gitRepo.create(projPath)])
-    )
-    .then(() => Promise.resolve())
-    .catch(err => Promise.reject(err));
+  if (utils.pathExist(projPath)) {
+    throw new Error(`Project path already exists: ${projPath}`);
+  }
+
+  await utils.createDirectory(projPath);
+
+  await Promise.all([projectJSON.create(projPath), gitRepo.create(projPath)]);
 }
 
 export default {

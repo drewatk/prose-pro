@@ -38,7 +38,7 @@ export default class ProjectConfig {
    */
   static async initEmptyConfig(filePath) {
     const emptyObj = ProjectConfig.genEmptyConfig();
-    return utils.writeJSONToFile(filePath, emptyObj);
+    await utils.writeJSONToFile(filePath, emptyObj);
   }
 
   /**

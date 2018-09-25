@@ -4,22 +4,16 @@ const fs = require("fs-extra");
  * Reolves if the path doesn't exist, rejects if it does
  * @param {String} path
  */
-function pathNotExist(path) {
-  return new Promise((resolve, reject) => {
-    if (fs.existsSync(path)) {
-      reject(new Error(`Path exists: ${path}`));
-    } else {
-      resolve();
-    }
-  });
+function pathExist(path) {
+  return fs.exists(path);
 }
 
 /**
  * Creates a directory for the given path
  * @param {String} path
  */
-function createDirectory(path) {
-  return fs.mkdirp(path);
+async function createDirectory(path) {
+  await fs.ensureDir(path);
 }
 
 /**
@@ -27,7 +21,17 @@ function createDirectory(path) {
  * @param {String} path
  */
 function createFile(path) {
-  return fs.ensureFile(path);
+  return new Promise((resolve, reject) =>
+    fs.createFile(path, err => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    })
+  );
+  //TODO: WHY DOES THIS NOT WORK?! WHY DOES IT NEED A FREAKING CALLBACK?!?!?!!?!
+  // return fs.ensureFile(path);
 }
 
 /**
@@ -48,7 +52,7 @@ function readJSONFromFile(path) {
 }
 
 export default {
-  pathNotExist,
+  pathExist,
   createDirectory,
   createFile,
   writeJSONToFile,
