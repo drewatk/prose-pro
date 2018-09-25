@@ -1,6 +1,5 @@
 import React from 'react';
-import ProjectListItem from './ProjectListItem';
-import { Form, FormGroup, Label } from 'reactstrap';
+import { Form, FormGroup, Label, Input } from 'reactstrap';
 const ProjectList = props => {
   const { projects } = props;
   return (
@@ -9,12 +8,14 @@ const ProjectList = props => {
         <FormGroup>
           <Label for="projectListLabel">Project List</Label>
         </FormGroup>
+        <FormGroup>
+          <Input type="select" name="selectMulti" id="projectSelect" multiple>
+            {projects.map((project, index) => {
+              return <option key={index}>{project.name}</option>;
+            })}
+          </Input>
+        </FormGroup>
       </Form>
-      <div>
-        {projects.map((project, index) => {
-          return <ProjectListItem project={project} key={index} />;
-        })}
-      </div>
     </div>
   );
 };
