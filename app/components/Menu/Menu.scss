@@ -7,7 +7,7 @@
   &-darwin {
     -webkit-app-region: drag;
 
-    &-buttons-placeholder {
+    & > &-buttons-placeholder {
       display: inline-block;
       width: 65px;
       height: inherit;
