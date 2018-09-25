@@ -1,11 +1,11 @@
 import React from "react";
 import Home from "app/components/Home";
-import Menu from "app/components/Menu";
+import TitleBar from "app/components/TitleBar";
 
 const HomePage = () => {
   return (
     <div>
-      <Menu />
+      <TitleBar />
       <Home />
     </div>
   );
