@@ -1,4 +1,4 @@
 {
-  "HOME": "/",
-  "PROJECT_SETUP": "/ProjectSetup"
+  "EDITOR": "/editor",
+  "PROJECT_SETUP": "/projectSetup"
 }
