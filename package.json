@@ -210,6 +210,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.2.0",
     "all": "^0.0.0",
+    "connected-react-router": "^4.5.0",
     "devtron": "^1.4.0",
     "draft-js": "^0.10.5",
     "electron-debug": "^2.0.0",
@@ -221,7 +222,6 @@
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "source-map-support": "^0.5.6"
