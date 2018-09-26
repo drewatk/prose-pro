@@ -6,19 +6,14 @@ import ProjectSetup from '../../../app/components/ProjectSetup';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('ProjectSetup', () => {
-  it('should should display a setup page', () => {
+  it('should should display NewProjectForm', () => {
     const wrapper = shallow(<ProjectSetup />);
-    expect(wrapper.find('DraftEditor')).toHaveLength(1);
+    expect(wrapper.find('NewProjectForm')).toHaveLength(1);
   });
 
-  it('should should display BlockStyleControls', () => {
+  it('should should display ProjectList', () => {
     const wrapper = shallow(<ProjectSetup />);
-    expect(wrapper.find('BlockStyleControls')).toHaveLength(1);
-  });
-
-  it('should should display InlineStyleControls', () => {
-    const wrapper = shallow(<ProjectSetup />);
-    expect(wrapper.find('InlineStyleControls')).toHaveLength(1);
+    expect(wrapper.find('ProjectList')).toHaveLength(1);
   });
 
   // TODO: Add tests for inputting into draftjs, investigation needed
