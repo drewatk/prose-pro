@@ -1,10 +1,10 @@
 // @flow
 import React from 'react';
-//import ProseEditor from './ProseEditor';
-import ProjectSetup from './ProjectSetup';
+import ProseEditor from './ProseEditor';
+//import ProjectSetup from './ProjectSetup';
 
 const Home = () => {
-  return <ProjectSetup />;
+  return <ProseEditor />;
 };
 
 export default Home;
