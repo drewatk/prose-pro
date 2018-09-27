@@ -1,6 +1,6 @@
-import nodegit from 'nodegit';
-import path from 'path';
-import createInitialCommit from './create-initial-commit';
+import nodegit from "nodegit";
+import path from "path";
+import createInitialCommit from "./create-initial-commit";
 
 /**
  * Initializes a git repo at the given path, and creates an initial commit

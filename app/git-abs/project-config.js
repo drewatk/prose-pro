@@ -1,4 +1,4 @@
-import utils from './utils';
+import utils from "./utils";
 
 export default class ProjectConfig {
   constructor(filePath) {
@@ -19,12 +19,12 @@ export default class ProjectConfig {
    */
   async addFile(fileName, branchName) {
     if (!this.projConfig) {
-      throw new Error('Project Config not initialized');
+      throw new Error("Project Config not initialized");
     }
 
     const { branches } = this.projConfig;
     if (branches[fileName]) {
-      throw new Error('File Already exists');
+      throw new Error("File Already exists");
     }
 
     this.branches[fileName] = branchName;
