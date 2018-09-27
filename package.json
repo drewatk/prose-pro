@@ -36,7 +36,7 @@
   "lint-staged": {
     "*.(js|jsx)": [
       "cross-env NODE_ENV=development eslint --cache --format=node_modules/eslint-formatter-pretty --fix",
-      "prettier --ignore-path .eslintignore --single-quote --write",
+      "prettier --ignore-path .eslintignore --write",
       "git add"
     ],
     "*.(json|css|scss|md)|.(babelrc|prettierrc|eslintrc)": [
@@ -161,7 +161,7 @@
     "electron-devtools-installer": "^2.2.4",
     "electron-rebuild": "^1.8.2",
     "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-adapter-react-16": "^1.5.0",
     "enzyme-to-json": "^3.3.4",
     "eslint": "^5.2.0",
     "eslint-config-prettier": "^2.9.0",

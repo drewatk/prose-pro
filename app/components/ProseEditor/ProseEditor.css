@@ -15,12 +15,6 @@
   margin-top: 10px;
 }
 
-.editor :global(.public-DraftEditorPlaceholder-root),
-.editor :global(.public-DraftEditor-contents) {
-  margin: 0 -15px -15px;
-  padding: 15px;
-}
-
 .editor :global(.public-DraftEditor-content) {
   min-height: 100px;
 }

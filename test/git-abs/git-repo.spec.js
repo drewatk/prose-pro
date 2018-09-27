@@ -1,11 +1,11 @@
-import fs from 'fs-extra';
-import gitRepo from '../../app/git-abs/project-handler/git-repo';
-import { projCons } from '../../app/git-abs/constants';
+import fs from "fs-extra";
+import gitRepo from "../../app/git-abs/project-handler/git-repo";
+import { projCons } from "../../app/git-abs/constants";
 
-describe('Git Repo tests', () => {
-  test('Create() valid test', async () => {
+describe("Git Repo tests", () => {
+  test("Create() valid test", async () => {
     /* set up */
-    const path = './temp-folder';
+    const path = "./temp-folder";
     const repoPath = `${path}/${projCons.gitDir}`;
     await unlinkIgnoreError(repoPath);
     /* end set up */
