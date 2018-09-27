@@ -225,11 +225,7 @@
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-<<<<<<< HEAD
-=======
-    "react-router-redux": "^5.0.0-alpha.6",
     "reactstrap": "^6.4.0",
->>>>>>> More menu (#13)
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "source-map-support": "^0.5.6"
