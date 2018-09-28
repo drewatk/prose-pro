@@ -1,12 +1,12 @@
-import fs from 'fs-extra';
-import projectJSON from '../../app/git-abs/project-handler/project-json';
-import { projCons } from '../../app/git-abs/constants';
-import ProjectConfig from '../../app/git-abs/project-config';
+import fs from "fs-extra";
+import projectJSON from "../../app/git-abs/project-handler/project-json";
+import { projCons } from "../../app/git-abs/constants";
+import ProjectConfig from "../../app/git-abs/project-config";
 
-describe('Project JSON tests', () => {
-  test('Create() should make file', async () => {
+describe("Project JSON tests", () => {
+  test("Create() should make file", async () => {
     /* set up */
-    const path = './temp-file.json';
+    const path = "./temp-file.json";
     const filePath = `${path}/${projCons.metadataDir}/${projCons.projFile}`;
     await unlinkIgnoreError(filePath);
     /* end set up */
@@ -21,9 +21,9 @@ describe('Project JSON tests', () => {
     /* end set up */
   });
 
-  test('Create() should initialize with empty object', async () => {
+  test("Create() should initialize with empty object", async () => {
     /* set up */
-    const path = './temp-file.json';
+    const path = "./temp-file.json";
     const filePath = `${path}/${projCons.metadataDir}/${projCons.projFile}`;
     await unlinkIgnoreError(filePath);
     await projectJSON.create(path);

@@ -1,3 +1,4 @@
-import addAndCommit from './add-and-commit';
+import addAndCommit from "./add-and-commit";
+import init from "./init";
 
-export { addAndCommit };
+export default { addAndCommit, init };

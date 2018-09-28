@@ -1,23 +1,25 @@
-import React from 'react';
-import { Editor, EditorState, RichUtils, getDefaultKeyBinding } from 'draft-js';
-import InlineStyleControls from './InlineStyleControls';
-import BlockStyleControls from './BlockStyleControls';
+import React from "react";
+import { connect } from "react-redux";
+import { Editor, RichUtils, getDefaultKeyBinding } from "draft-js";
+import InlineStyleControls from "./InlineStyleControls";
+import BlockStyleControls from "./BlockStyleControls";
+import { UPDATE_EDITOR_STATE } from "../../actions/editor";
 
-import styles from './ProseEditor.css';
+import styles from "./ProseEditor.css";
 
 const MAX_TAB_DEPTH = 4;
 
 /**
  * Adapted from draft-js rich editor example
  * https://github.com/facebook/draft-js/blob/master/examples/draft-0-10-0/rich/rich.html
+ * Also referenced this article to connect to Redux: https://reactrocket.com/post/draft-js-and-redux/
  */
-class ProseEditor extends React.Component {
+export class ProseEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { editorState: EditorState.createEmpty() };
     this.editorRef = React.createRef();
     this.focus = () => this.editorRef.current.editor.focus();
-    this.onChange = editorState => this.setState({ editorState });
+    this.onChange = editorState => this.props.onSaveEditorState(editorState);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
     this.mapKeyToEditorCommand = this.mapKeyToEditorCommand.bind(this);
     this.toggleBlockType = this.toggleBlockType.bind(this);
@@ -33,14 +35,18 @@ class ProseEditor extends React.Component {
     return false;
   }
 
+  /**
+   * @todo Tab capturing is currently not working
+   * @param {SyntheticEvent} e
+   */
   mapKeyToEditorCommand(e) {
     if (e.keyCode === 9 /* TAB */) {
       const newEditorState = RichUtils.onTab(
         e,
-        this.state.editorState,
+        this.props.editorState,
         MAX_TAB_DEPTH
       );
-      if (newEditorState !== this.state.editorState) {
+      if (newEditorState !== this.props.editorState) {
         this.onChange(newEditorState);
       }
       return;
@@ -49,17 +55,18 @@ class ProseEditor extends React.Component {
   }
 
   toggleBlockType(blockType) {
-    this.onChange(RichUtils.toggleBlockType(this.state.editorState, blockType));
+    this.onChange(RichUtils.toggleBlockType(this.props.editorState, blockType));
   }
 
   toggleInlineStyle(inlineStyle) {
     this.onChange(
-      RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle)
+      RichUtils.toggleInlineStyle(this.props.editorState, inlineStyle)
     );
   }
 
   render() {
-    const { editorState } = this.state;
+    const { editorState } = this.props;
+
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
     let hidePlaceholderClass = false;
@@ -69,7 +76,7 @@ class ProseEditor extends React.Component {
         contentState
           .getBlockMap()
           .first()
-          .getType() !== 'unstyled'
+          .getType() !== "unstyled"
       ) {
         hidePlaceholderClass = true;
       }
@@ -86,7 +93,7 @@ class ProseEditor extends React.Component {
         />
         <div
           className={`${styles.editor} ${
-            hidePlaceholderClass ? styles.hidePlaceholder : ''
+            hidePlaceholderClass ? styles.hidePlaceholder : ""
           }`}
           onClick={this.focus}
         >
@@ -110,7 +117,7 @@ class ProseEditor extends React.Component {
 // Custom overrides for "code" style.
 const styleMap = {
   CODE: {
-    backgroundColor: 'rgba(0, 0, 0, 0.05)',
+    backgroundColor: "rgba(0, 0, 0, 0.05)",
     fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
     fontSize: 16,
     padding: 2
@@ -119,11 +126,27 @@ const styleMap = {
 
 function getBlockStyle(block) {
   switch (block.getType()) {
-    case 'blockquote':
+    case "blockquote":
       return styles.blockquote;
     default:
       return null;
   }
 }
 
-export default ProseEditor;
+const mapStateToProps = ({ editor: { editorState } }) => ({ editorState });
+
+const mapDispatchToProps = dispatch => ({
+  onSaveEditorState: editorState => {
+    dispatch({
+      type: UPDATE_EDITOR_STATE,
+      payload: editorState
+    });
+  }
+});
+
+const WithProseEditor = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProseEditor);
+
+export default WithProseEditor;

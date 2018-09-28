@@ -1,17 +1,17 @@
-import fs from 'fs-extra';
-import utils from '../../app/git-abs/utils';
+import fs from "fs-extra";
+import utils from "../../app/git-abs/utils";
 
-describe('PathNotExist() tests', () => {
-  test('Path exists should resolve', async () => {
-    const filePath = './temp-test.txt';
+describe("PathNotExist() tests", () => {
+  test("Path exists should resolve", async () => {
+    const filePath = "./temp-test.txt";
 
     await unlinkIgnoreError(filePath);
 
     await expect(utils.pathNotExist(filePath)).resolves.toBe();
   });
 
-  test('Path exists should reject', async () => {
-    const filePath = './temp-test.txt';
+  test("Path exists should reject", async () => {
+    const filePath = "./temp-test.txt";
 
     await fs.ensureFile(filePath);
 
@@ -23,9 +23,9 @@ describe('PathNotExist() tests', () => {
   });
 });
 
-describe('CreateDirectory() tests', () => {
-  test('Create Directory should resolve', async () => {
-    const filePath = './temp-folder';
+describe("CreateDirectory() tests", () => {
+  test("Create Directory should resolve", async () => {
+    const filePath = "./temp-folder";
 
     await unlinkIgnoreError(filePath);
 
@@ -33,9 +33,9 @@ describe('CreateDirectory() tests', () => {
   });
 });
 
-describe('CreateFile() tests', () => {
-  test('Create File valid test', async () => {
-    const filePath = './temp-file.txt';
+describe("CreateFile() tests", () => {
+  test("Create File valid test", async () => {
+    const filePath = "./temp-file.txt";
 
     await utils.createFile(filePath);
 
@@ -45,10 +45,10 @@ describe('CreateFile() tests', () => {
   });
 });
 
-describe('WriteJSONToFile() tests', () => {
-  test('Write Json valid test', async () => {
-    const filePath = './temp.json';
-    const testObj = { key: 'value' };
+describe("WriteJSONToFile() tests", () => {
+  test("Write Json valid test", async () => {
+    const filePath = "./temp.json";
+    const testObj = { key: "value" };
 
     await utils.writeJSONToFile(filePath, testObj);
 
@@ -60,10 +60,10 @@ describe('WriteJSONToFile() tests', () => {
   });
 });
 
-describe('ReadJSONFromFole() tests', () => {
-  test('Read Json valid test', async () => {
-    const filePath = './temp.json';
-    const testObj = { key: 'value' };
+describe("ReadJSONFromFole() tests", () => {
+  test("Read Json valid test", async () => {
+    const filePath = "./temp.json";
+    const testObj = { key: "value" };
 
     await unlinkIgnoreError(filePath);
 

@@ -1,0 +1,43 @@
+.title-bar {
+  background-color: #4f4f4f;
+  color: white;
+  padding: 0.3rem 0.3rem;
+  -webkit-user-select: none;
+
+  &-darwin {
+    -webkit-app-region: drag;
+
+    & > &-buttons-placeholder {
+      display: inline-block;
+      width: 75px;
+      height: inherit;
+    }
+  }
+
+  &-header {
+    display: inline-block;
+  }
+
+  &-header {
+    margin-top: 0.4rem;
+    margin-bottom: 0;
+    font-size: 1.25rem;
+
+    :global(.text-muted) {
+      color: #ddd !important;
+      margin-left: 0.5rem;
+    }
+  }
+
+  :global(.nav-item) {
+    font-size: 0.9rem;
+
+    a {
+      color: lighten(#007bff, 25%);
+    }
+
+    a:hover {
+      color: lighten(#0056b3, 25%);
+    }
+  }
+}
