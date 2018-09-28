@@ -1,6 +1,6 @@
 import utils from "./utils";
 
-export default class ProjectConfig {
+export default class Metadata {
   constructor(filePath) {
     this.filePath = filePath;
     this.projConfig = null;
@@ -29,7 +29,7 @@ export default class ProjectConfig {
 
     this.branches[fileName] = branchName;
 
-    return this.updateConfigFile();
+    await this.updateConfigFile();
   }
 
   /**
@@ -37,7 +37,11 @@ export default class ProjectConfig {
    * @param {String} filePath
    */
   static async initEmptyConfig(filePath) {
+<<<<<<< HEAD:app/git-abs/project-config.js
     const emptyObj = ProjectConfig.genEmptyConfig();
+=======
+    const emptyObj = Metadata.genEmptyConfig();
+>>>>>>> saving:app/git-abs/metadata.js
     await utils.writeJSONToFile(filePath, emptyObj);
   }
 
@@ -54,13 +58,13 @@ export default class ProjectConfig {
    * write the current state of the project config to config file
    */
   async updateConfigFile() {
-    return utils.writeJSONToFile(this.filePath, this.projConfig);
+    await utils.writeJSONToFile(this.filePath, this.projConfig);
   }
 
   /**
    * read config file to get the object
    */
   async getConfigFromFile() {
-    return utils.readJSONFromFile(this.filePath);
+    await utils.readJSONFromFile(this.filePath);
   }
 }

@@ -1,7 +1,11 @@
 const projCons = {
   metadataDir: "metadata",
   gitDir: "repo",
+<<<<<<< HEAD
   projFile: "settings.json",
+=======
+  projFile: "metadata.json",
+>>>>>>> saving
   editFile: "text.json"
 };
 
