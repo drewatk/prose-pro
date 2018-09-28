@@ -10,9 +10,9 @@ import ProjectConfig from "../project-config";
 async function create(projPath) {
   const filePath = path.join(projPath, projCons.metadataDir, projCons.projFile);
 
-  return utils
-    .createFile(filePath)
-    .then(() => ProjectConfig.initEmptyConfig(filePath));
+  await utils.createFile(filePath);
+
+  await ProjectConfig.initEmptyConfig(filePath);
 }
 
 export default { create };
