@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react";
+import { Button } from "reactstrap";
 
-const buttonStyles = {};
-
-const Button = ({ text, ...props }) => (
-  <button style={buttonStyles} {...props}>
-    {text}
-  </button>
+const ButtonWrapper = ({ text, ...props }) => (
+  <div {...props}>
+    <Button size="sm" color="secondary">
+      {text}
+    </Button>
+  </div>
 );
 
-export default Button;
+export default ButtonWrapper;

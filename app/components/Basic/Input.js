@@ -1,22 +1,22 @@
-import React from 'react';
+import React from "react";
+import { InputGroup, InputGroupAddon, Input } from "reactstrap";
 
 const inputStyles = {
   error: {
-    color: 'red',
-    fontSize: 10
-  },
-  inputWrapper: {
-    display: 'block'
+    fontSize: "15px",
+    fontFamily: "sans-serif",
+    color: "#ad1e1a"
   }
 };
 
-const Input = ({ input, type, meta: { touched, error }, ...props }) => (
+const InputWrapper = ({ input, type, meta: { touched, error }, ...props }) => (
   <div {...props}>
-    <div style={inputStyles.inputWrapper}>
-      <input type={type} {...input} />
-    </div>
+    <InputGroup size="sm">
+      <InputGroupAddon addonType="prepend">Message</InputGroupAddon>
+      <Input type={type} {...input} />
+    </InputGroup>
     {touched && error && <span style={inputStyles.error}>{error}</span>}
   </div>
 );
 
-export default Input;
+export default InputWrapper;
