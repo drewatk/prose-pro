@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './ProseEditor.css';
+import React from "react";
+import styles from "./ProseEditor.css";
 
 export default class StyleButton extends React.Component {
   constructor() {
@@ -14,7 +14,7 @@ export default class StyleButton extends React.Component {
     const { active, label } = this.props;
     return (
       <span
-        className={`${styles.styleButton} ${active ? styles.activeButton : ''}`}
+        className={`${styles.styleButton} ${active ? styles.activeButton : ""}`}
         onMouseDown={this.onToggle}
         role="button"
       >

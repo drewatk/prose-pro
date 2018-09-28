@@ -1,7 +1,7 @@
-import utils from '../utils';
-import path from 'path';
-import { projCons } from '../constants';
-import ProjectConfig from '../project-config';
+import utils from "../utils";
+import path from "path";
+import { projCons } from "../constants";
+import ProjectConfig from "../project-config";
 
 /**
  * Creates a project JSON for the given project name in the metadata folder
