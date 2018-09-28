@@ -1,5 +1,5 @@
-import nodegit from 'nodegit';
-import { gitCons } from 'app/git-abs/constants';
+import nodegit from "nodegit";
+import { gitCons } from "app/git-abs/constants";
 
 const { AUTHOR, EMAIL, HEAD_REF } = gitCons;
 
@@ -15,7 +15,7 @@ const createInitialCommit = repo => {
     .refreshIndex()
     .then(index => index.writeTree())
     .then(oid =>
-      repo.createCommit(HEAD_REF, author, committer, 'initial commit', oid, [])
+      repo.createCommit(HEAD_REF, author, committer, "initial commit", oid, [])
     );
 };
 
