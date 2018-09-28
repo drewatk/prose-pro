@@ -1,6 +1,6 @@
 // @flow
-import React, { Component } from 'react';
-import ProjectSetup from 'app/components/ProjectSetup';
+import React, { Component } from "react";
+import ProjectSetup from "app/components/ProjectSetup";
 
 type Props = {};
 

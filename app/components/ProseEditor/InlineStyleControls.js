@@ -1,13 +1,13 @@
-import React from 'react';
-import StyleButton from './StyleButton';
+import React from "react";
+import StyleButton from "./StyleButton";
 
-import styles from './ProseEditor.css';
+import styles from "./ProseEditor.css";
 
 const INLINE_STYLES = [
-  { label: 'Bold', style: 'BOLD' },
-  { label: 'Italic', style: 'ITALIC' },
-  { label: 'Underline', style: 'UNDERLINE' },
-  { label: 'Monospace', style: 'CODE' }
+  { label: "Bold", style: "BOLD" },
+  { label: "Italic", style: "ITALIC" },
+  { label: "Underline", style: "UNDERLINE" },
+  { label: "Monospace", style: "CODE" }
 ];
 
 const InlineStyleControls = props => {

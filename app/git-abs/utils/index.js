@@ -1,4 +1,4 @@
-const fs = require('fs-extra');
+const fs = require("fs-extra");
 
 /**
  * Reolves if the path doesn't exist, rejects if it does
