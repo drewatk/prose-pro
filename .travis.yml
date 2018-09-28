@@ -9,8 +9,8 @@ matrix:
     #   language: node_js
     #   node_js: "8"
     #   env:
-    #     - ELECTRON_CACHE=$EDITOR/.cache/electron
-    #     - ELECTRON_BUILDER_CACHE=$EDITOR/.cache/electron-builder
+    #     - ELECTRON_CACHE=$HOME/.cache/electron
+    #     - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 
     - os: linux
       services: docker
@@ -33,9 +33,9 @@ matrix:
 #     - node_modules
 #     - app/node_modules
 #     - $(npm config get prefix)/lib/node_modules
-#     - $EDITOR/.cache/electron
-#     - $EDITOR/.cache/electron-builder
-#     - $EDITOR/docker
+#     - $HOME/.cache/electron
+#     - $HOME/.cache/electron-builder
+#     - $HOME/docker
 
 # NOTE: Remove this if your project is private and you don't have a paid greenkeeper account
 before_install: yarn global add greenkeeper-lockfile@1
