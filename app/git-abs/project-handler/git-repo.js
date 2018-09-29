@@ -10,13 +10,9 @@ import { init } from "app/git-abs/git";
 async function create(projPath) {
   const repoPath = path.join(projPath, projCons.gitDir);
 
-  return new Promise((resolve, reject) => {
-    utils
-      .createDirectory(repoPath)
-      .then(() => init(repoPath))
-      .then(() => resolve())
-      .catch(err => reject(err));
-  });
+  await utils.createDirectory(repoPath);
+
+  await init(repoPath);
 }
 
 export default { create };

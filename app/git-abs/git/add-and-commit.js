@@ -1,7 +1,7 @@
-import nodegit from 'nodegit';
-import path from 'path';
+import nodegit from "nodegit";
+import path from "path";
 
-import { gitCons } from 'app/git-abs/constants';
+import { gitCons } from "app/git-abs/constants";
 
 const { GIT_CONFIG_PATH, AUTHOR, EMAIL, HEAD_REF } = gitCons;
 
@@ -63,7 +63,7 @@ const addAndCommit = filename => commitMessage => {
       })
       .then(commitId => resolve(commitId))
       .catch(err => {
-        console.error('Error in addAndCommit:');
+        console.error("Error in addAndCommit:");
         reject(err);
       });
   });

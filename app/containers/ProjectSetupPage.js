@@ -1,13 +1,14 @@
-// @flow
 import React, { Component } from "react";
 import ProjectSetup from "app/components/ProjectSetup";
+import TitleBar from "app/components/TitleBar";
 
-type Props = {};
-
-export default class ProjectSetupPage extends Component<Props> {
-  props: Props;
-
+export default class ProjectSetupPage extends Component {
   render() {
-    return <ProjectSetup />;
+    return (
+      <div>
+        <TitleBar />
+        <ProjectSetup />
+      </div>
+    );
   }
 }

@@ -1,14 +1,14 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { createHashHistory } from "history";
-import { routerMiddleware, routerActions } from "react-router-redux";
+import { routerMiddleware, connectRouter } from "connected-react-router";
 import { createLogger } from "redux-logger";
 import rootReducer from "../reducers";
 import * as editorActions from "../actions/editor";
 
 const history = createHashHistory();
 
-const configureStore = (initialState?: counterStateType) => {
+const configureStore = initialState => {
   // Redux Configuration
   const middleware = [];
   const enhancers = [];
@@ -33,8 +33,7 @@ const configureStore = (initialState?: counterStateType) => {
 
   // Redux DevTools Configuration
   const actionCreators = {
-    ...editorActions,
-    ...routerActions
+    ...editorActions
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
   /* eslint-disable no-underscore-dangle */
@@ -51,12 +50,16 @@ const configureStore = (initialState?: counterStateType) => {
   const enhancer = composeEnhancers(...enhancers);
 
   // Create Store
-  const store = createStore(rootReducer, initialState, enhancer);
+  const store = createStore(
+    connectRouter(history)(rootReducer),
+    initialState,
+    enhancer
+  );
 
   if (module.hot) {
     module.hot.accept(
       "../reducers",
-      () => store.replaceReducer(require("../reducers")) // eslint-disable-line global-require
+      () => store.replaceReducer(connectRouter(history, require("../reducers"))) // eslint-disable-line global-require
     );
   }
 
