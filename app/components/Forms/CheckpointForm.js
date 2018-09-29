@@ -38,7 +38,7 @@ const CheckpointForm = ({ handleSubmit, submitting, pristine }) => (
     <Button
       type="submit"
       text="Create"
-      disabled={false && (submitting || pristine)}
+      disabled={submitting || pristine}
       style={styles.button}
     />
   </Form>
