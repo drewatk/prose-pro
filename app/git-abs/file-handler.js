@@ -1,20 +1,31 @@
 // TODO decide on where the editor interaction comes in.
-
+import git from "./git";
+import { editFile } from "./constants";
 /* eslint-disable */
 
 export default class FileHandler {
-  constructor(projectPath) {
-    this.projectPath = projectPath;
+  /**
+   *
+   * @param {Metadata (./metadata.js)} metadata
+   * @param {Repository (nodegit)} repository
+   */
+  constructor(metadata, repository) {
+    this.metadata = metadata;
+    this.repository = repository;
   }
 
   /**
    * Creates a branch for the given file name
    * @param {String} fileName
    */
-  createFile = fileName => {
+  createFile = async fileName => {
     // create branch
-    // update project.json
-    // switch branch
+    const branchName = ""; //TODO create unique branch name
+
+    await Promise.all([
+      git.branch.create(this.repository)(branchName), // create a branch
+      this.metadata.addFile(fileName, branchName) // update metadata
+    ]);
   };
 
   /**
@@ -31,10 +42,15 @@ export default class FileHandler {
    * Switches branch to the one mapped to the given file name
    * @param {String} fileName
    */
-  openFile = fileName => {
-    // get branch from project.json
+  openFile = async fileName => {
     // save current state of branch
+    await git.addAndCommit(editFile)("switching file");
+
+    // get branch from project.json
+    const branchName = this.metadata.getBranchName(fileName);
+
     // switch to branch for fileName
+    await git.branch.checkOut(this.repository)(branchName);
   };
 
   /**

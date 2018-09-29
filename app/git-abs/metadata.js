@@ -33,6 +33,18 @@ export default class Metadata {
   }
 
   /**
+   * Get branch name corresponding to given file
+   * @param {String} fileName
+   */
+  getBranchName(fileName) {
+    if (!this.branches[fileName]) {
+      throw new Error("File doesn't exist");
+    }
+
+    return this.branches[fileName];
+  }
+
+  /**
    * To set up an empty config file
    * @param {String} filePath
    */
