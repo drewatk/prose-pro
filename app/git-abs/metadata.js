@@ -37,11 +37,7 @@ export default class Metadata {
    * @param {String} filePath
    */
   static async initEmptyConfig(filePath) {
-<<<<<<< HEAD:app/git-abs/project-config.js
-    const emptyObj = ProjectConfig.genEmptyConfig();
-=======
     const emptyObj = Metadata.genEmptyConfig();
->>>>>>> saving:app/git-abs/metadata.js
     await utils.writeJSONToFile(filePath, emptyObj);
   }
 
