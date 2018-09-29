@@ -1,11 +1,10 @@
-// @flow
 import { combineReducers } from "redux";
-import { routerReducer as router } from "react-router-redux";
-import editor from "./editor";
+import editor from "app/reducers/editor";
+import view from "app/reducers/view";
 
 const rootReducer = combineReducers({
   editor,
-  router
+  view
 });
 
 export default rootReducer;
