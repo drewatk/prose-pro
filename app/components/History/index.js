@@ -1,9 +1,16 @@
 import React from "react";
+import { connect } from "react-redux";
 
-const History = () => (
-  <div style={{ backgroundColor: "lightblue", height: "100%" }}>
-    History View
+import CheckpointView from "./CheckpointView";
+
+const History = ({ history }) => (
+  <div style={{ height: "100%" }}>
+    {history.map((data, index) => (
+      <CheckpointView key={index} {...data} />
+    ))}
   </div>
 );
 
-export default History;
+const mapStateToProps = state => ({ history: state.history });
+
+export default connect(mapStateToProps)(History);
