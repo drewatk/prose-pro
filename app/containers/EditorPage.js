@@ -4,6 +4,7 @@ import ProseEditor from "app/components/ProseEditor";
 import TitleBar from "app/components/TitleBar";
 import FileList from "app/components/FileList";
 import History from "app/components/History";
+import CheckpointForm from "app/components/Forms/CheckpointForm";
 
 const EditorPage = props => {
   const { showHistory, showFileList } = props;
@@ -26,6 +27,11 @@ const EditorPage = props => {
           </div>
         )}
       </div>
+      <CheckpointForm
+        onSubmit={({ commitMessage }) =>
+          console.log("Submitted new checkpoint: ", commitMessage)
+        }
+      />
     </div>
   );
 };
