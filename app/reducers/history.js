@@ -1,4 +1,4 @@
-const now = new Date().toString();
+const now = new Date().toLocaleString("en-US", { timeZone: "UTC" });
 
 const defaultHistory = [
   { message: "first commit", date: now },
