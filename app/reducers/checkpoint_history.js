@@ -6,6 +6,6 @@ const defaultHistory = [
   { message: "day 68. still doesn't work. i'm giving up", date: now }
 ];
 
-const history = (state = defaultHistory) => state;
+const checkpointHistory = (state = defaultHistory) => state;
 
-export default history;
+export default checkpointHistory;

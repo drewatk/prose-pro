@@ -11,6 +11,8 @@ const History = ({ history }) => (
   </div>
 );
 
-const mapStateToProps = ({ history }) => ({ history });
+const mapStateToProps = ({ checkpointHistory }) => ({
+  history: checkpointHistory
+});
 
 export default connect(mapStateToProps)(History);
