@@ -1,8 +1,8 @@
 import React from "react";
-import { Form } from "reactstrap";
+import { Form, Button } from "reactstrap";
 import { Field, reduxForm } from "redux-form";
 
-import { Button, Input } from "app/components/Basic";
+import { Input } from "app/components/Basic";
 import { required } from "./validators";
 
 const styles = {
@@ -37,10 +37,13 @@ const CheckpointForm = ({ handleSubmit, submitting, pristine }) => (
     />
     <Button
       type="submit"
-      text="Create"
+      size="sm"
+      color="secondary"
       disabled={submitting || pristine}
       style={styles.button}
-    />
+    >
+      Create
+    </Button>
   </Form>
 );
 

@@ -1,7 +1,6 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import { Form, FormGroup, Label } from "reactstrap";
-import { Button } from "app/components/Basic";
+import { Form, FormGroup, Label, Button } from "reactstrap";
 
 const ProjectList = ({ projects, handleSubmit }) => (
   <Form onSubmit={handleSubmit}>
@@ -9,8 +8,8 @@ const ProjectList = ({ projects, handleSubmit }) => (
       <Label for="projectListLabel">Project List</Label>
     </FormGroup>
     <FormGroup>
-      <Field name="woof" component="input" />
       <Field name="project" component="select">
+        <option />
         {projects.map((project, index) => {
           return (
             <option key={index} value={project.name}>
@@ -20,8 +19,9 @@ const ProjectList = ({ projects, handleSubmit }) => (
         })}
       </Field>
     </FormGroup>
-
-    <Button type="submit" text="Select" />
+    <Button type="submit" size="sm" color="secondary">
+      Select
+    </Button>
   </Form>
 );
 
