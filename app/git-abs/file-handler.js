@@ -75,6 +75,14 @@ export default class FileHandler {
     // save current state of branch
     // checkout to selected commit
   };
+
+  /**
+   * Returns list of versions saved for given file name
+   * @param {String} fileName
+   */
+  getVersions = fileName => {
+    // use metedata object to get version names for the given fileName
+  };
 }
 
 /* eslint-enable */
