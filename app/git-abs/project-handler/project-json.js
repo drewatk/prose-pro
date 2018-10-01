@@ -10,9 +10,8 @@ import Metadata from "../metadata";
 async function create(projPath) {
   const filePath = path.join(projPath, projCons.metadataDir, projCons.projFile);
 
-  return utils
-    .createFile(filePath)
-    .then(() => Metadata.initEmptyConfig(filePath));
+  await utils.createFile(filePath);
+  await Metadata.initEmptyConfig(filePath);
 }
 
 export default { create };
