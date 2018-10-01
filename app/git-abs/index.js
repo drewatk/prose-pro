@@ -1,9 +1,11 @@
 // TODO decide on where the editor interaction comes in.
 import git from "./git";
-import { editFile } from "./constants";
+import { editFile, projCons } from "./constants";
+import Metadata from "./metadata";
+import path from "path";
 /* eslint-disable */
 
-export default class FileHandler {
+class GitAbs {
   /**
    *
    * @param {Metadata (./metadata.js)} metadata
@@ -86,3 +88,13 @@ export default class FileHandler {
 }
 
 /* eslint-enable */
+const initGitAbs = async projPath => {
+  const metadata = new Metadata(projPath);
+  await metadata.init();
+
+  const repo = await git.repository.open(path.join(projPath, projCons.gitDir));
+
+  return new GitAbs(metadata, repo);
+};
+
+export default initGitAbs;

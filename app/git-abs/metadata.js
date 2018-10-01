@@ -3,17 +3,17 @@ import path from "path";
 import projCons from "./constants";
 
 export default class Metadata {
-  constructor(dirPath) {
-    this.dirPath = dirPath;
-    this.cfgPath = path.join(dirPath, projCons.projConfig);
-    this.projConfig = null;
+  constructor(projPath) {
+    this.dirPath = path.join(projPath, projCons.metadataDir);
+    this.cfgPath = path.join(this.dirPath, projCons.projConfig);
+    this.projConfig = null; /* stores the config from file */
   }
 
   /**
    * reads project config from json file
    */
   async init() {
-    this.projConfig = await this.getConfigFromFile();
+    this.projConfig = await this.getCfgFromFile();
   }
 
   /**
@@ -32,7 +32,7 @@ export default class Metadata {
 
     /* create filename - branch mapping */
     this.branches[fileName] = branchName;
-    await this.updateConfigFile();
+    await this.updateCfgFile();
 
     /* create metadata file for version - commit mapping */
     const filePath = path.join(this.dirPath, branchName);
@@ -81,14 +81,14 @@ export default class Metadata {
    * @param {String} filePath
    */
   static async initEmptyConfig(filePath) {
-    const emptyObj = Metadata.genEmptyConfig();
+    const emptyObj = Metadata.getnEmptyCfgObj();
     await utils.writeJSONToFile(filePath, emptyObj);
   }
 
   /**
    * Generates empty config object
    */
-  static genEmptyConfig() {
+  static getnEmptyCfgObj() {
     return {
       branches: {}
     };
@@ -106,14 +106,14 @@ export default class Metadata {
   /**
    * write the current state of the project config to config file
    */
-  async updateConfigFile() {
+  async updateCfgFile() {
     await utils.writeJSONToFile(this.cfgPath, this.projConfig);
   }
 
   /**
    * read config file to get the object
    */
-  async getConfigFromFile() {
+  async getCfgFromFile() {
     await utils.readJSONFromFile(this.cfgPath);
   }
 }
