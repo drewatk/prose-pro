@@ -13,12 +13,18 @@ const ProjectSetupPage = ({ projects, dispatch }) => (
     <NewProjectForm />
     <ProjectSelectionForm
       projects={projects}
-      onSubmit={values => dispatch(projectSelect(values.project))}
+      onSubmit={({ project }) =>
+        dispatch([
+          projectSelect(project)
+          /* grab files */
+          /* update git repo information */
+        ])
+      }
     />
   </div>
 );
 
-const mapStateToProps = state => ({ projects: state.projects });
+const mapStateToProps = ({ projects }) => ({ projects });
 const mapDispatchToProps = dispatch => ({ dispatch });
 
 export default connect(
