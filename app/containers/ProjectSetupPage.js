@@ -15,13 +15,18 @@ const ProjectSetupPage = ({ projects, dispatch }) => (
     <NewProjectForm />
     <ProjectSelectionForm
       projects={projects}
-      onSubmit={({ project }) =>
+      onSubmit={
+        ({ project }) => {
+          dispatch(projectSelect(project));
+          dispatch(push(routes.EDITOR));
+        }
+        /*
         dispatch([
           projectSelect(project),
-          /* grab files */
-          /* update git repo information */
+          /* grab files
+          /* update git repo information
           push(routes.EDITOR) // navigate to editor.
-        ])
+        ]) */
       }
     />
   </div>

@@ -2,13 +2,15 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Form, FormGroup, Label, Button } from "reactstrap";
 
-const ProjectList = ({ projects, handleSubmit }) => (
+import { required } from "./validators";
+
+const ProjectList = ({ projects, handleSubmit, submitting, pristine }) => (
   <Form onSubmit={handleSubmit}>
     <FormGroup>
       <Label for="projectListLabel">Project List</Label>
     </FormGroup>
     <FormGroup>
-      <Field name="project" component="select">
+      <Field name="project" component="select" validate={[required]}>
         <option />
         {projects.map((project, index) => {
           return (
@@ -19,7 +21,12 @@ const ProjectList = ({ projects, handleSubmit }) => (
         })}
       </Field>
     </FormGroup>
-    <Button type="submit" size="sm" color="secondary">
+    <Button
+      type="submit"
+      size="sm"
+      color="secondary"
+      disabled={submitting || pristine}
+    >
       Select
     </Button>
   </Form>
