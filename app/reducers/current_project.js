@@ -1,4 +1,4 @@
-import { SELECT_PROJECT } from "app/actions/action_types";
+import { SELECT_PROJECT } from "app/actions/project_selection";
 
 /* Handles the currently selected project */
 const currentProject = (state = null, { type, payload }) => {

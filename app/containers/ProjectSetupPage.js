@@ -18,7 +18,6 @@ const ProjectSetupPage = ({ projects, dispatch }) => (
       onSubmit={({ project }) =>
         dispatch([
           projectSelect(project),
-
           /* grab files */
           /* update git repo information */
           push(routes.EDITOR) // navigate to editor.

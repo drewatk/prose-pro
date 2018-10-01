@@ -1,4 +1,4 @@
-import { SELECT_PROJECT } from "./action_types";
+export const SELECT_PROJECT = "SELECT_PROJECT";
 
 const projectSelect = project => ({
   type: SELECT_PROJECT,
