@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import { push } from "connected-react-router";
+import routes from "app/constants/routes.json";
 
 import TitleBar from "app/components/TitleBar";
 import ProjectSelectionForm from "app/components/Forms/ProjectSelectionForm";
@@ -15,9 +17,11 @@ const ProjectSetupPage = ({ projects, dispatch }) => (
       projects={projects}
       onSubmit={({ project }) =>
         dispatch([
-          projectSelect(project)
+          projectSelect(project),
+
           /* grab files */
           /* update git repo information */
+          push(routes.EDITOR) // navigate to editor.
         ])
       }
     />
