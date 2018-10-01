@@ -1,4 +1,4 @@
-import { FORM_SUBMIT_SUCCEEDED } from "app/actions/action_types";
+import { FORM_SUBMIT_SUCCEEDED } from "app/actions/form";
 
 /* Useful for clearing form data upon successful submitted. */
 const clearFormOnSuccess = (state, action) => {
