@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardBody, CardSubtitle, CardText } from "reactstrap";
 
-const CheckpointView = ({ message, date }) => (
+const CheckpointCard = ({ message, date }) => (
   <Card>
     <CardBody>
       <CardSubtitle>Checkpoint:</CardSubtitle>
@@ -12,4 +12,4 @@ const CheckpointView = ({ message, date }) => (
   </Card>
 );
 
-export default CheckpointView;
+export default CheckpointCard;
