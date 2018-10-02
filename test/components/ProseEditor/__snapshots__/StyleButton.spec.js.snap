@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StyleButton Matches Snapshot (active) 1`] = `
+<span
+  className="styleButton activeButton"
+  onMouseDown={[Function]}
+  role="button"
+/>
+`;
+
+exports[`StyleButton Matches Snapshot 1`] = `
+<span
+  className="styleButton "
+  onMouseDown={[Function]}
+  role="button"
+/>
+`;

@@ -2,7 +2,7 @@ import React from "react";
 import Enzyme, { shallow, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { ContentState, EditorState } from "draft-js";
-import { ProseEditor } from "../../../app/components/ProseEditor/Editor";
+import { ProseEditor } from "app/components/ProseEditor/Editor";
 
 async function fillRTE(component, value) {
   const input = component.find("DraftEditor");

@@ -44,6 +44,19 @@ export default class MenuBuilder {
   }
 
   buildDarwinTemplate() {
+    const subMenuFile = {
+      label: "File",
+      submenu: [
+        {
+          label: "Save",
+          accelerator: "Ctrl+S"
+        },
+        {
+          label: "New Project"
+        },
+        { label: "New Document" }
+      ]
+    };
     const subMenuAbout = {
       label: "ProsePro",
       submenu: [
@@ -170,7 +183,14 @@ export default class MenuBuilder {
     const subMenuView =
       process.env.NODE_ENV === "development" ? subMenuViewDev : subMenuViewProd;
 
-    return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
+    return [
+      subMenuFile,
+      subMenuAbout,
+      subMenuEdit,
+      subMenuView,
+      subMenuWindow,
+      subMenuHelp
+    ];
   }
 
   buildDefaultTemplate() {
@@ -179,16 +199,14 @@ export default class MenuBuilder {
         label: "&File",
         submenu: [
           {
-            label: "&Open",
-            accelerator: "Ctrl+O"
+            label: "Save",
+            accelerator: "CommandOrControl+S"
           },
           {
-            label: "&Close",
-            accelerator: "Ctrl+W",
-            click: () => {
-              this.mainWindow.close();
-            }
-          }
+            label: "New Project",
+            accelerator: "CommandOrControl+N"
+          },
+          { label: "New Document", accelerator: "CommandOrControl+D" }
         ]
       },
       {
