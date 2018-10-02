@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`View Actions Toggle Show File List 1`] = `
+Object {
+  "type": "TOGGLE_SHOW_FILE_LIST",
+}
+`;
+
+exports[`View Actions Toggle Show History 1`] = `
+Object {
+  "type": "TOGGLE_SHOW_HISTORY",
+}
+`;
