@@ -1,17 +1,29 @@
 import React from "react";
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Field, reduxForm } from "redux-form";
+import { Button, Form, FormGroup, Label } from "reactstrap";
+import { Input } from "app/components/Basic";
 
-const NewProjectForm = () => (
-  <Form>
+import { required } from "./validators";
+
+const NewProjectForm = ({ handleSubmit, pristine, submitting }) => (
+  <Form onSubmit={handleSubmit}>
     <FormGroup>
       <Label for="newProjectFormLabel">New Project Form</Label>
     </FormGroup>
     <FormGroup>
       <Label for="projectNameLabel">Project Name</Label>
-      <Input placeholder="Name your project here" />
-      <Button>Create Project</Button>
+      <Field
+        name="commitMessage"
+        placeholder="Name your project"
+        component={Input}
+        validate={[required]}
+        type="text"
+      />
+      <Button disabled={pristine || submitting}>Create Project</Button>
     </FormGroup>
   </Form>
 );
 
-export default NewProjectForm;
+export default reduxForm({
+  form: "newProjectForm"
+})(NewProjectForm);
