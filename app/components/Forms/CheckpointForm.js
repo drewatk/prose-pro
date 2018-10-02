@@ -26,7 +26,7 @@ const styles = {
   }
 };
 
-const CheckpointForm = ({ handleSubmit, submitting, pristine }) => (
+export const CheckpointForm = ({ handleSubmit, submitting, pristine }) => (
   <Form style={styles.form} onSubmit={handleSubmit}>
     <h4 style={styles.header}>Create Checkpoint</h4>
     <Field
