@@ -1,7 +1,7 @@
 import utils from "../utils";
 import path from "path";
 import { projCons } from "../constants";
-import ProjectConfig from "../project-config";
+import Metadata from "../metadata";
 
 /**
  * Creates a project JSON for the given project name in the metadata folder
@@ -11,8 +11,7 @@ async function create(projPath) {
   const filePath = path.join(projPath, projCons.metadataDir, projCons.projFile);
 
   await utils.createFile(filePath);
-
-  await ProjectConfig.initEmptyConfig(filePath);
+  await Metadata.initEmptyConfig(filePath);
 }
 
 export default { create };
