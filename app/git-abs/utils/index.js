@@ -48,7 +48,16 @@ function writeJSONToFile(path, obj) {
  * @param {String} path
  */
 function readJSONFromFile(path) {
-  return fs.readJSON(path);
+  //WHY DON"T PROMISES WORK GODDAMMIT
+  return new Promise((resolve, reject) =>
+    fs.readJSON(path, (err, obj) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(obj);
+      }
+    })
+  );
 }
 
 export default {

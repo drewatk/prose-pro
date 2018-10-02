@@ -1,8 +1,6 @@
 // TODO decide on where the editor interaction comes in.
 import git from "./git";
-import { editFile, projCons } from "./constants";
 import Metadata from "./metadata";
-import path from "path";
 /* eslint-disable */
 
 class GitAbs {
@@ -22,12 +20,9 @@ class GitAbs {
    */
   createFile = async fileName => {
     // create branch
-    const branchName = ""; //TODO create unique branch name
-
-    await Promise.all([
-      git.branch.create(this.repository)(branchName), // create a branch
-      this.metadata.addFile(fileName, branchName) // update metadata
-    ]);
+    const branchName = fileName; //TODO create unique branch name
+    await git.branch.create(this.repository)(branchName); // create a branch
+    await this.metadata.addFile(fileName, branchName); // update metadata
   };
 
   /**
@@ -46,7 +41,8 @@ class GitAbs {
    */
   openFile = async fileName => {
     // save current state of branch
-    await git.addAndCommit(editFile)("switching file");
+    // TODO: ask clayton what to pass in
+    // await git.addAndCommit(editFile)("switching file");
 
     // get branch from project.json
     const branchName = this.metadata.getBranchName(fileName);
@@ -94,10 +90,11 @@ class GitAbs {
 
 /* eslint-enable */
 const openProject = async projPath => {
+  console.log(projPath);
   const metadata = new Metadata(projPath);
   await metadata.init();
 
-  const repo = await git.repository.open(path.join(projPath, projCons.gitDir));
+  const repo = await git.repository.open(projPath);
 
   return new GitAbs(metadata, repo);
 };

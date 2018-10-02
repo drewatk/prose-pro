@@ -4,9 +4,10 @@
  * @param {String} branchName
  */
 const create = repo => branchName => {
+  console.log(repo.refreshIndex());
   return repo
     .getHeadCommit()
-    .then(commit => repo.createBranch(branchName, commit, 0));
+    .then(commit => repo.createBranch(branchName, commit, false));
 };
 
 /**
