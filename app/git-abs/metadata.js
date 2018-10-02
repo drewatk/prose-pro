@@ -1,11 +1,11 @@
 import utils from "./utils";
 import path from "path";
-import projCons from "./constants";
+import { projCons } from "./constants";
 
 export default class Metadata {
   constructor(projPath) {
     this.dirPath = path.join(projPath, projCons.metadataDir);
-    this.cfgPath = path.join(this.dirPath, projCons.projConfig);
+    this.cfgPath = path.join(this.dirPath, projCons.projFile);
     this.projConfig = null; /* stores the config from file */
   }
 
@@ -31,7 +31,8 @@ export default class Metadata {
     }
 
     /* create filename - branch mapping */
-    this.branches[fileName] = branchName;
+    this.projConfig.branches[fileName] = branchName;
+
     await this.updateCfgFile();
 
     /* create metadata file for version - commit mapping */
@@ -65,7 +66,7 @@ export default class Metadata {
   }
 
   getAllBranches() {
-    return Object.keys(this.branches);
+    return Object.keys(this.projConfig.branches);
   }
 
   /**
@@ -73,11 +74,12 @@ export default class Metadata {
    * @param {String} fileName
    */
   getBranchName(fileName) {
-    if (!this.branches[fileName]) {
+    const { branches } = this.projConfig;
+    if (!branches[fileName]) {
       throw new Error("File doesn't exist");
     }
 
-    return this.branches[fileName];
+    return branches[fileName];
   }
 
   /**
@@ -117,7 +119,15 @@ export default class Metadata {
   /**
    * read config file to get the object
    */
-  async getCfgFromFile() {
-    await utils.readJSONFromFile(this.cfgPath);
+  getCfgFromFile() {
+    return new Promise((resolve, reject) =>
+      utils
+        .readJSONFromFile(this.cfgPath)
+        .then(obj => {
+          console.log("Object: " + obj);
+          resolve(obj);
+        })
+        .catch(e => reject(e))
+    );
   }
 }
