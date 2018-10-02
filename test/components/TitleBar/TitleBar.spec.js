@@ -16,6 +16,13 @@ describe("TitleBar", () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it("matches snapshot (on editor page)", () => {
+    const pathname = routes.EDITOR;
+
+    const wrapper = shallow(<TitleBar pathname={pathname} />);
+    expect(wrapper).toMatchSnapshot();
+  });
+
   // TODO: Unable to mock os module correctly
   // it("Doesn't show span on Windows", () => {
   //   platform.mockReturnValueOnce("win32");

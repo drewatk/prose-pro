@@ -1,5 +1,59 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`TitleBar matches snapshot (on editor page) 1`] = `
+<div
+  className="titleBar  d-flex"
+>
+  <span
+    className="titleBarDarwinButtonsPlaceholder"
+  />
+  <h1
+    className="titleBarHeader"
+  >
+    ProsePro
+    <small
+      className="text-muted"
+    />
+  </h1>
+  <Nav
+    className="ml-auto"
+    tag="ul"
+    vertical={false}
+  >
+    <NavItem
+      tag="li"
+    >
+      <NavLink
+        href="#"
+        id="files-button"
+        onClick={[Function]}
+        tag="a"
+      >
+        <i
+          className="far fa-file"
+        />
+         Files
+      </NavLink>
+    </NavItem>
+    <NavItem
+      tag="li"
+    >
+      <NavLink
+        href="#"
+        id="history-button"
+        onClick={[Function]}
+        tag="a"
+      >
+        <i
+          className="fas fa-history"
+        />
+         History
+      </NavLink>
+    </NavItem>
+  </Nav>
+</div>
+`;
+
 exports[`TitleBar matches snapshot 1`] = `
 <div
   className="titleBar  d-flex"
