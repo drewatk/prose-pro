@@ -85,6 +85,11 @@ class GitAbs {
   getVersions = fileName => {
     // use metedata object to get version names for the given fileName
   };
+
+  /**
+   * Returns list of files in the project
+   */
+  getFiles = () => this.metadata.getAllBranches();
 }
 
 /* eslint-enable */

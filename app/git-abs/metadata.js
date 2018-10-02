@@ -64,6 +64,10 @@ export default class Metadata {
     return obj;
   }
 
+  getAllBranches() {
+    return Object.keys(this.branches);
+  }
+
   /**
    * Get branch name corresponding to given file
    * @param {String} fileName
