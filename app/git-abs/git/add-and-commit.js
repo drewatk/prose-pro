@@ -1,9 +1,8 @@
 import nodegit from "nodegit";
-import path from "path";
 
-import { gitCons } from "app/git-abs/constants";
+import { gitCons, projCons } from "app/git-abs/constants";
 
-const { GIT_CONFIG_PATH, AUTHOR, EMAIL, HEAD_REF } = gitCons;
+const { AUTHOR, EMAIL, HEAD_REF } = gitCons;
 
 /**
  * Adds changes made to a file to the index, stages them, and makes a commit with the provided message.
@@ -22,17 +21,15 @@ addAndCommit('test.js')('this commit was brought to you by the folks inside pros
 
 ***/
 
-const addAndCommit = filename => commitMessage => {
+const addAndCommit = repo => commitMessage => {
   return new Promise((resolve, reject) => {
     let index = null,
-      oid = null,
-      repo = null;
+      oid = null;
 
-    nodegit.Repository.open(path.resolve(__dirname, GIT_CONFIG_PATH))
-      .then(repoResult => {
-        repo = repoResult;
-        return repoResult.refreshIndex();
-      })
+    const filename = projCons.editFile;
+
+    repo
+      .refreshIndex()
       .then(indexResult => {
         index = indexResult;
       })

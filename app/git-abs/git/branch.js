@@ -21,7 +21,14 @@ const checkOut = repo => branchName => {
     .then(reference => repo.checkoutBranch(reference));
 };
 
+/* eslint-disable */
+const checkOutCommit = repo => commitHash => {
+  //TODO
+};
+/* eslint-enable */
+
 export default {
   create,
-  checkOut
+  checkOut,
+  checkOutCommit
 };
