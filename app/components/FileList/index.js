@@ -1,12 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import FileNameList from "./FileNameList";
+
 const FileList = ({ files }) => (
-  <div style={{ backgroundColor: "lightblue", height: "100%" }}>
-    FileList View
-    {files.map((file, index) => (
-      <p key={index}>{file}</p>
-    ))}
+  <div>
+    <div style={{ backgroundColor: "lightblue", height: "100%" }}>
+      FileList View
+    </div>
+    <div>
+      <FileNameList files={files} />
+    </div>
   </div>
 );
 
