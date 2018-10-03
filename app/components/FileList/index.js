@@ -1,18 +1,24 @@
 import React from "react";
+import { connect } from "react-redux";
+
 import FileNameList from "./FileNameList";
 
-const FileList = () => {
-  const files = [{ name: "file 1" }, { name: "file 2" }, { name: "file 3" }];
-  return (
-    <div>
-      <div style={{ backgroundColor: "lightblue", height: "100%" }}>
-        FileList View
-      </div>
-      <div>
-        <FileNameList files={files} />
-      </div>
+const FileList = ({ files }) => (
+  <div>
+    <div style={{ backgroundColor: "lightblue", height: "100%" }}>
+      FileList View
     </div>
-  );
+    <div>
+      <FileNameList files={files} />
+    </div>
+  </div>
+);
+
+const mapStateToProps = ({ gitAbstractions: { getFiles } }) => {
+  if (getFiles) {
+    return { files: getFiles() };
+  }
+  return { files: [] };
 };
 
-export default FileList;
+export default connect(mapStateToProps)(FileList);

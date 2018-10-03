@@ -1,14 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Nav, NavItem, NavLink } from "reactstrap";
+import { platform } from "os";
 import routes from "app/constants/routes.json";
 import { toggleShowHistory, toggleShowFileList } from "app/actions/view";
 import styles from "./TitleBar.scss";
 
 // True if on OSX
-const darwin = process.platform === "darwin";
+const darwin = platform() === "darwin";
 
-const TitleBar = props => {
+export const TitleBar = props => {
   const { title, pathname, onFilesClick, onHistoryClick } = props;
 
   return (
@@ -28,6 +29,7 @@ const TitleBar = props => {
         <Nav className="ml-auto">
           <NavItem>
             <NavLink
+              id="files-button"
               onClick={() => {
                 onFilesClick();
               }}
@@ -39,6 +41,7 @@ const TitleBar = props => {
           </NavItem>
           <NavItem>
             <NavLink
+              id="history-button"
               onClick={() => {
                 onHistoryClick();
               }}

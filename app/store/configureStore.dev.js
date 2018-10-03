@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
+import reduxMulti from "redux-multi";
 import { createHashHistory } from "history";
 import { routerMiddleware, connectRouter } from "connected-react-router";
 import { createLogger } from "redux-logger";
@@ -15,6 +16,9 @@ const configureStore = initialState => {
 
   // Thunk Middleware
   middleware.push(thunk);
+
+  // Redux Multi Middleware
+  middleware.push(reduxMulti);
 
   // Logging Middleware
   const logger = createLogger({
