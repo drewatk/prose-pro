@@ -120,14 +120,13 @@ export default class Metadata {
    * read config file to get the object
    */
   getCfgFromFile() {
-    return new Promise((resolve, reject) =>
-      utils
+    return new Promise((resolve, reject) => {
+      return utils
         .readJSONFromFile(this.cfgPath)
         .then(obj => {
-          console.log("Object: " + obj);
           resolve(obj);
         })
-        .catch(e => reject(e))
-    );
+        .catch(e => reject(e));
+    });
   }
 }

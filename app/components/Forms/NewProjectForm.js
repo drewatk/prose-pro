@@ -13,7 +13,7 @@ const NewProjectForm = ({ handleSubmit, pristine, submitting }) => (
     <FormGroup>
       <Label for="projectNameLabel">Project Name</Label>
       <Field
-        name="commitMessage"
+        name="project"
         placeholder="Name your project"
         component={Input}
         validate={[required]}
