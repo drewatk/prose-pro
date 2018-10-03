@@ -1,4 +1,4 @@
-const defaultState = [{ name: "Project 1" }];
+const defaultState = [{ name: "Project1" }];
 
 const projects = (state = defaultState) => state;
 
