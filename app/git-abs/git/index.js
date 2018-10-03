@@ -3,5 +3,13 @@ import init from "./init";
 import branch from "./branch";
 import createInitialCommit from "./create-initial-commit";
 import repository from "./repository";
+import log from "./log";
 
-export default { addAndCommit, init, branch, createInitialCommit, repository };
+export default {
+  addAndCommit,
+  init,
+  branch,
+  createInitialCommit,
+  repository,
+  log
+};

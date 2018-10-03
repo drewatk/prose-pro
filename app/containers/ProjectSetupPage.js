@@ -10,7 +10,7 @@ import ProjectSelectionForm from "app/components/Forms/ProjectSelectionForm";
 import NewProjectForm from "app/components/Forms/NewProjectForm";
 
 import projectSelect from "app/actions/project_selection";
-import initGitAbs from "app/actions/git_abs";
+import { initGitAbs } from "app/actions/git_abs";
 
 const ProjectSetupPage = ({ projects, dispatch }) => (
   <div>

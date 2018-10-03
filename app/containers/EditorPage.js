@@ -6,35 +6,41 @@ import FileList from "app/components/FileList";
 import History from "app/components/History";
 import CheckpointForm from "app/components/Forms/CheckpointForm";
 
-const EditorPage = props => {
-  const { showHistory, showFileList } = props;
-  return (
-    <div className="conatiner-fluid">
-      <TitleBar />
-      <div className="row no-gutters">
-        {showFileList && (
-          <div className="col-2">
-            <FileList />
-          </div>
-        )}
-        <div className="col">
-          {" "}
-          <ProseEditor />
+import { loadFileHistory } from "app/actions/git_abs";
+import { addAndCommit } from "app/git-abs/git";
+
+const EditorPage = ({ showHistory, showFileList, dispatch }) => (
+  <div className="conatiner-fluid">
+    <TitleBar />
+    <div className="row no-gutters">
+      {showFileList && (
+        <div className="col-2">
+          <FileList />
         </div>
-        {showHistory && (
-          <div className="col-2">
-            <History />
-          </div>
-        )}
+      )}
+      <div className="col">
+        {" "}
+        <ProseEditor />
       </div>
-      <CheckpointForm
-        onSubmit={({ commitMessage }) =>
-          console.log("Submitted new checkpoint: ", commitMessage)
-        }
-      />
+      {showHistory && (
+        <div className="col-2">
+          <History />
+        </div>
+      )}
     </div>
-  );
-};
+    <CheckpointForm
+      onSubmit={({ commitMessage }) => {
+        addAndCommit(/* TODO: file path */)(commitMessage)
+          .then(() => {
+            dispatch(loadFileHistory(/* File */));
+          })
+          .catch(err =>
+            console.error("Error in CheckpointForm submission: ", err)
+          );
+      }}
+    />
+  </div>
+);
 
 const mapStateToProps = state => {
   return {

@@ -1,11 +1,23 @@
 export const INIT_GIT_ABS = "INIT_GIT_ABS";
+export const UPDATE_FILE_HISTORY = "UPDATE_FILE_HISTORY";
 
 import { openProject } from "app/git-abs";
+import { log } from "app/git-abs/git";
 
 const initGitAbs = project => dispatch => {
-  openProject(project)
+  console.log(project);
+  openProject("app/TestProjects/Project1")
     .then(git_abs => dispatch({ type: INIT_GIT_ABS, payload: git_abs }))
-    .catch(err => console.error(err));
+    .catch(err => console.error("Error in initGitAbs action creator: ", err));
 };
 
-export default initGitAbs;
+const loadFileHistory = file => dispatch => {
+  console.log(file);
+  log(/* file info */)
+    .then(commits => dispatch({ type: UPDATE_FILE_HISTORY, payload: commits }))
+    .catch(err =>
+      console.error("Error in loadFileHistory action creator: ", err)
+    );
+};
+
+export { initGitAbs, loadFileHistory };
