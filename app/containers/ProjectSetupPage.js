@@ -22,9 +22,9 @@ const ProjectSetupPage = ({ projects, dispatch }) => (
         createProject(projectPath)
           .then(() =>
             dispatch([
-              push(routes.EDITOR),
               projectSelect(project),
-              initGitAbs(projectPath)
+              initGitAbs(projectPath),
+              push(routes.EDITOR)
             ])
           )
           .catch(err => console.error(err));
@@ -36,9 +36,9 @@ const ProjectSetupPage = ({ projects, dispatch }) => (
         // TODO: find the best way to run each action in sequence if possible.
         const projectPath = path.resolve("app/TestProjects/", project);
         dispatch([
-          push(routes.EDITOR),
           projectSelect(project),
-          initGitAbs(projectPath)
+          initGitAbs(projectPath),
+          push(routes.EDITOR)
         ]);
       }}
     />
