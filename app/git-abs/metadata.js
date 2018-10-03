@@ -124,7 +124,6 @@ export default class Metadata {
       utils
         .readJSONFromFile(this.cfgPath)
         .then(obj => {
-          console.log("Object: " + obj);
           resolve(obj);
         })
         .catch(e => reject(e))
