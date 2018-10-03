@@ -65,6 +65,13 @@ export default class Metadata {
     return obj;
   }
 
+  async getAllVersions(fileName) {
+    const filePath = path.join(this.dirPath, fileName);
+
+    const obj = await utils.readJSONFromFile(filePath);
+    return obj;
+  }
+
   getAllBranches() {
     return Object.keys(this.projConfig.branches);
   }

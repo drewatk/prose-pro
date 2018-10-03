@@ -41,8 +41,7 @@ class GitAbs {
    */
   openFile = async fileName => {
     // save current state of branch
-    // TODO: ask clayton what to pass in
-    // await git.addAndCommit(editFile)("switching file");
+    await git.addAndCommit(this.repository)("switching file");
 
     // get branch from project.json
     const branchName = this.metadata.getBranchName(fileName);
@@ -56,10 +55,18 @@ class GitAbs {
    * @param {String} fileName
    * @param {String} versionName
    */
-  saveFile = (fileName, versionName) => {
-    // if version name is null, save commit as is
-    // else save current state as a tagged commit
-    // update project.json with new version-commit mapping
+  saveFile = async (fileName, versionName) => {
+    //TODO: check if it is currently at head commit
+
+    // save current state as a commit
+    const commitMessage = "placeholder message";
+    const commitHash = await git.addAndCommit(fileName)(commitMessage);
+
+    // if version name is given
+    if (versionName) {
+      // update project.json with new version-commit mapping
+      this.metadata.addVersion(fileName, versionName, commitHash);
+    }
   };
 
   /**
@@ -67,19 +74,35 @@ class GitAbs {
    * @param {String} fileName
    * @param {String} versionName
    */
-  switchVersion = (fileName, versionName) => {
-    // ensure current branch is fileName's branch
-    // get tag name for version from project.json
-    // save current state of branch
+  switchVersion = async (fileName, versionName) => {
+    // TODO: ensure current branch is fileName's branch
+    // get commit for version from project.json
+    // const versions = await this.metadata.getAllVersions(fileName);
+    // const commitHash = versions[fileName];
+    // if (!commitHash) {
+    //   throw new Error(`Version not found: ${commitHash}`);
+    // }
+    // // save current state of branch
+    // await this.saveFile(fileName);
     // checkout to selected commit
+    // TODO: implement
+  };
+
+  /**
+   *
+   */
+  switchToHeadCommit = async () => {
+    // TODO: implement
   };
 
   /**
    * Returns list of versions saved for given file name
    * @param {String} fileName
    */
-  getVersions = fileName => {
+  getVersions = async fileName => {
     // use metedata object to get version names for the given fileName
+    const obj = await this.metadata.getAllVersions(fileName);
+    return Object.keys(obj);
   };
 
   /**
