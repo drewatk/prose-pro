@@ -9,7 +9,7 @@ import CheckpointForm from "app/components/Forms/CheckpointForm";
 import { loadFileHistory } from "app/actions/git_abs";
 import { addAndCommit } from "app/git-abs/git";
 
-const EditorPage = ({ showHistory, showFileList, dispatch }) => (
+const EditorPage = ({ showHistory, showFileList, dispatch, file }) => (
   <div className="conatiner-fluid">
     <TitleBar />
     <div className="row no-gutters">
@@ -18,10 +18,7 @@ const EditorPage = ({ showHistory, showFileList, dispatch }) => (
           <FileList />
         </div>
       )}
-      <div className="col">
-        {" "}
-        <ProseEditor />
-      </div>
+      <div className="col"> {file && <ProseEditor />}</div>
       {showHistory && (
         <div className="col-2">
           <History />
@@ -45,7 +42,8 @@ const EditorPage = ({ showHistory, showFileList, dispatch }) => (
 const mapStateToProps = state => {
   return {
     showFileList: state.view.showFileList,
-    showHistory: state.view.showHistory
+    showHistory: state.view.showHistory,
+    file: state.currentFile
   };
 };
 

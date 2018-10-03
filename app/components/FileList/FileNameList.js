@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { loadFileHistory } from "app/actions/git_abs";
+import fileSelect from "app/actions/file_selection";
 
 import { ListGroup, ListGroupItem } from "reactstrap";
 
@@ -15,6 +16,7 @@ const FileNameList = ({ files, dispatch }) => (
             style={{ cursor: "pointer" }}
             onClick={() =>
               dispatch([
+                fileSelect(file),
                 /* TODO: LOAD file contents for use by editor */
                 loadFileHistory(file) // TODO: mapping file name to actual file??
               ])
