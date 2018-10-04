@@ -5,7 +5,7 @@ const fs = require("fs-extra");
  * @param {String} path
  */
 function pathExist(path) {
-  return fs.exists(path);
+  return fs.existsSync(path);
 }
 
 /**
