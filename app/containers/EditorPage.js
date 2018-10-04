@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Button } from "reactstrap";
 import ProseEditor from "app/components/ProseEditor";
 import TitleBar from "app/components/TitleBar";
 import FileList from "app/components/FileList";
@@ -18,7 +19,22 @@ const EditorPage = ({ showHistory, showFileList, dispatch, file }) => (
           <FileList />
         </div>
       )}
-      <div className="col"> {file && <ProseEditor />}</div>
+      <div className="col">
+        {" "}
+        {file && (
+          <div>
+            <ProseEditor />
+            <Button
+              size="sm"
+              color="secondary"
+              onClick={() => /* save file locally */ console.log("SAVING...")}
+            >
+              Save
+            </Button>
+          </div>
+        )}
+      </div>
+
       {showHistory && (
         <div className="col-2">
           <History />
