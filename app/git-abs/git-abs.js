@@ -60,7 +60,7 @@ class GitAbs {
     await this.editFile.createFileJson();
 
     // return json content
-    const fileObj = await editFile.getFileJson();
+    const fileObj = await this.editFile.getFileJson();
     return fileObj;
   };
 
@@ -69,12 +69,17 @@ class GitAbs {
    * @param {String} fileName
    * @param {String} versionName
    */
-  saveFile = async (fileName, versionName) => {
+  saveFile = async (fileName, obj, versionName) => {
+    // check if in right branch
+
     //TODO: check if it is currently at head commit
+
+    //update the edit file
+    await this.editFile.updateFileJson(obj);
 
     // save current state as a commit
     const commitMessage = "placeholder message";
-    const commitHash = await git.addAndCommit(fileName)(commitMessage);
+    const commitHash = await git.addAndCommit(this.repository)(commitMessage);
 
     // if version name is given
     if (versionName) {
@@ -133,6 +138,8 @@ const openProject = async projPath => {
   const repo = await git.repository.open(projPath);
 
   const editFile = new EditFile(projPath);
+
+  //Switch to master branch
 
   return new GitAbs(metadata, repo, editFile);
 };
