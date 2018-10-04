@@ -4,7 +4,7 @@ const fileSelect = (gitAbs, file) => dispatch => {
   /* TODO: SWITCH TO BRANCH FILE */
   // then
   gitAbs
-    .openFile()
+    .openFile(file)
     .then(() => {
       dispatch({ type: SELECT_FILE, payload: file });
     })
