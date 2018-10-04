@@ -1,24 +1,35 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import CreateFileForm from "../Forms/CreateFileForm";
 import FileNameList from "./FileNameList";
 
-const FileList = ({ files }) => (
-  <div>
-    <div style={{ backgroundColor: "lightblue", height: "100%" }}>
-      FileList View
-    </div>
+const FileList = ({ files, createFile }) => {
+  console.log(createFile);
+  return (
     <div>
-      <FileNameList files={files} />
+      <div>
+        <CreateFileForm
+          onSubmit={({ fileName }) => {
+            createFile(fileName);
+          }}
+        />
+      </div>
+      <div style={{ backgroundColor: "lightblue", height: "100%" }}>
+        FileList View
+      </div>
+      <div>
+        <FileNameList files={files} />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
-const mapStateToProps = ({ gitAbstractions: { getFiles } }) => {
+const mapStateToProps = ({ gitAbstractions: { getFiles, createFile } }) => {
   if (getFiles) {
-    return { files: getFiles() };
+    return { files: getFiles(), createFile };
   }
-  return { files: [] };
+  return { files: [], createFile };
 };
 
 export default connect(mapStateToProps)(FileList);
