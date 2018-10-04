@@ -7,30 +7,27 @@ const { editFile } = projCons;
 export default class EditFile {
   constructor(projPath) {
     this.repoPath = path.join(projPath, projCons.gitDir);
+    this.filePath = path.join(this.repoPath, editFile);
   }
 
   createFileJson = async () => {
-    const filePath = path.join(this.repoPath, editFile);
-
     //if file exists, return
-    if (utils.pathExist(filePath)) return;
+    if (utils.pathExist(this.filePath)) return;
 
     //create file
-    await utils.createFile(filePath);
+    await utils.createFile(this.filePath);
 
     //fill file with empty json
-    await utils.writeJSONToFile(filePath, {});
+    await utils.writeJSONToFile(this.filePath, {});
   };
 
   getFileJson = async () => {
-    const filePath = path.join(this.repoPath, editFile);
-    const obj = await utils.readJSONFromFile(filePath);
-
+    const obj = await utils.readJSONFromFile(this.filePath);
+    console.log(this.filePath);
     return obj;
   };
 
   updateFileJson = async obj => {
-    const filePath = path.join(this.repoPath, editFile);
-    await utils.writeJSONToFile(filePath, obj);
+    await utils.writeJSONToFile(this.filePath, obj);
   };
 }
