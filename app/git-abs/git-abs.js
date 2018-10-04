@@ -1,6 +1,8 @@
 // TODO decide on where the editor interaction comes in.
 import git from "./git";
 import Metadata from "./metadata";
+import EditFile from "./edit-file.js";
+
 /* eslint-disable */
 
 class GitAbs {
@@ -9,9 +11,10 @@ class GitAbs {
    * @param {Metadata (./metadata.js)} metadata
    * @param {Repository (nodegit)} repository
    */
-  constructor(metadata, repository) {
+  constructor(metadata, repository, editFile) {
     this.metadata = metadata;
     this.repository = repository;
+    this.editFile = editFile;
   }
 
   /**
@@ -41,14 +44,20 @@ class GitAbs {
    */
   openFile = async fileName => {
     // save current state of branch
-    // TODO: ask clayton what to pass in
-    // await git.addAndCommit(editFile)("switching file");
+    await git.addAndCommit(this.repository)("switching file");
 
     // get branch from project.json
     const branchName = this.metadata.getBranchName(fileName);
 
     // switch to branch for fileName
     await git.branch.checkOut(this.repository)(branchName);
+
+    // if file hasn't been created, create it (can be made more efficient)
+    await this.editFile.createFileJson();
+
+    // return json content
+    const fileObj = await this.editFile.getFileJson();
+    return fileObj;
   };
 
   /**
@@ -56,10 +65,23 @@ class GitAbs {
    * @param {String} fileName
    * @param {String} versionName
    */
-  saveFile = (fileName, versionName) => {
-    // if version name is null, save commit as is
-    // else save current state as a tagged commit
-    // update project.json with new version-commit mapping
+  saveFile = async (fileName, obj, versionName) => {
+    // check if in right branch
+
+    //TODO: check if it is currently at head commit
+
+    //update the edit file
+    await this.editFile.updateFileJson(obj);
+
+    // save current state as a commit
+    const commitMessage = "placeholder message";
+    const commitHash = await git.addAndCommit(this.repository)(commitMessage);
+
+    // if version name is given
+    if (versionName) {
+      // update project.json with new version-commit mapping
+      this.metadata.addVersion(fileName, versionName, commitHash.toString());
+    }
   };
 
   /**
@@ -67,19 +89,35 @@ class GitAbs {
    * @param {String} fileName
    * @param {String} versionName
    */
-  switchVersion = (fileName, versionName) => {
-    // ensure current branch is fileName's branch
-    // get tag name for version from project.json
-    // save current state of branch
+  switchVersion = async (fileName, versionName) => {
+    // TODO: ensure current branch is fileName's branch
+    // get commit for version from project.json
+    // const versions = await this.metadata.getAllVersions(fileName);
+    // const commitHash = versions[fileName];
+    // if (!commitHash) {
+    //   throw new Error(`Version not found: ${commitHash}`);
+    // }
+    // // save current state of branch
+    // await this.saveFile(fileName);
     // checkout to selected commit
+    // TODO: implement
+  };
+
+  /**
+   *
+   */
+  switchToHeadCommit = async () => {
+    // TODO: implement
   };
 
   /**
    * Returns list of versions saved for given file name
    * @param {String} fileName
    */
-  getVersions = fileName => {
+  getVersions = async fileName => {
     // use metedata object to get version names for the given fileName
+    const obj = await this.metadata.getAllVersions(fileName);
+    return Object.keys(obj);
   };
 
   /**
@@ -90,13 +128,16 @@ class GitAbs {
 
 /* eslint-enable */
 const openProject = async projPath => {
-  console.log(projPath);
   const metadata = new Metadata(projPath);
   await metadata.init();
 
   const repo = await git.repository.open(projPath);
 
-  return new GitAbs(metadata, repo);
+  const editFile = new EditFile(projPath);
+
+  //Switch to master branch
+
+  return new GitAbs(metadata, repo, editFile);
 };
 
 export default openProject;

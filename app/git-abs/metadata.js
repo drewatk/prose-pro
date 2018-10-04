@@ -48,7 +48,10 @@ export default class Metadata {
    * @param {String} commitHash
    */
   async addVersion(fileName, versionName, commitHash) {
-    const filePath = path.join(this.dirPath, this.branches[fileName]);
+    const filePath = path.join(
+      this.dirPath,
+      this.projConfig.branches[fileName]
+    );
     // read object from metadata file
     const obj = await utils.readJSONFromFile(filePath);
 
@@ -56,12 +59,20 @@ export default class Metadata {
     if (obj[versionName]) {
       throw new Error("Version name already exists");
     }
-    obj[versionName] = commitHash;
 
+    obj[versionName] = commitHash;
+    console.log(commitHash);
     // write object back to metadata file
     await utils.writeJSONToFile(filePath, obj);
 
     // return new object?
+    return obj;
+  }
+
+  async getAllVersions(fileName) {
+    const filePath = path.join(this.dirPath, fileName);
+
+    const obj = await utils.readJSONFromFile(filePath);
     return obj;
   }
 
