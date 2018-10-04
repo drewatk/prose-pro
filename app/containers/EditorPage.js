@@ -10,7 +10,14 @@ import CheckpointForm from "app/components/Forms/CheckpointForm";
 import { loadFileHistory } from "app/actions/git_abs";
 import { addAndCommit } from "app/git-abs/git";
 
-const EditorPage = ({ showHistory, showFileList, dispatch, file }) => (
+const EditorPage = ({
+  showHistory,
+  showFileList,
+  dispatch,
+  file,
+  gitAbstractions,
+  editorState
+}) => (
   <div className="conatiner-fluid">
     <TitleBar />
     <div className="row no-gutters">
@@ -27,7 +34,12 @@ const EditorPage = ({ showHistory, showFileList, dispatch, file }) => (
             <Button
               size="sm"
               color="secondary"
-              onClick={() => /* save file locally */ console.log("SAVING...")}
+              onClick={() =>
+                gitAbstractions
+                  .saveFile(file, editorState.getCurrentContent())
+                  .then(() => console.log("saved"))
+                  .catch(e => console.log(e))
+              }
             >
               Save
             </Button>
@@ -59,7 +71,9 @@ const mapStateToProps = state => {
   return {
     showFileList: state.view.showFileList,
     showHistory: state.view.showHistory,
-    file: state.currentFile
+    file: state.currentFile,
+    gitAbstractions: state.gitAbstractions,
+    editorState: state.editor.editorState
   };
 };
 
