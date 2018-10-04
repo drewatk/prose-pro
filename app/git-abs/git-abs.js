@@ -44,11 +44,7 @@ class GitAbs {
    */
   openFile = async fileName => {
     // save current state of branch
-<<<<<<< HEAD
     await git.addAndCommit(this.repository)("switching file");
-=======
-    // await git.addAndCommit(editFile)("switching file");
->>>>>>> creaed class to handle edit file
 
     // get branch from project.json
     const branchName = this.metadata.getBranchName(fileName);
