@@ -80,7 +80,7 @@ class GitAbs {
     // if version name is given
     if (versionName) {
       // update project.json with new version-commit mapping
-      this.metadata.addVersion(fileName, versionName, commitHash);
+      this.metadata.addVersion(fileName, versionName, commitHash.toString());
     }
   };
 
