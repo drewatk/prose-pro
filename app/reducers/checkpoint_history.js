@@ -1,4 +1,4 @@
-import { UPDATE_FILE_HISTORY } from "app/actions/git_abs";
+import { LOAD_FILE_HISTORY } from "app/actions/git_abs";
 const now = new Date().toLocaleString("en-US", { timeZone: "UTC" });
 
 const defaultHistory = [
@@ -8,7 +8,7 @@ const defaultHistory = [
 ];
 
 const checkpointHistory = (state = defaultHistory, { type, payload }) => {
-  if (type === UPDATE_FILE_HISTORY) {
+  if (type === LOAD_FILE_HISTORY) {
     return payload;
   }
   return state;

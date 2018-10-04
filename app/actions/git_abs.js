@@ -1,5 +1,5 @@
 export const INIT_GIT_ABS = "INIT_GIT_ABS";
-export const UPDATE_FILE_HISTORY = "UPDATE_FILE_HISTORY";
+export const LOAD_FILE_HISTORY = "LOAD_FILE_HISTORY";
 
 import { openProject } from "app/git-abs";
 import { log } from "app/git-abs/git";
@@ -14,7 +14,7 @@ const initGitAbs = project => dispatch => {
 const loadFileHistory = file => dispatch => {
   console.log(file);
   log(/* file info */)
-    .then(commits => dispatch({ type: UPDATE_FILE_HISTORY, payload: commits }))
+    .then(commits => dispatch({ type: LOAD_FILE_HISTORY, payload: commits }))
     .catch(err =>
       console.error("Error in loadFileHistory action creator: ", err)
     );
