@@ -1,6 +1,8 @@
 // TODO decide on where the editor interaction comes in.
 import git from "./git";
 import Metadata from "./metadata";
+import EditFile from "./edit-file.js";
+
 /* eslint-disable */
 
 class GitAbs {
@@ -9,9 +11,10 @@ class GitAbs {
    * @param {Metadata (./metadata.js)} metadata
    * @param {Repository (nodegit)} repository
    */
-  constructor(metadata, repository) {
+  constructor(metadata, repository, editFile) {
     this.metadata = metadata;
     this.repository = repository;
+    this.editFile = editFile;
   }
 
   /**
@@ -41,13 +44,24 @@ class GitAbs {
    */
   openFile = async fileName => {
     // save current state of branch
+<<<<<<< HEAD
     await git.addAndCommit(this.repository)("switching file");
+=======
+    // await git.addAndCommit(editFile)("switching file");
+>>>>>>> creaed class to handle edit file
 
     // get branch from project.json
     const branchName = this.metadata.getBranchName(fileName);
 
     // switch to branch for fileName
     await git.branch.checkOut(this.repository)(branchName);
+
+    // if file hasn't been created, create it (can be made more efficient)
+    await this.editFile.createFileJson();
+
+    // return json content
+    const fileObj = await editFile.getFileJson();
+    return fileObj;
   };
 
   /**
@@ -113,13 +127,14 @@ class GitAbs {
 
 /* eslint-enable */
 const openProject = async projPath => {
-  console.log(projPath);
   const metadata = new Metadata(projPath);
   await metadata.init();
 
   const repo = await git.repository.open(projPath);
 
-  return new GitAbs(metadata, repo);
+  const editFile = new EditFile(projPath);
+
+  return new GitAbs(metadata, repo, editFile);
 };
 
 export default openProject;
