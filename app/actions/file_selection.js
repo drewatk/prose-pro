@@ -1,9 +1,14 @@
 export const SELECT_FILE = "SELECT_FILE";
 
-const fileSelect = file => dispatch => {
+const fileSelect = (gitAbs, file) => dispatch => {
   /* TODO: SWITCH TO BRANCH FILE */
   // then
-  dispatch({ type: SELECT_FILE, payload: file });
+  gitAbs
+    .openFile()
+    .then(() => {
+      dispatch({ type: SELECT_FILE, payload: file });
+    })
+    .catch(err => console.log(err));
 };
 
 export default fileSelect;

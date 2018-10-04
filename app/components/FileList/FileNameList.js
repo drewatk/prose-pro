@@ -7,7 +7,7 @@ import fileSelect from "app/actions/file_selection";
 
 import { ListGroup, ListGroupItem } from "reactstrap";
 
-const FileNameList = ({ files, dispatch }) => (
+const FileNameList = ({ files, dispatch, gitAbstractions }) => (
   <div>
     <ListGroup>
       {files.map((file, index) => {
@@ -17,9 +17,9 @@ const FileNameList = ({ files, dispatch }) => (
             style={{ cursor: "pointer" }}
             onClick={() =>
               dispatch([
-                fileSelect(file),
+                fileSelect(gitAbstractions),
                 /* TODO: LOAD file contents for use by editor */
-                loadFile(file),
+                loadFile(gitAbstractions, file),
                 loadFileHistory(file) // TODO: mapping file name to actual file??
               ])
             }
@@ -32,9 +32,10 @@ const FileNameList = ({ files, dispatch }) => (
   </div>
 );
 
+const mapStateToProps = ({ gitAbstractions }) => ({ gitAbstractions });
 const mapDispatchToProps = dispatch => ({ dispatch });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(FileNameList);
