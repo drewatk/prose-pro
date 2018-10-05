@@ -6,18 +6,20 @@ import FileList from "app/components/FileList";
 import History from "app/components/History";
 import CheckpointForm from "app/components/Forms/CheckpointForm";
 
+import styles from "./EditorPage.scss";
+
 const EditorPage = props => {
   const { showHistory, showFileList } = props;
   return (
-    <div className="conatiner-fluid">
+    <div className={`${styles.container} conatiner-fluid`}>
       <TitleBar />
-      <div className="row no-gutters">
+      <div className={`${styles.row} row no-gutters`}>
         {showFileList && (
-          <div className="col-2">
+          <div className={`${styles.col} col-2`}>
             <FileList />
           </div>
         )}
-        <div className="col">
+        <div className={`${styles.col} col`}>
           {/* TODO: should this onSubmit be in a different place? */}
           <CheckpointForm
             onSubmit={({ commitMessage }) =>
@@ -27,7 +29,7 @@ const EditorPage = props => {
           <ProseEditor />
         </div>
         {showHistory && (
-          <div className="col-2">
+          <div className={`${styles.col} col-2`}>
             <History />
           </div>
         )}
