@@ -118,7 +118,7 @@ class GitAbs {
   getVersions = async fileName => {
     // use metedata object to get version names for the given fileName
     const obj = await this.metadata.getAllVersions(fileName);
-    return Object.keys(obj);
+    return obj;
   };
 
   /**
