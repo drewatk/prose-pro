@@ -54,8 +54,9 @@ class GitAbs {
 
     // if file hasn't been created, create it (can be made more efficient)
     await this.editFile.createFileJson();
+  };
 
-    // return json content
+  getFileObj = async () => {
     const fileObj = await this.editFile.getFileJson();
     return fileObj;
   };

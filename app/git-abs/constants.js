@@ -6,7 +6,7 @@ const projCons = {
 };
 
 const gitCons = {
-  GIT_CONFIG_PATH: "../../NodeGitTesting/my-git-repo/.git", // git path of local repo on Clayton's machine
+  GIT_CONFIG_PATH: "app/TestProjects/Project1/repo", // TEMPORARY FOLDER FOR STORING TEST REPO.
   AUTHOR: "Linus Torvalds",
   EMAIL: "therealtorvalds@gmail.com",
   HEAD_REF: "HEAD",
