@@ -15,7 +15,7 @@ const ProjectList = ({ projects, handleSubmit, submitting, pristine }) => (
         {projects.map((project, index) => {
           return (
             <option key={index} value={project.name}>
-              {project.name}
+              {project}
             </option>
           );
         })}

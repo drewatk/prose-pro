@@ -1,4 +1,4 @@
-import { readdirSync, statSync, exists } from "fs";
+import { readdirSync, statSync, existsSync } from "fs";
 import path from "path";
 import { projCons } from "./constants";
 
@@ -9,7 +9,9 @@ import { projCons } from "./constants";
 export default function listProjects(dirName) {
   return readdirSync(dirName)
     .filter(file => statSync(path.join(dirName, file)).isDirectory())
-    .filter(dir => {
-      exists(path.join(dir, projCons.metadataDir, projCons.projFile));
-    });
+    .filter(dir =>
+      existsSync(
+        path.join(dirName, dir, projCons.metadataDir, projCons.projFile)
+      )
+    );
 }
