@@ -2,7 +2,6 @@ export const INIT_GIT_ABS = "INIT_GIT_ABS";
 export const LOAD_FILE_HISTORY = "LOAD_FILE_HISTORY";
 
 import { openProject } from "app/git-abs";
-import { log } from "app/git-abs/git";
 
 const initGitAbs = project => dispatch => {
   console.log(project);
@@ -11,13 +10,11 @@ const initGitAbs = project => dispatch => {
     .catch(err => console.error("Error in initGitAbs action creator: ", err));
 };
 
-const loadFileHistory = file => dispatch => {
-  console.log(file);
-  log(/* file info */)
+const loadFileHistory = (gitAbstractions, file) => dispatch => {
+  gitAbstractions
+    .getVersions(file)
     .then(commits => dispatch({ type: LOAD_FILE_HISTORY, payload: commits }))
-    .catch(err =>
-      console.error("Error in loadFileHistory action creator: ", err)
-    );
+    .catch(err => console.error("Error in loadFileHistory: ", err));
 };
 
 export { initGitAbs, loadFileHistory };

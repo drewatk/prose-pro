@@ -17,10 +17,10 @@ const FileNameList = ({ files, dispatch, gitAbstractions }) => (
             style={{ cursor: "pointer" }}
             onClick={() =>
               dispatch([
-                fileSelect(gitAbstractions),
+                fileSelect(gitAbstractions, file),
                 /* TODO: LOAD file contents for use by editor */
                 loadFile(gitAbstractions, file),
-                loadFileHistory(file) // TODO: mapping file name to actual file??
+                loadFileHistory(gitAbstractions, file) // TODO: mapping file name to actual file??
               ])
             }
           >

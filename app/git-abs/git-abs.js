@@ -75,8 +75,11 @@ class GitAbs {
     await this.editFile.updateFileJson(obj);
 
     // save current state as a commit
-    const commitMessage = "placeholder message";
-    const commitHash = await git.addAndCommit(this.repository)(commitMessage);
+    const commitMessage = versionName;
+    git
+      .addAndCommit(this.repository)(commitMessage)
+      .then(() => {})
+      .catch(err => console.error("error bois: ", err));
 
     // if version name is given
     if (versionName) {

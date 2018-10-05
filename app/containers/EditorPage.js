@@ -7,13 +7,9 @@ import FileList from "app/components/FileList";
 import History from "app/components/History";
 import CheckpointForm from "app/components/Forms/CheckpointForm";
 
-import { loadFileHistory } from "app/actions/git_abs";
-import { addAndCommit } from "app/git-abs/git";
-
 const EditorPage = ({
   showHistory,
   showFileList,
-  dispatch,
   file,
   gitAbstractions,
   editorState
@@ -38,7 +34,7 @@ const EditorPage = ({
                 gitAbstractions
                   .saveFile(file, editorState.getCurrentContent())
                   .then(() => console.log("saved"))
-                  .catch(e => console.log(e))
+                  .catch(e => console.log("failed here: ", e))
               }
             >
               Save
@@ -55,13 +51,10 @@ const EditorPage = ({
     </div>
     <CheckpointForm
       onSubmit={({ commitMessage }) => {
-        addAndCommit(/* TODO: file path */)(commitMessage)
-          .then(() => {
-            dispatch(loadFileHistory(/* File */));
-          })
-          .catch(err =>
-            console.error("Error in CheckpointForm submission: ", err)
-          );
+        gitAbstractions
+          .saveFile(file, editorState.getCurrentContent(), commitMessage)
+          .then(() => console.log("saved and commited."))
+          .catch(err => console.error("failed to save and commit: ", err));
       }}
     />
   </div>
