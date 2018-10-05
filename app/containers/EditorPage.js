@@ -39,7 +39,8 @@ const EditorPage = props => {
 const mapStateToProps = state => {
   return {
     showFileList: state.view.showFileList,
-    showHistory: state.view.showHistory
+    showHistory: state.view.showHistory,
+    file: state.currentFile
   };
 };
 
