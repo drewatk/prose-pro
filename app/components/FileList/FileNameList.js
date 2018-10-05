@@ -7,7 +7,7 @@ const FileNameList = props => {
       <ListGroup>
         {files.map((file, index) => {
           return (
-            <ListGroupItem key={index} onClick="">
+            <ListGroupItem key={index} onClick={() => {}}>
               {file.name}
             </ListGroupItem>
           );
