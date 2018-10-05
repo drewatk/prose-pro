@@ -1,13 +1,7 @@
 import React from "react";
 import { InputGroup, InputGroupAddon, Input } from "reactstrap";
 
-const inputStyles = {
-  error: {
-    fontSize: "15px",
-    fontFamily: "sans-serif",
-    color: "#ad1e1a"
-  }
-};
+import styles from "./Input.css";
 
 const InputWrapper = ({ input, type, meta: { touched, error }, ...props }) => (
   <div {...props}>
@@ -15,7 +9,7 @@ const InputWrapper = ({ input, type, meta: { touched, error }, ...props }) => (
       <InputGroupAddon addonType="prepend">Message</InputGroupAddon>
       <Input type={type} {...input} />
     </InputGroup>
-    {touched && error && <span style={inputStyles.error}>{error}</span>}
+    {touched && error && <span className={styles.error}>{error}</span>}
   </div>
 );
 

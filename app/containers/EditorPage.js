@@ -18,7 +18,12 @@ const EditorPage = props => {
           </div>
         )}
         <div className="col">
-          {" "}
+          {/* TODO: should this onSubmit be in a different place? */}
+          <CheckpointForm
+            onSubmit={({ commitMessage }) =>
+              console.log("Submitted new checkpoint: ", commitMessage)
+            }
+          />
           <ProseEditor />
         </div>
         {showHistory && (
@@ -27,11 +32,6 @@ const EditorPage = props => {
           </div>
         )}
       </div>
-      <CheckpointForm
-        onSubmit={({ commitMessage }) =>
-          console.log("Submitted new checkpoint: ", commitMessage)
-        }
-      />
     </div>
   );
 };

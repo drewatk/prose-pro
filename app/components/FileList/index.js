@@ -38,8 +38,15 @@ const FileList = ({ files, gitAbstractions, dispatch }) => {
         />
       </div>
     </div>
-  );
-};
+    {/* TODO: Move Styles to CSS file */}
+    <div style={{ backgroundColor: "lightblue", height: "100%" }}>
+      FileList View
+    </div>
+    <div>
+      <FileNameList files={files} />
+    </div>
+  </div>
+);
 
 const mapStateToProps = ({ files, gitAbstractions }) => ({
   files,
