@@ -5,26 +5,7 @@ import { Field, reduxForm } from "redux-form";
 import { Input } from "app/components/Basic";
 import { required } from "./validators";
 
-const styles = {
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    width: "350px",
-    borderWidth: "1px",
-    borderColor: "#898989",
-    borderStyle: "solid",
-    borderRadius: "10px",
-    justifyContent: "center",
-    padding: "20px"
-  },
-  header: {
-    color: "#595858"
-  },
-  button: {
-    marginTop: "20px",
-    width: "60px"
-  }
-};
+import styles from "./CheckpointForm.css";
 
 export const CheckpointForm = ({ handleSubmit, submitting, pristine }) => (
   <Form style={styles.form} onSubmit={handleSubmit}>
