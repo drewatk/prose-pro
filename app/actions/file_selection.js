@@ -1,6 +1,8 @@
 export const SELECT_FILE = "SELECT_FILE";
 
+/*
 const fileSelect = (gitAbs, file) => dispatch => {
+
   gitAbs
     .openFile(file)
     .then(() => {
@@ -8,6 +10,8 @@ const fileSelect = (gitAbs, file) => dispatch => {
       dispatch({ type: SELECT_FILE, payload: file });
     })
     .catch(err => console.log("error in file select: ", err));
-};
+}; */
+
+const fileSelect = file => ({ type: SELECT_FILE, payload: file });
 
 export default fileSelect;

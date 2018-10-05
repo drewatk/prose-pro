@@ -5,7 +5,6 @@ import CreateFileForm from "../Forms/CreateFileForm";
 import FileNameList from "./FileNameList";
 
 const FileList = ({ files, createFile }) => {
-  console.log(createFile);
   return (
     <div>
       <div>

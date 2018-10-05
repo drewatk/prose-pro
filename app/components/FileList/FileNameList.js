@@ -1,10 +1,10 @@
 import React from "react";
 import { ListGroup, ListGroupItem } from "reactstrap";
 import { connect } from "react-redux";
-import { SELECT_FILE } from "app/actions/file_selection";
 
-const FileNameList = props => {
-  const { files, dispatch } = props;
+import fileSelect from "app/actions/file_selection";
+
+const FileNameList = ({ files, dispatch }) => {
   return (
     <div>
       <ListGroup>
@@ -12,7 +12,7 @@ const FileNameList = props => {
           return (
             <ListGroupItem
               key={index}
-              onClick={() => dispatch({ type: SELECT_FILE, payload: file })}
+              onClick={() => dispatch([fileSelect(file)])}
             >
               {file}
             </ListGroupItem>

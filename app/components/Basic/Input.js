@@ -9,10 +9,16 @@ const inputStyles = {
   }
 };
 
-const InputWrapper = ({ input, type, meta: { touched, error }, ...props }) => (
+const InputWrapper = ({
+  input,
+  type,
+  meta: { touched, error },
+  inputTitle,
+  ...props
+}) => (
   <div {...props}>
     <InputGroup size="sm">
-      <InputGroupAddon addonType="prepend">Message</InputGroupAddon>
+      <InputGroupAddon addonType="prepend">{inputTitle}</InputGroupAddon>
       <Input type={type} {...input} />
     </InputGroup>
     {touched && error && <span style={inputStyles.error}>{error}</span>}

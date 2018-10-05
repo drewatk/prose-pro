@@ -6,35 +6,35 @@ import FileList from "app/components/FileList";
 import History from "app/components/History";
 import CheckpointForm from "app/components/Forms/CheckpointForm";
 
-const EditorPage = props => {
-  const { showHistory, showFileList } = props;
-  return (
-    <div className="conatiner-fluid">
-      <TitleBar />
-      <div className="row no-gutters">
-        {showFileList && (
-          <div className="col-2">
-            <FileList />
-          </div>
-        )}
+const EditorPage = ({ file, showHistory, showFileList }) => (
+  <div className="conatiner-fluid">
+    <TitleBar />
+    <div className="row no-gutters">
+      {showFileList && (
+        <div className="col-2">
+          <FileList />
+        </div>
+      )}
+      {file && (
         <div className="col">
           {" "}
           <ProseEditor />
         </div>
-        {showHistory && (
+      )}
+      {file &&
+        showHistory && (
           <div className="col-2">
             <History />
           </div>
         )}
-      </div>
-      <CheckpointForm
-        onSubmit={({ commitMessage }) =>
-          console.log("Submitted new checkpoint: ", commitMessage)
-        }
-      />
     </div>
-  );
-};
+    <CheckpointForm
+      onSubmit={({ commitMessage }) =>
+        console.log("Submitted new checkpoint: ", commitMessage)
+      }
+    />
+  </div>
+);
 
 const mapStateToProps = state => {
   return {

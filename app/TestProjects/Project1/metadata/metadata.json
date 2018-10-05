@@ -1,5 +1,6 @@
 {
   "branches": {
-    "fileA": "fileA"
+    "fileA": "fileA",
+    "freshFile": "freshFile"
   }
 }
