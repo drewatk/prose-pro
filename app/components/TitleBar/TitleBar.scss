@@ -3,6 +3,9 @@
   color: white;
   padding: 0.3rem 0.3rem;
   -webkit-user-select: none;
+  position: fixed;
+  z-index: 20;
+  width: 100%;
 
   &-darwin {
     -webkit-app-region: drag;

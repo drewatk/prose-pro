@@ -11,28 +11,30 @@ import styles from "./EditorPage.scss";
 const EditorPage = props => {
   const { showHistory, showFileList } = props;
   return (
-    <div className={`${styles.container} conatiner-fluid`}>
+    <div>
       <TitleBar />
-      <div className={`${styles.row} row no-gutters`}>
-        {showFileList && (
-          <div className={`${styles.col} col-2`}>
-            <FileList />
+      <div className={`${styles.container} conatiner-fluid`}>
+        <div className={`${styles.row} row no-gutters`}>
+          {showFileList && (
+            <div className={`${styles.col} col-2`}>
+              <FileList />
+            </div>
+          )}
+          <div className={`${styles.col} col`}>
+            {/* TODO: should this onSubmit be in a different place? */}
+            <CheckpointForm
+              onSubmit={({ commitMessage }) =>
+                console.log("Submitted new checkpoint: ", commitMessage)
+              }
+            />
+            <ProseEditor />
           </div>
-        )}
-        <div className={`${styles.col} col`}>
-          {/* TODO: should this onSubmit be in a different place? */}
-          <CheckpointForm
-            onSubmit={({ commitMessage }) =>
-              console.log("Submitted new checkpoint: ", commitMessage)
-            }
-          />
-          <ProseEditor />
+          {showHistory && (
+            <div className={`${styles.col} col-2`}>
+              <History />
+            </div>
+          )}
         </div>
-        {showHistory && (
-          <div className={`${styles.col} col-2`}>
-            <History />
-          </div>
-        )}
       </div>
     </div>
   );

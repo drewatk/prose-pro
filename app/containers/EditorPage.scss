@@ -1,8 +1,18 @@
 .container {
-  height: 100vh;
+  // TODO: should this be padding or margin?
+  padding-top: 45px;
+  height: 100%;
 }
 
 .row,
 .col {
   height: 100%;
+}
+
+:global(#root) {
+  height: 100%;
+}
+
+body {
+  height: 1vh;
 }
