@@ -23,7 +23,6 @@ export default class EditFile {
 
   getFileJson = async () => {
     const obj = await utils.readJSONFromFile(this.filePath);
-    console.log(this.filePath);
     return obj;
   };
 

@@ -11,11 +11,9 @@ const FileNameList = props => {
             <ListGroupItem
               id="file-item"
               key={index}
-              onClick={() => {
-                onFileItemClick();
-              }}
+              onClick={() => onFileItemClick(file)}
             >
-              {file.name}
+              {file}
             </ListGroupItem>
           );
         })}
