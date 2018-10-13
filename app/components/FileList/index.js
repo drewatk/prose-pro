@@ -31,9 +31,8 @@ const FileList = ({ files, gitAbstractions, dispatch }) => {
           onFileItemClick={file => {
             dispatch([
               selectFile(file)
-              /* set current file in redux */
-              /* load file */
-              /* load history */
+              /* load file data */
+              /* load file checkpoints */
             ]);
           }}
         />
