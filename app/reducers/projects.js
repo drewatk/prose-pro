@@ -1,4 +1,4 @@
-import listProjects from "app/git-abs/list-projects";
+import { listProjects } from "app/git-abs/";
 
 const defaultState = listProjects("app/TestProjects");
 
