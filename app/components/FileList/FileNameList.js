@@ -12,6 +12,7 @@ const FileNameList = props => {
               id="file-item"
               key={index}
               onClick={() => onFileItemClick(file)}
+              style={{ cursor: "pointer" }}
             >
               {file}
             </ListGroupItem>
