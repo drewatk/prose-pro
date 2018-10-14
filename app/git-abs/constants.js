@@ -1,5 +1,3 @@
-import { app } from "electron";
-
 const projCons = {
   metadataDir: "metadata",
   gitDir: "repo",
@@ -15,6 +13,4 @@ const gitCons = {
   MAX_LOG_SIZE: 200
 };
 
-const rootDir = app.getPath("appData");
-
-export default { projCons, gitCons, rootDir };
+export default { projCons, gitCons };
