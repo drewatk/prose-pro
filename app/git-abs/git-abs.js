@@ -53,7 +53,7 @@ class GitAbs {
     await git.branch.checkOut(this.repository)(branchName);
 
     // if file hasn't been created, create it (can be made more efficient)
-    await this.editFile.createFileJson();
+    await this.editFile.createFileJson(this.repository);
 
     // return json content
     const fileObj = await this.editFile.getFileJson();
@@ -68,7 +68,10 @@ class GitAbs {
   saveFile = async (fileName, obj, versionName) => {
     // check if in right branch
 
-    //TODO: check if it is currently at head commit
+    //Don't allow save if current state of branch not at head commit
+    if (git.branch.isDetachedHead(this.repository)) {
+      throw new Error("Cannot save while in previous version.");
+    }
 
     //update the edit file
     await this.editFile.updateFileJson(obj);
@@ -106,8 +109,13 @@ class GitAbs {
   /**
    *
    */
-  switchToHeadCommit = async () => {
-    // TODO: implement
+  switchToCurrentVersion = async fileName => {
+    if (git.branch.isDetachedHead(this.repository)) {
+      // this means already at head commit
+      return;
+    }
+
+    return this.openFile(fileName);
   };
 
   /**
@@ -130,12 +138,11 @@ class GitAbs {
 const openProject = async projPath => {
   const metadata = new Metadata(projPath);
   await metadata.init();
-
   const repo = await git.repository.open(projPath);
-
   const editFile = new EditFile(projPath);
 
-  //Switch to master branch
+  // Ensure master branch is checked out when project is opened
+  await git.branch.checkOutMasterBranch(repo);
 
   return new GitAbs(metadata, repo, editFile);
 };

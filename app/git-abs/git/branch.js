@@ -27,8 +27,18 @@ const checkOutCommit = repo => commitHash => {
 };
 /* eslint-enable */
 
+const checkOutMasterBranch = repo => {
+  return checkOut(repo)("master");
+};
+
+const isDetachedHead = repo => {
+  return repo.headDetached() ? true : false;
+};
+
 export default {
   create,
   checkOut,
-  checkOutCommit
+  checkOutCommit,
+  checkOutMasterBranch,
+  isDetachedHead
 };
