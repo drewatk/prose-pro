@@ -2,12 +2,15 @@ import utils from "../utils";
 import gitRepo from "./git-repo";
 import projectJSON from "./project-json";
 import EditFile from "../edit-file";
+import getProjectPath from "../projectPath";
 
 /**
  * Creates a project folder for the given project name
  * @param {String} projectName
  */
-async function createProject(projPath) {
+async function createProject(projName) {
+  const projPath = getProjectPath(projName);
+  console.log(projPath);
   if (utils.pathExist(projPath)) {
     throw new Error(`Project path already exists: ${projPath}`);
   }

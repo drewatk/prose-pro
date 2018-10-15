@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
-import path from "path";
 import routes from "app/constants/routes.json";
 import { createProject } from "app/git-abs";
 
@@ -18,12 +17,11 @@ const ProjectSetupPage = ({ projects, dispatch }) => (
     <NewProjectForm
       onSubmit={({ project }) => {
         // TODO: ensure the project name doesn't already exist.
-        const projectPath = path.resolve("app/TestProjects/", project);
-        createProject(projectPath)
+        createProject(project)
           .then(() =>
             dispatch([
               projectSelect(project),
-              initGitAbs(projectPath),
+              initGitAbs(project),
               push(routes.EDITOR)
             ])
           )
@@ -34,10 +32,9 @@ const ProjectSetupPage = ({ projects, dispatch }) => (
       projects={projects}
       onSubmit={({ project }) => {
         // TODO: find the best way to run each action in sequence if possible.
-        const projectPath = path.resolve("app/TestProjects/", project);
         dispatch([
           projectSelect(project),
-          initGitAbs(projectPath),
+          initGitAbs(project),
           push(routes.EDITOR)
         ]);
       }}

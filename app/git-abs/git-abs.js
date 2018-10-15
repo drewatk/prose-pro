@@ -1,6 +1,7 @@
 import git from "./git";
 import Metadata from "./metadata";
 import EditFile from "./edit-file.js";
+import getProjectPath from "./projectPath";
 
 /* eslint-disable */
 
@@ -134,7 +135,10 @@ class GitAbs {
 }
 
 /* eslint-enable */
-const openProject = async projPath => {
+const openProject = async projName => {
+  const projPath = getProjectPath(projName);
+  console.log(projPath);
+
   const metadata = new Metadata(projPath);
   await metadata.init();
   const repo = await git.repository.open(projPath);
