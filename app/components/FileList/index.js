@@ -4,14 +4,21 @@ import { connect } from "react-redux";
 import CreateFileForm from "../Forms/CreateFileForm";
 import FileNameList from "./FileNameList";
 
-const FileList = ({ files, createFile }) => {
-  console.log(createFile);
+import selectFile from "app/actions/file_selection";
+import updateFiles from "app/actions/files";
+
+const FileList = ({ files, gitAbstractions, dispatch }) => {
   return (
     <div>
       <div>
         <CreateFileForm
           onSubmit={({ fileName }) => {
-            createFile(fileName);
+            gitAbstractions
+              .createFile(fileName)
+              .then(() => dispatch(updateFiles(gitAbstractions.getFiles())))
+              .catch(err =>
+                console.error("Error in CreateFileForm onSubmit: ", err)
+              );
           }}
         />
       </div>
@@ -19,17 +26,29 @@ const FileList = ({ files, createFile }) => {
         FileList View
       </div>
       <div>
-        <FileNameList files={files} />
+        <FileNameList
+          files={files}
+          onFileItemClick={file => {
+            dispatch([
+              selectFile(file)
+              /* load file data */
+              /* load file checkpoints */
+            ]);
+          }}
+        />
       </div>
     </div>
   );
 };
 
-const mapStateToProps = ({ gitAbstractions: { getFiles, createFile } }) => {
-  if (getFiles) {
-    return { files: getFiles(), createFile };
-  }
-  return { files: [], createFile };
-};
+const mapStateToProps = ({ files, gitAbstractions }) => ({
+  files,
+  gitAbstractions
+});
 
-export default connect(mapStateToProps)(FileList);
+const mapDispatchToProps = dispatch => ({ dispatch });
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FileList);
