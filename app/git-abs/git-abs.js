@@ -137,7 +137,6 @@ class GitAbs {
 /* eslint-enable */
 const openProject = async projName => {
   const projPath = getProjectPath(projName);
-  console.log(projPath);
 
   const metadata = new Metadata(projPath);
   await metadata.init();

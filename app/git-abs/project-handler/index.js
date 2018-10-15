@@ -10,7 +10,7 @@ import getProjectPath from "../projectPath";
  */
 async function createProject(projName) {
   const projPath = getProjectPath(projName);
-  console.log(projPath);
+
   if (utils.pathExist(projPath)) {
     throw new Error(`Project path already exists: ${projPath}`);
   }
