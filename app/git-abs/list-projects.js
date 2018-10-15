@@ -1,17 +1,21 @@
-import { readdirSync, statSync, existsSync } from "fs";
+import { readdirSync, statSync, existsSync, mkdirSync } from "fs";
 import path from "path";
 import { projCons } from "./constants";
+import { rootDir } from "./constants";
 
 /**
  * Lists the projects in the given directory name
- * @param {string} dirName
  */
-export default function listProjects(dirName) {
-  return readdirSync(dirName)
-    .filter(file => statSync(path.join(dirName, file)).isDirectory())
+export default function listProjects() {
+  if (!existsSync(rootDir)) {
+    mkdirSync(rootDir);
+  }
+
+  return readdirSync(rootDir)
+    .filter(file => statSync(path.join(rootDir, file)).isDirectory())
     .filter(dir =>
       existsSync(
-        path.join(dirName, dir, projCons.metadataDir, projCons.projFile)
+        path.join(rootDir, dir, projCons.metadataDir, projCons.projFile)
       )
     );
 }

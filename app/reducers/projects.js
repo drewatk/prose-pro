@@ -1,6 +1,6 @@
-import listProjects from "app/git-abs/list-projects";
+import { listProjects } from "app/git-abs/";
 
-const defaultState = listProjects("app/TestProjects");
+const defaultState = listProjects();
 
 // TODO: much like other recent changes, this is temporary.
 const projects = (state = defaultState) => state;

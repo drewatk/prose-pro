@@ -7,7 +7,7 @@ import updateFiles from "app/actions/files";
 export const SELECT_PROJECT = "SELECT_PROJECT";
 
 const projectSelect = project => dispatch => {
-  openProject("app/TestProjects/" + project)
+  openProject(project)
     .then(git_abs =>
       dispatch([initGitAbs(git_abs), updateFiles(git_abs.getFiles())])
     )

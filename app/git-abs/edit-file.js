@@ -1,6 +1,7 @@
 import utils from "./utils";
 import path from "path";
 import { projCons } from "./constants";
+import git from "./git";
 
 const { editFile } = projCons;
 
@@ -10,7 +11,7 @@ export default class EditFile {
     this.filePath = path.join(this.repoPath, editFile);
   }
 
-  createFileJson = async () => {
+  createFileJson = async repo => {
     //if file exists, return
     if (utils.pathExist(this.filePath)) return;
 
@@ -19,6 +20,11 @@ export default class EditFile {
 
     //fill file with empty json
     await utils.writeJSONToFile(this.filePath, {});
+
+    //add the intitial commit if repo given
+    if (repo) {
+      await git.addAndCommit(repo)("first commit for text.json");
+    }
   };
 
   getFileJson = async () => {

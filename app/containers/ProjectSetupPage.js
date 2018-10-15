@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import path from "path";
 import { createProject } from "app/git-abs";
 
 import TitleBar from "app/components/TitleBar";
@@ -14,9 +13,7 @@ const ProjectSetupPage = ({ projects, dispatch }) => (
     <TitleBar />
     <NewProjectForm
       onSubmit={({ project }) => {
-        // TODO: ensure the project name doesn't already exist.
-        const projectPath = path.resolve("app/TestProjects/", project);
-        createProject(projectPath)
+        createProject(project)
           .then(() => dispatch(projectSelect(project)))
           .catch(err => console.error(err));
       }}

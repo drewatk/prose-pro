@@ -1,3 +1,8 @@
+import path from "path";
+import electron from "electron";
+
+const app = electron.remote.app;
+
 const projCons = {
   metadataDir: "metadata",
   gitDir: "repo",
@@ -13,4 +18,6 @@ const gitCons = {
   MAX_LOG_SIZE: 200
 };
 
-export default { projCons, gitCons };
+const rootDir = path.join(app.getPath("userData"), "projects");
+
+export default { projCons, gitCons, rootDir };
