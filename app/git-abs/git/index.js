@@ -2,7 +2,6 @@ import addAndCommit from "./add-and-commit";
 import init from "./init";
 import branch from "./branch";
 import createInitialCommit from "./create-initial-commit";
-import getCurrentBranch from "./branch-name";
 import repository from "./repository";
 
 export default {
@@ -10,6 +9,5 @@ export default {
   init,
   branch,
   createInitialCommit,
-  repository,
-  getCurrentBranch
+  repository
 };
