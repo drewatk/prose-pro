@@ -110,7 +110,7 @@ class GitAbs {
    *
    */
   switchToCurrentVersion = async fileName => {
-    if (git.branch.isDetachedHead(this.repository)) {
+    if (!git.branch.isDetachedHead(this.repository)) {
       // this means already at head commit
       return;
     }
