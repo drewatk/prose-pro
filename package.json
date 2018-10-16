@@ -196,6 +196,7 @@
     "connected-react-router": "^4.5.0",
     "devtron": "^1.4.0",
     "draft-js": "^0.10.5",
+    "draft-js-export-html": "^1.2.0",
     "electron-debug": "^2.0.0",
     "fs-extra": "^7.0.0",
     "history": "^4.7.2",

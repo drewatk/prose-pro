@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import ProseEditor from "app/components/ProseEditor";
+import EditorPanel from "app/components/EditorPanel";
 import TitleBar from "app/components/TitleBar";
 import FileList from "app/components/FileList";
 import History from "app/components/History";
@@ -27,7 +27,8 @@ const EditorPage = props => {
                 console.log("Submitted new checkpoint: ", commitMessage)
               }
             />
-            <ProseEditor />
+            {/* TODO: remove prop */}
+            <EditorPanel isEditable={true} />
           </div>
           {showHistory && (
             <div className={`${styles.right} col-2`}>
