@@ -30,11 +30,7 @@ const FileList = ({ files, gitAbstractions, dispatch }) => {
         <FileNameList
           files={files}
           onFileItemClick={file => {
-            dispatch([
-              selectFile(gitAbstractions, file)
-              /* load file data */
-              /* load file checkpoints */
-            ]);
+            dispatch(selectFile(gitAbstractions, file));
           }}
         />
       </div>
