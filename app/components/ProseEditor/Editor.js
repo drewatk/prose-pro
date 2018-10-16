@@ -1,6 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Editor, RichUtils, getDefaultKeyBinding } from "draft-js";
+import { Button } from "reactstrap";
+import { convertToRaw } from "draft-js";
+
 import InlineStyleControls from "./InlineStyleControls";
 import BlockStyleControls from "./BlockStyleControls";
 import { UPDATE_EDITOR_STATE } from "../../actions/editor";
@@ -65,7 +68,7 @@ export class ProseEditor extends React.Component {
   }
 
   render() {
-    const { editorState } = this.props;
+    const { editorState, currentFile, gitAbstractions } = this.props;
 
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
@@ -83,6 +86,16 @@ export class ProseEditor extends React.Component {
     }
     return (
       <div className={styles.root}>
+        <Button
+          onClick={() =>
+            gitAbstractions.saveFile(
+              currentFile,
+              convertToRaw(editorState.getCurrentContent())
+            )
+          }
+        >
+          Save
+        </Button>
         <BlockStyleControls
           editorState={editorState}
           onToggle={this.toggleBlockType}
@@ -133,7 +146,11 @@ function getBlockStyle(block) {
   }
 }
 
-const mapStateToProps = ({ editor: { editorState } }) => ({ editorState });
+const mapStateToProps = ({
+  editor: { editorState },
+  currentFile,
+  gitAbstractions
+}) => ({ editorState, currentFile, gitAbstractions });
 
 const mapDispatchToProps = dispatch => ({
   onSaveEditorState: editorState => {

@@ -16,6 +16,7 @@ const FileList = ({ files, gitAbstractions, dispatch }) => {
             gitAbstractions
               .createFile(fileName)
               .then(() => dispatch(updateFiles(gitAbstractions.getFiles())))
+              .then(() => dispatch(selectFile(gitAbstractions, fileName)))
               .catch(err =>
                 console.error("Error in CreateFileForm onSubmit: ", err)
               );
@@ -29,11 +30,7 @@ const FileList = ({ files, gitAbstractions, dispatch }) => {
         <FileNameList
           files={files}
           onFileItemClick={file => {
-            dispatch([
-              selectFile(file)
-              /* load file data */
-              /* load file checkpoints */
-            ]);
+            dispatch(selectFile(gitAbstractions, file));
           }}
         />
       </div>

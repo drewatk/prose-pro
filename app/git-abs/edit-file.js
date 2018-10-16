@@ -1,5 +1,7 @@
 import utils from "./utils";
 import path from "path";
+import { ContentState, convertToRaw } from "draft-js";
+
 import { projCons } from "./constants";
 import git from "./git";
 
@@ -19,7 +21,11 @@ export default class EditFile {
     await utils.createFile(this.filePath);
 
     //fill file with empty json
-    await utils.writeJSONToFile(this.filePath, {});
+    const emptyFileContentState = ContentState.createFromText("");
+    await utils.writeJSONToFile(
+      this.filePath,
+      convertToRaw(emptyFileContentState)
+    );
 
     //add the intitial commit if repo given
     if (repo) {
