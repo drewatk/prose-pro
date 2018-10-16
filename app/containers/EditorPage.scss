@@ -4,15 +4,34 @@
   height: 100%;
 }
 
-.row,
-.col {
-  height: 100%;
+.row-height {
+  height: calc(100vh - 45px);
 }
 
-:global(#root) {
+.left {
+  background-color: red;
   height: 100%;
+  overflow-y: scroll;
 }
 
-body {
-  height: 1vh;
+.right {
+  background-color: blue;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.mid {
+  background-color: green;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+/*Remove the scrollbar from Chrome, Safari, Edge and IE*/
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+* {
+  -ms-overflow-style: none !important;
 }

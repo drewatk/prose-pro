@@ -14,13 +14,13 @@ const EditorPage = props => {
     <div>
       <TitleBar />
       <div className={`${styles.container} conatiner-fluid`}>
-        <div className={`${styles.row} row no-gutters`}>
+        <div className={`${styles.rowHeight} row no-gutters`}>
           {showFileList && (
-            <div className={`${styles.col} col-2`}>
+            <div className={`${styles.left} col-2`}>
               <FileList />
             </div>
           )}
-          <div className={`${styles.col} col`}>
+          <div className={`${styles.mid} col`}>
             {/* TODO: should this onSubmit be in a different place? */}
             <CheckpointForm
               onSubmit={({ commitMessage }) =>
@@ -30,7 +30,7 @@ const EditorPage = props => {
             <ProseEditor />
           </div>
           {showHistory && (
-            <div className={`${styles.col} col-2`}>
+            <div className={`${styles.right} col-2`}>
               <History />
             </div>
           )}
