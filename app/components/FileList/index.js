@@ -11,42 +11,44 @@ const FileList = ({ files, gitAbstractions, dispatch }) => {
   return (
     <div>
       <div>
-        <CreateFileForm
-          onSubmit={({ fileName }) => {
-            gitAbstractions
-              .createFile(fileName)
-              .then(() => dispatch(updateFiles(gitAbstractions.getFiles())))
-              .catch(err =>
-                console.error("Error in CreateFileForm onSubmit: ", err)
-              );
-          }}
-        />
+        <div>
+          <CreateFileForm
+            onSubmit={({ fileName }) => {
+              gitAbstractions
+                .createFile(fileName)
+                .then(() => dispatch(updateFiles(gitAbstractions.getFiles())))
+                .catch(err =>
+                  console.error("Error in CreateFileForm onSubmit: ", err)
+                );
+            }}
+          />
+        </div>
+        <div style={{ backgroundColor: "lightblue", height: "100%" }}>
+          FileList View
+        </div>
+        <div>
+          <FileNameList
+            files={files}
+            onFileItemClick={file => {
+              dispatch([
+                selectFile(file)
+                /* load file data */
+                /* load file checkpoints */
+              ]);
+            }}
+          />
+        </div>
       </div>
+      {/* TODO:  Move Styles to CSS file  */}
       <div style={{ backgroundColor: "lightblue", height: "100%" }}>
         FileList View
       </div>
       <div>
-        <FileNameList
-          files={files}
-          onFileItemClick={file => {
-            dispatch([
-              selectFile(file)
-              /* load file data */
-              /* load file checkpoints */
-            ]);
-          }}
-        />
+        <FileNameList files={files} />
       </div>
     </div>
-    {/* TODO: Move Styles to CSS file */}
-    <div style={{ backgroundColor: "lightblue", height: "100%" }}>
-      FileList View
-    </div>
-    <div>
-      <FileNameList files={files} />
-    </div>
-  </div>
-);
+  );
+};
 
 const mapStateToProps = ({ files, gitAbstractions }) => ({
   files,
