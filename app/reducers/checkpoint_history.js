@@ -1,11 +1,10 @@
-const now = new Date().toLocaleString("en-US", { timeZone: "UTC" });
+import { UPDATE_HISTORY_STATE } from "app/actions/history";
 
-const defaultHistory = [
-  { message: "first commit", date: now },
-  { message: "second commit", date: now },
-  { message: "day 68. still doesn't work. i'm giving up", date: now }
-];
-
-const checkpointHistory = (state = defaultHistory) => state;
+const checkpointHistory = (state = [], { type, payload }) => {
+  if (type === UPDATE_HISTORY_STATE) {
+    return payload;
+  }
+  return state;
+};
 
 export default checkpointHistory;
