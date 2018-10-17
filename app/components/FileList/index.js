@@ -11,6 +11,7 @@ const FileList = ({ files, gitAbstractions, dispatch }) => {
   return (
     <div>
       <div>
+
         <CreateFileForm
           onSubmit={({ fileName }) => {
             gitAbstractions
@@ -23,6 +24,7 @@ const FileList = ({ files, gitAbstractions, dispatch }) => {
           }}
         />
       </div>
+      {/* TODO:  Move Styles to CSS file  */}
       <div style={{ backgroundColor: "lightblue", height: "100%" }}>
         FileList View
       </div>

@@ -15,10 +15,6 @@
   margin-top: 10px;
 }
 
-.editor :global(.public-DraftEditor-content) {
-  min-height: 100px;
-}
-
 .hidePlaceholder :global(.public-DraftEditorPlaceholder-root) {
   display: none;
 }
@@ -40,7 +36,6 @@
 }
 
 .controls {
-  /* font-family: "Helvetica", sans-serif; */
   font-size: 14px;
   margin-bottom: 5px;
   user-select: none;

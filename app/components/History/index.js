@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import CheckpointCard from "./CheckpointCard";
 
 export const History = ({ history }) => (
+  // TODO: Move styles to CSS file
   <div style={{ height: "100%" }}>
     {history.map((data, index) => (
       <CheckpointCard key={index} {...data} />

@@ -5,30 +5,11 @@ import { Field, reduxForm } from "redux-form";
 import { Input } from "app/components/Basic";
 import { required } from "./validators";
 
-const styles = {
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    width: "350px",
-    borderWidth: "1px",
-    borderColor: "#898989",
-    borderStyle: "solid",
-    borderRadius: "10px",
-    justifyContent: "center",
-    padding: "20px"
-  },
-  header: {
-    color: "#595858"
-  },
-  button: {
-    marginTop: "20px",
-    width: "60px"
-  }
-};
+import styles from "./CheckpointForm.scss";
 
 export const CheckpointForm = ({ handleSubmit, submitting, pristine }) => (
-  <Form style={styles.form} onSubmit={handleSubmit}>
-    <h4 style={styles.header}>Create Checkpoint</h4>
+  <Form className={styles.form} onSubmit={handleSubmit}>
+    <h4 className={styles.header}>Create Checkpoint</h4>
     <Field
       name="commitMessage"
       component={Input}
@@ -40,7 +21,7 @@ export const CheckpointForm = ({ handleSubmit, submitting, pristine }) => (
       size="sm"
       color="secondary"
       disabled={submitting || pristine}
-      style={styles.button}
+      className={styles.button}
     >
       Create
     </Button>
