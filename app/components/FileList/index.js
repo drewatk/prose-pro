@@ -11,40 +11,30 @@ const FileList = ({ files, gitAbstractions, dispatch }) => {
   return (
     <div>
       <div>
-        <div>
-          <CreateFileForm
-            onSubmit={({ fileName }) => {
-              gitAbstractions
-                .createFile(fileName)
-                .then(() => dispatch(updateFiles(gitAbstractions.getFiles())))
-                .catch(err =>
-                  console.error("Error in CreateFileForm onSubmit: ", err)
-                );
-            }}
-          />
-        </div>
-        <div style={{ backgroundColor: "lightblue", height: "100%" }}>
-          FileList View
-        </div>
-        <div>
-          <FileNameList
-            files={files}
-            onFileItemClick={file => {
-              dispatch([
-                selectFile(file)
-                /* load file data */
-                /* load file checkpoints */
-              ]);
-            }}
-          />
-        </div>
+
+        <CreateFileForm
+          onSubmit={({ fileName }) => {
+            gitAbstractions
+              .createFile(fileName)
+              .then(() => dispatch(updateFiles(gitAbstractions.getFiles())))
+              .then(() => dispatch(selectFile(gitAbstractions, fileName)))
+              .catch(err =>
+                console.error("Error in CreateFileForm onSubmit: ", err)
+              );
+          }}
+        />
       </div>
       {/* TODO:  Move Styles to CSS file  */}
       <div style={{ backgroundColor: "lightblue", height: "100%" }}>
         FileList View
       </div>
       <div>
-        <FileNameList files={files} />
+        <FileNameList
+          files={files}
+          onFileItemClick={file => {
+            dispatch(selectFile(gitAbstractions, file));
+          }}
+        />
       </div>
     </div>
   );
