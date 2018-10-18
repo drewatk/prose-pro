@@ -3,6 +3,7 @@ import Metadata from "./metadata";
 import EditFile from "./edit-file.js";
 import getProjectPath from "./projectPath";
 
+const MASTER_BRANCH = "master";
 /* eslint-disable */
 
 class GitAbs {
@@ -15,6 +16,7 @@ class GitAbs {
     this.metadata = metadata;
     this.repository = repository;
     this.editFile = editFile;
+    this.currentBranch = MASTER_BRANCH;
   }
 
   /**
