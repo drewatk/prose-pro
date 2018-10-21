@@ -26,6 +26,7 @@ class GitAbs {
   createFile = async fileName => {
     // create branch
     const branchName = fileName; //TODO create unique branch name
+
     await git.branch.create(this.repository)(branchName); // create a branch
     await this.metadata.addFile(fileName, branchName); // update metadata
   };
@@ -147,9 +148,6 @@ const openProject = async projName => {
 
   // Ensure master branch is checked out when project is opened
   await git.branch.checkOutMasterBranch(repo);
-
-  const branch = await git.getCurrentBranch(repo);
-  console.log(`current branch: ${branch}`);
 
   return new GitAbs(metadata, repo, editFile);
 };
