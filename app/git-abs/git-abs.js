@@ -148,6 +148,9 @@ const openProject = async projName => {
   // Ensure master branch is checked out when project is opened
   await git.branch.checkOutMasterBranch(repo);
 
+  const branch = await git.getCurrentBranch(repo);
+  console.log(`current branch: ${branch}`);
+
   return new GitAbs(metadata, repo, editFile);
 };
 
