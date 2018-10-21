@@ -9,7 +9,7 @@ import CheckpointForm from "app/components/Forms/CheckpointForm";
 import styles from "./EditorPage.scss";
 
 const EditorPage = props => {
-  const { showHistory, showFileList } = props;
+  const { showHistory, showFileList, currentFile } = props;
   return (
     <div>
       <TitleBar />
@@ -28,7 +28,7 @@ const EditorPage = props => {
               }
             />
             {/* TODO: remove prop */}
-            <EditorPanel isEditable={true} />
+            {currentFile && <EditorPanel isEditable={true} />}
           </div>
           {showHistory && (
             <div className={`${styles.right} col-2`}>
@@ -41,10 +41,14 @@ const EditorPage = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = ({
+  view: { showFileList, showHistory },
+  currentFile
+}) => {
   return {
-    showFileList: state.view.showFileList,
-    showHistory: state.view.showHistory
+    showFileList,
+    showHistory,
+    currentFile
   };
 };
 
