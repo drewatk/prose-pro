@@ -1,6 +1,6 @@
-import git from "./git";
-import Metadata from "./metadata";
-import EditFile from "./edit-file.js";
+import git from "app/git-abs/git";
+import Metadata from "app/git-abs/metadata";
+import EditFile from "app/git-abs/edit-file.js";
 import getProjectPath from "./projectPath";
 
 const MASTER_BRANCH = "master";
