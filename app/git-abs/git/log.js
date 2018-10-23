@@ -1,12 +1,13 @@
 import nodegit from "nodegit";
 
-import { gitCons } from "app/git-abs/constants";
+import { gitCons, projCons } from "app/git-abs/constants";
 
-const { GIT_CONFIG_PATH, MAX_LOG_SIZE } = gitCons;
+const { MAX_LOG_SIZE } = gitCons;
+const { editFile } = projCons;
 
 /**
  * Returns a list of commits (checkpoints) for the corresponding file
- * @param {String} file
+ * @param {nodegit.Repository} repo
  *
  * @return {Promise} then([{ message: '', date: new Date() }, ...]) catch(error)
  */
@@ -14,15 +15,14 @@ const { GIT_CONFIG_PATH, MAX_LOG_SIZE } = gitCons;
 /***
  Usage Example:
 
- log('test.js')
+ log(repository)
  .then(commits => console.log(commits))
  .catch(err => console.error(err))
 
  ***/
 
-const log = file => {
+const log = repo => {
   let historyCommits = [],
-    repo = null,
     walker = null;
 
   const compileHistory = commits => {
@@ -44,22 +44,19 @@ const log = file => {
     walker.push(lastSha);
     walker.sorting(nodegit.Revwalk.SORT.TIME);
 
-    return walker.fileHistoryWalk(file, MAX_LOG_SIZE).then(compileHistory);
+    return walker.fileHistoryWalk(editFile, MAX_LOG_SIZE).then(compileHistory);
   };
 
   return new Promise((resolve, reject) => {
-    nodegit.Repository.open(GIT_CONFIG_PATH)
-      .then(openRepo => {
-        repo = openRepo;
-        return repo.getMasterCommit();
-      })
-      .then(firstCommitOnMaster => {
+    repo
+      .getHeadCommit()
+      .then(firstCommitOnBranch => {
         // History returns an event.
         walker = repo.createRevWalk();
-        walker.push(firstCommitOnMaster.sha());
+        walker.push(firstCommitOnBranch.sha());
         walker.sorting(nodegit.Revwalk.SORT.Time);
 
-        return walker.fileHistoryWalk(file, MAX_LOG_SIZE);
+        return walker.fileHistoryWalk(editFile, MAX_LOG_SIZE);
       })
       .then(compileHistory)
       .then(() =>

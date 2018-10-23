@@ -8,16 +8,17 @@ import FileList from "app/components/FileList";
 import History from "app/components/History";
 import CheckpointForm from "app/components/Forms/CheckpointForm";
 import { Button } from "reactstrap";
-
+import { UPDATE_HISTORY_STATE } from "app/actions/history";
 import styles from "./EditorPage.scss";
 
 const EditorPage = props => {
   const {
-    editorState,
+    dispatch,
     showHistory,
     showFileList,
+    currentFile,
     gitAbstractions,
-    currentFile
+    editorState
   } = props;
   return (
     <div>
@@ -33,11 +34,27 @@ const EditorPage = props => {
             {/* TODO: should this onSubmit be in a different place? */}
             <CheckpointForm
               onSubmit={({ commitMessage }) =>
-                gitAbstractions.saveFile(
-                  currentFile,
-                  convertToRaw(editorState.getCurrentContent()),
-                  commitMessage
-                )
+                gitAbstractions
+                  .saveFile(
+                    currentFile,
+                    convertToRaw(editorState.getCurrentContent()),
+                    commitMessage
+                  )
+                  .then(() => gitAbstractions.getVersions(currentFile))
+                  .then(({ versions }) => {
+                    console.log(
+                      "checkpoint form submission is getting versions => ",
+                      versions
+                    );
+                    dispatch({
+                      type: UPDATE_HISTORY_STATE,
+                      payload: versions.map(v => ({
+                        message: v.getVersionName(),
+                        commitHash: v.getCommitId(),
+                        date: v.getTimestamp()
+                      }))
+                    });
+                  })
               }
             />
             <Button
@@ -51,7 +68,7 @@ const EditorPage = props => {
               Save
             </Button>
             {/* TODO: remove prop */}
-            <EditorPanel editorState={editorState} isEditable={true} />
+            {currentFile && <EditorPanel isEditable={true} />}
           </div>
           {showHistory && (
             <div className={`${styles.right} col-2`}>
@@ -65,19 +82,26 @@ const EditorPage = props => {
 };
 
 const mapStateToProps = ({
-  view: { showHistory, showFileList },
+  view: { showFileList, showHistory },
   editor: { editorState },
-  gitAbstractions,
-  currentFile
-}) => ({
-  showFileList,
-  showHistory,
-  gitAbstractions,
   currentFile,
-  editorState
-});
+  gitAbstractions
+}) => {
+  return {
+    showFileList,
+    showHistory,
+    currentFile,
+    gitAbstractions,
+    editorState
+  };
+};
 
-const WithEditorPage = connect(mapStateToProps)(EditorPage);
+const mapDispatchToProps = dispatch => ({ dispatch });
+
+const WithEditorPage = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditorPage);
 
 WithEditorPage.displayName = "EditorPage";
 export default WithEditorPage;

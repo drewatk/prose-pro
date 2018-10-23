@@ -1,3 +1,5 @@
+import { Branch } from "nodegit";
+
 /**
  * Creates a branch with given branchName in the given Repo
  * @param {Repository (nodegit)} repo
@@ -6,8 +8,8 @@
 const create = repo => branchName => {
   console.log(repo.refreshIndex());
   return repo
-    .getHeadCommit()
-    .then(commit => repo.createBranch(branchName, commit, false));
+    .getMasterCommit()
+    .then(commit => Branch.create(repo, branchName, commit, false));
 };
 
 /**

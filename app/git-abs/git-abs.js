@@ -1,6 +1,6 @@
-import git from "./git";
-import Metadata from "./metadata";
-import EditFile from "./edit-file.js";
+import git from "app/git-abs/git";
+import Metadata from "app/git-abs/metadata";
+import EditFile from "app/git-abs/edit-file.js";
 import getProjectPath from "./projectPath";
 
 /* eslint-disable */
@@ -24,6 +24,7 @@ class GitAbs {
   createFile = async fileName => {
     // create branch
     const branchName = fileName; //TODO create unique branch name
+
     await git.branch.create(this.repository)(branchName); // create a branch
     await this.metadata.addFile(fileName, branchName); // update metadata
   };
@@ -83,7 +84,11 @@ class GitAbs {
     // if version name is given
     if (versionName) {
       // update project.json with new version-commit mapping
-      this.metadata.addVersion(fileName, versionName, commitHash.toString());
+      await this.metadata.addVersion(
+        fileName,
+        versionName,
+        commitHash.toString()
+      );
     }
   };
 
@@ -124,14 +129,7 @@ class GitAbs {
    */
   getVersions = async fileName => {
     // use metedata object to get version names for the given fileName
-    // const obj = await this.metadata.getAllVersions(fileName);
-    // return Object.keys(obj);
-    const now = new Date().toLocaleString("en-US", { timeZone: "UTC" });
-    return [
-      { message: "first commit", date: now },
-      { message: "second commit", date: now },
-      { message: "day 68. still doesn't work. i'm giving up", date: now }
-    ];
+    return await this.metadata.getAllVersions(fileName);
   };
 
   /**

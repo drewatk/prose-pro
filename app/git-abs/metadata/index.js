@@ -1,19 +1,22 @@
-import utils from "./utils";
+import utils from "app/git-abs/utils";
 import path from "path";
-import { projCons } from "./constants";
+import { FileObject, Version } from "app/git-abs/metadata/file-object";
+import CfgObject from "app/git-abs/metadata/cfg-object";
+import { projCons } from "app/git-abs/constants";
 
 export default class Metadata {
   constructor(projPath) {
     this.dirPath = path.join(projPath, projCons.metadataDir);
     this.cfgPath = path.join(this.dirPath, projCons.projFile);
-    this.projConfig = null; /* stores the config from file */
+    this.cfgObj = null; /* stores the config from file */
   }
 
   /**
    * reads project config from json file
    */
   async init() {
-    this.projConfig = await this.getCfgFromFile();
+    this.cfgObj = await this.getCfgFromFile();
+    console.log(this.cfgObj);
   }
 
   /**
@@ -21,24 +24,25 @@ export default class Metadata {
    * @param {String} fileName
    */
   async addFile(fileName, branchName) {
-    if (!this.projConfig) {
+    if (!this.cfgObj) {
       throw new Error("Project Config not initialized");
     }
 
-    const { branches } = this.projConfig;
-    if (branches[fileName]) {
+    if (this.cfgObj.hasFile(fileName)) {
       throw new Error("File Already exists");
     }
 
     /* create filename - branch mapping */
-    this.projConfig.branches[fileName] = branchName;
+    this.cfgObj.addFile(fileName, branchName);
 
     await this.updateCfgFile();
 
     /* create metadata file for version - commit mapping */
     const filePath = path.join(this.dirPath, branchName);
     await utils.createFile(filePath);
-    await utils.writeJSONToFile(filePath, Metadata.genEmptyFileObj());
+
+    const emptyObj = Metadata.genEmptyFileObj().getObject();
+    await utils.writeJSONToFile(filePath, emptyObj);
   }
 
   /**
@@ -50,34 +54,34 @@ export default class Metadata {
   async addVersion(fileName, versionName, commitHash) {
     const filePath = path.join(
       this.dirPath,
-      this.projConfig.branches[fileName]
+      this.cfgObj.getBranchForFile(fileName)
     );
     // read object from metadata file
     const obj = await utils.readJSONFromFile(filePath);
+    const fileObj = new FileObject(obj);
 
     // update object
-    if (obj[versionName]) {
-      throw new Error("Version name already exists");
-    }
+    const newVersion = new Version(versionName, commitHash, Date.now());
+    fileObj.addVersion(newVersion);
 
-    obj[versionName] = commitHash;
-    console.log(commitHash);
+    console.log(newVersion);
+
     // write object back to metadata file
-    await utils.writeJSONToFile(filePath, obj);
+    await utils.writeJSONToFile(filePath, fileObj.getObject());
 
     // return new object?
-    return obj;
+    return fileObj;
   }
 
   async getAllVersions(fileName) {
     const filePath = path.join(this.dirPath, fileName);
 
     const obj = await utils.readJSONFromFile(filePath);
-    return obj;
+    return new FileObject(obj);
   }
 
   getAllBranches() {
-    return Object.keys(this.projConfig.branches);
+    return this.cfgObj.getFileNames();
   }
 
   /**
@@ -85,12 +89,11 @@ export default class Metadata {
    * @param {String} fileName
    */
   getBranchName(fileName) {
-    const { branches } = this.projConfig;
-    if (!branches[fileName]) {
+    if (!this.cfgObj.hasFile(fileName)) {
       throw new Error("File doesn't exist");
     }
 
-    return branches[fileName];
+    return this.cfgObj.getBranchForFile(fileName);
   }
 
   /**
@@ -98,33 +101,30 @@ export default class Metadata {
    * @param {String} filePath
    */
   static async initEmptyConfig(filePath) {
-    const emptyObj = Metadata.getnEmptyCfgObj();
-    await utils.writeJSONToFile(filePath, emptyObj);
+    const emptyObj = Metadata.getEmptyCfgObj();
+    console.log(emptyObj);
+    await utils.writeJSONToFile(filePath, emptyObj.getObject());
   }
 
   /**
    * Generates empty config object
    */
-  static getnEmptyCfgObj() {
-    return {
-      branches: {}
-    };
+  static getEmptyCfgObj() {
+    return new CfgObject();
   }
 
   /**
    * Generates empty file metadata object
    */
   static genEmptyFileObj() {
-    return {
-      versions: {}
-    };
+    return new FileObject();
   }
 
   /**
    * write the current state of the project config to config file
    */
   async updateCfgFile() {
-    await utils.writeJSONToFile(this.cfgPath, this.projConfig);
+    await utils.writeJSONToFile(this.cfgPath, this.cfgObj.getObject());
   }
 
   /**
@@ -135,7 +135,7 @@ export default class Metadata {
       utils
         .readJSONFromFile(this.cfgPath)
         .then(obj => {
-          resolve(obj);
+          resolve(new CfgObject(obj));
         })
         .catch(e => reject(e))
     );

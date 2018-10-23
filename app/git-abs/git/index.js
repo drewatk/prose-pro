@@ -3,11 +3,13 @@ import init from "./init";
 import branch from "./branch";
 import createInitialCommit from "./create-initial-commit";
 import repository from "./repository";
+import getCurrentBranch from "./current-branch";
 
 export default {
   addAndCommit,
   init,
   branch,
   createInitialCommit,
-  repository
+  repository,
+  getCurrentBranch
 };
