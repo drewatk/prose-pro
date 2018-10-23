@@ -39,7 +39,6 @@ FileObject.prototype.addVersion = function(version) {
       }. Needs to be an object of type Version`
     );
   }
-  console.log(this[VERSIONS]);
   this[VERSIONS].push(version);
 };
 
