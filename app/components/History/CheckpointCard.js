@@ -8,7 +8,9 @@ const CheckpointCard = ({ message, date }) => (
       <CardText>{message}</CardText>
       <CardSubtitle>Date:</CardSubtitle>
       <CardText>
-        {new Date(date).toLocaleString("en-US", { timeZone: "UTC" })}
+        {new Date(date).toLocaleString("en-US", {
+          timeZone: "America/New_York"
+        })}
       </CardText>
     </CardBody>
   </Card>

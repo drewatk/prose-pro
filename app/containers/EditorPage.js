@@ -8,8 +8,9 @@ import FileList from "app/components/FileList";
 import History from "app/components/History";
 import CheckpointForm from "app/components/Forms/CheckpointForm";
 import { Button } from "reactstrap";
-import { UPDATE_HISTORY_STATE } from "app/actions/history";
 import styles from "./EditorPage.scss";
+
+import updateHistory from "app/actions/history";
 
 const EditorPage = props => {
   const {
@@ -41,20 +42,7 @@ const EditorPage = props => {
                     commitMessage
                   )
                   .then(() => gitAbstractions.getVersions(currentFile))
-                  .then(({ versions }) => {
-                    console.log(
-                      "checkpoint form submission is getting versions => ",
-                      versions
-                    );
-                    dispatch({
-                      type: UPDATE_HISTORY_STATE,
-                      payload: versions.map(v => ({
-                        message: v.getVersionName(),
-                        commitHash: v.getCommitId(),
-                        date: v.getTimestamp()
-                      }))
-                    });
-                  })
+                  .then(({ versions }) => dispatch(updateHistory(versions)))
               }
             />
             <Button
