@@ -1,6 +1,6 @@
-import git from "./git";
-import Metadata from "./metadata";
-import EditFile from "./edit-file.js";
+import git from "app/git-abs/git";
+import Metadata from "app/git-abs/metadata";
+import EditFile from "app/git-abs/edit-file.js";
 import getProjectPath from "./projectPath";
 
 /* eslint-disable */
@@ -24,6 +24,7 @@ class GitAbs {
   createFile = async fileName => {
     // create branch
     const branchName = fileName; //TODO create unique branch name
+
     await git.branch.create(this.repository)(branchName); // create a branch
     await this.metadata.addFile(fileName, branchName); // update metadata
   };
