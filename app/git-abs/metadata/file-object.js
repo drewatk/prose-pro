@@ -9,13 +9,13 @@ function Version(v_name, commit, timestamp) {
   this[COMMIT_SHA] = commit;
   this[TIMESTAMP] = timestamp;
 }
-Version.prototype.getVersionName = () => {
+Version.prototype.getVersionName = function() {
   return this[VERSION_NAME];
 };
-Version.prototype.getCommitId = () => {
+Version.prototype.getCommitId = function() {
   return this[COMMIT_SHA];
 };
-Version.prototype.getTimestamp = () => {
+Version.prototype.getTimestamp = function() {
   return this[TIMESTAMP];
 };
 
