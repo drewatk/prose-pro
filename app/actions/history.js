@@ -1,8 +1,8 @@
 export const UPDATE_HISTORY_STATE = "UPDATE_HISTORY_STATE";
 
-/*
-  @param versions: [Version] object (defined in git-abs/metadata/file-object)
-*/
+/**
+  @param {Version[]} versions Version object defined in app/git-abs/metadata/file-object
+**/
 const updateHistory = versions => dispatch => {
   dispatch({
     type: UPDATE_HISTORY_STATE,
