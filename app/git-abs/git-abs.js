@@ -74,6 +74,11 @@ class GitAbs {
     // if file hasn't been created, create it (can be made more efficient)
     await this.editFile.createFileJson(this.repository);
 
+    const latest_time = await git.getLatestCommitTime(this.repository)(
+      fileName
+    );
+    console.log(`latest time: ${latest_time}`);
+
     // return json content
     const fileObj = await this.editFile.getFileJson();
     return fileObj;
