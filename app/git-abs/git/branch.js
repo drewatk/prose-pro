@@ -15,7 +15,9 @@ const remove = repo => branchName => {
   return repo
     .getBranch(branchName)
     .then(ref => Branch.delete(ref))
-    .catch(e => throw new Error("Error in deleting branch"));
+    .catch(e => {
+      throw new Error(`Error in deleting branch ${e}`);
+    });
 };
 
 /**
