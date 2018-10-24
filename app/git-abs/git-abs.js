@@ -49,7 +49,7 @@ class GitAbs {
     ); /* don't need to wait for async to return */
 
     /* if deleting current file, switch to master branch */
-    if (branchName == currentBranch) {
+    if (branchName === currentBranch) {
       await git.addAndCommit(this.repository)("deleting branch");
       await git.branch.checkOutMasterBranch();
     }
