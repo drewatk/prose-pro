@@ -1,4 +1,4 @@
-import { Branch } from "nodegit";
+import { Branch, Checkout } from "nodegit";
 
 /**
  * Creates a branch with given branchName in the given Repo
@@ -31,11 +31,19 @@ const checkOut = repo => branchName => {
     .then(reference => repo.checkoutBranch(reference));
 };
 
-/* eslint-disable */
 const checkOutCommit = repo => commitHash => {
-  //TODO
+  return repo.getCommit(commitHash).then(commit =>
+    Checkout.tree(repo, commit, {
+      checkoutStrategy: Checkout.STRATEGY.SAFE
+    }).then(() =>
+      repo.setHeadDetached(
+        commit,
+        repo.defaultSignature,
+        "Checkout: HEAD " + commit.id()
+      )
+    )
+  );
 };
-/* eslint-enable */
 
 const checkOutMasterBranch = repo => {
   return checkOut(repo)("master");

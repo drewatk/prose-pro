@@ -127,6 +127,9 @@ class GitAbs {
     // await this.saveFile(fileName);
     // checkout to selected commit
     // TODO: implement
+    git.branch.checkOutCommit(this.repository)(
+      "0689daf0f107f4e842e9d412cde07bb3ff511d50"
+    );
   };
 
   /**
