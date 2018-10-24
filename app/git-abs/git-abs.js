@@ -127,9 +127,9 @@ class GitAbs {
     // get commit for version from project.json
     let commitHash;
     const versions = await this.metadata.getAllVersions(fileName);
-    for (let v in versions) {
+    for (let v of versions.versions) {
       if (v.getVersionName() === versionName) {
-        commitHash = versions.getCommitId();
+        commitHash = v.getCommitId();
         break;
       }
     }
@@ -140,7 +140,7 @@ class GitAbs {
     }
 
     // save current state of branch
-    await this.saveFile(fileName);
+    await git.addAndCommit(this.repository)("switching version");
 
     // checkout to selected commit
     await git.branch.checkOutCommit(this.repository)(commitHash);
