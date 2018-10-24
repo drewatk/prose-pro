@@ -12,7 +12,10 @@ const create = repo => branchName => {
 };
 
 const remove = repo => branchName => {
-  return repo.getBranch(branchName).then(ref => Branch.delete(ref));
+  return repo
+    .getBranch(branchName)
+    .then(ref => Branch.delete(ref))
+    .catch(e => throw new Error("Error in deleting branch"));
 };
 
 /**
