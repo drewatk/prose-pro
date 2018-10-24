@@ -6,10 +6,18 @@ import { Branch } from "nodegit";
  * @param {String} branchName
  */
 const create = repo => branchName => {
-  console.log(repo.refreshIndex());
   return repo
     .getMasterCommit()
     .then(commit => Branch.create(repo, branchName, commit, false));
+};
+
+const remove = repo => branchName => {
+  return repo
+    .getBranch(branchName)
+    .then(ref => Branch.delete(ref))
+    .catch(e => {
+      throw new Error(`Error in deleting branch ${e}`);
+    });
 };
 
 /**
@@ -39,6 +47,7 @@ const isDetachedHead = repo => {
 
 export default {
   create,
+  remove,
   checkOut,
   checkOutCommit,
   checkOutMasterBranch,

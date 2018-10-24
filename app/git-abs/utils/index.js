@@ -23,15 +23,21 @@ async function createDirectory(path) {
 function createFile(path) {
   return new Promise((resolve, reject) =>
     fs.createFile(path, err => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
-      }
+      if (err) reject(err);
+      else resolve();
     })
   );
   //TODO: WHY DOES THIS NOT WORK?! WHY DOES IT NEED A FREAKING CALLBACK?!?!?!!?!
   // return fs.ensureFile(path);
+}
+
+function deleteFile(path) {
+  return new Promise((resolve, reject) =>
+    fs.unlink(path, err => {
+      if (err) reject(err);
+      else resolve();
+    })
+  );
 }
 
 /**
@@ -42,11 +48,8 @@ function createFile(path) {
 function writeJSONToFile(path, obj) {
   return new Promise((resolve, reject) => {
     fs.writeJSON(path, obj, err => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
-      }
+      if (err) reject(err);
+      else resolve();
     });
   });
 }
@@ -59,11 +62,8 @@ function readJSONFromFile(path) {
   //WHY DON"T PROMISES WORK GODDAMMIT
   return new Promise((resolve, reject) =>
     fs.readJSON(path, (err, obj) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(obj);
-      }
+      if (err) reject(err);
+      else resolve(obj);
     })
   );
 }
@@ -72,6 +72,7 @@ export default {
   pathExist,
   createDirectory,
   createFile,
+  deleteFile,
   writeJSONToFile,
   readJSONFromFile
 };
