@@ -33,10 +33,28 @@ class GitAbs {
    * Deletes branch for the given file name
    * @param {String} fileName
    */
-  deleteFile = fileName => {
-    // switch branch
-    // delete branch
-    // update project.json
+  deleteFile = async fileName => {
+    // if filename is not given, current branch is deleted
+    let branchName;
+    const currentBranch = await git.getCurrentBranch();
+
+    if (fileName) {
+      branchName = this.metadata.getBranchName(fileName);
+    } else {
+      branchName = currentBranch;
+    }
+
+    this.metadata.removeFile(
+      fileName
+    ); /* don't need to wait for async to return */
+
+    /* if deleting current file, switch to master branch */
+    if (branchName == currentBranch) {
+      await git.addAndCommit(this.repository)("deleting branch");
+      await git.branch.checkOutMasterBranch();
+    }
+
+    await git.branch.remove(branchName);
   };
 
   /**
