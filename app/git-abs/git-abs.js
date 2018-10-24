@@ -102,7 +102,11 @@ class GitAbs {
     // if version name is given
     if (versionName) {
       // update project.json with new version-commit mapping
-      this.metadata.addVersion(fileName, versionName, commitHash.toString());
+      await this.metadata.addVersion(
+        fileName,
+        versionName,
+        commitHash.toString()
+      );
     }
   };
 
@@ -143,8 +147,7 @@ class GitAbs {
    */
   getVersions = async fileName => {
     // use metedata object to get version names for the given fileName
-    const obj = await this.metadata.getAllVersions(fileName);
-    return Object.keys(obj);
+    return await this.metadata.getAllVersions(fileName);
   };
 
   /**

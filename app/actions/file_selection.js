@@ -1,11 +1,13 @@
 import { EditorState, convertFromRaw } from "draft-js";
 import { UPDATE_EDITOR_STATE } from "./editor";
+import updateHistory from "./history";
+
 export const SELECT_FILE = "SELECT_FILE";
 
 const selectFile = (gitAbs, file) => dispatch => {
   gitAbs
     .openFile(file)
-    .then(fileData =>
+    .then(fileData => {
       dispatch([
         {
           type: SELECT_FILE,
@@ -15,8 +17,10 @@ const selectFile = (gitAbs, file) => dispatch => {
           type: UPDATE_EDITOR_STATE,
           payload: EditorState.createWithContent(convertFromRaw(fileData))
         }
-      ])
-    )
+      ]);
+      return gitAbs.getVersions(file);
+    })
+    .then(({ versions }) => dispatch(updateHistory(versions)))
     .catch(err => console.error("Error in file select action creator: ", err));
 };
 
