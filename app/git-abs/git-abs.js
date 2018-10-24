@@ -117,19 +117,33 @@ class GitAbs {
    */
   switchVersion = async (fileName, versionName) => {
     // TODO: ensure current branch is fileName's branch
+    const currentBranch = await git.getCurrentBranch(this.repository);
+    const branchName = this.metadata.getBranchName(fileName);
+
+    if (branchName != currentBranch) {
+      throw new Error("Given file is not the current open file");
+    }
+
     // get commit for version from project.json
-    // const versions = await this.metadata.getAllVersions(fileName);
-    // const commitHash = versions[fileName];
-    // if (!commitHash) {
-    //   throw new Error(`Version not found: ${commitHash}`);
-    // }
-    // // save current state of branch
-    // await this.saveFile(fileName);
+    let commitHash;
+    const versions = await this.metadata.getAllVersions(fileName);
+    for (let v in versions) {
+      if (v.getVersionName() === versionName) {
+        commitHash = versions.getCommitId();
+        break;
+      }
+    }
+    if (!commitHash) {
+      throw new Error(
+        `Version name: ${versionName} not found for file ${fileName}`
+      );
+    }
+
+    // save current state of branch
+    await this.saveFile(fileName);
+
     // checkout to selected commit
-    // TODO: implement
-    git.branch.checkOutCommit(this.repository)(
-      "0689daf0f107f4e842e9d412cde07bb3ff511d50"
-    );
+    await git.branch.checkOutCommit(this.repository)(commitHash);
   };
 
   /**
