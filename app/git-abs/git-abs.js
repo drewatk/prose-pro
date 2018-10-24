@@ -36,7 +36,7 @@ class GitAbs {
   deleteFile = async fileName => {
     // if filename is not given, current branch is deleted
     let branchName;
-    const currentBranch = await git.getCurrentBranch();
+    const currentBranch = await git.getCurrentBranch(this.repository);
 
     if (fileName) {
       branchName = this.metadata.getBranchName(fileName);
@@ -54,7 +54,7 @@ class GitAbs {
       await git.branch.checkOutMasterBranch();
     }
 
-    await git.branch.remove(branchName);
+    await git.branch.remove(this.repository)(branchName);
   };
 
   /**
