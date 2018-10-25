@@ -171,6 +171,14 @@ class GitAbs {
    * Returns list of files in the project
    */
   getFiles = () => this.metadata.getAllBranches();
+
+  /**
+   * Performs a hard reset on the given file to a previous commit
+   * @param {String} fileName
+   * @param {String} commitHash
+   */
+  reset = async (fileName, commitHash) =>
+    git.reset(this.repository, fileName, commitHash);
 }
 
 /* eslint-enable */

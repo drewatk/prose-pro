@@ -6,7 +6,7 @@ import { Commit, Reset, Oid, CheckoutOptions } from "nodegit";
  * @param {String} branchName
  * @param {String} commitHash
  */
-const reset = repo => branchName => commitHash => {
+const reset = repo => branchName => commitHash =>
   Commit.lookup(repo, Oid.fromString(commitHash))
     .then(commit =>
       Reset.reset(
@@ -18,6 +18,5 @@ const reset = repo => branchName => commitHash => {
       )
     )
     .catch(err => console.error("Error in Commit.lookup: ", err));
-};
 
 export default reset;
