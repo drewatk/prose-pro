@@ -96,7 +96,7 @@ class GitAbs {
     await this.editFile.updateFileJson(obj);
 
     // save current state as a commit
-    const commitMessage = "placeholder message";
+    const commitMessage = "placeholder message 💎";
     const commitHash = await git.addAndCommit(this.repository)(commitMessage);
 
     // if version name is given
@@ -156,6 +156,22 @@ class GitAbs {
     }
 
     return this.openFile(fileName);
+  };
+
+  getLatestTime = async fileName => {
+    const currentBranch = await git.getCurrentBranch(this.repository);
+    const branchName = this.metadata.getBranchName(fileName);
+
+    if (currentBranch !== branchName) {
+      throw new Error(
+        "requested file's latest time is not currently open file "
+      );
+    }
+
+    const latest_time = await git.getLatestCommitTime(this.repository)(
+      fileName
+    );
+    return latest_time;
   };
 
   /**
