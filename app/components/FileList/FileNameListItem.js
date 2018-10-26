@@ -24,7 +24,7 @@ class FileNameListItem extends React.Component {
   }
 
   render() {
-    const { file, onFileItemClick, styles } = this.props;
+    const { file, onFileItemClick, styles, onFileDeleteClick } = this.props;
     return (
       <ListGroupItem
         id="file-item"
@@ -37,7 +37,13 @@ class FileNameListItem extends React.Component {
             <i className="fas fa-ellipsis-h" style={{ float: "right" }} />
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem>Delete File</DropdownItem>
+            <DropdownItem
+              onClick={() => {
+                onFileDeleteClick(file);
+              }}
+            >
+              Delete File
+            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </ListGroupItem>
