@@ -178,7 +178,7 @@ class GitAbs {
    * @param {String} commitHash
    */
   reset = async (fileName, commitHash) =>
-    git.reset(this.repository, fileName, commitHash);
+    await git.reset(this.repository, fileName, commitHash);
 }
 
 /* eslint-enable */
