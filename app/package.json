@@ -15,6 +15,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "nodegit": "0.23.0-alpha.1"
+    "nodegit": "0.23.0"
   }
 }
