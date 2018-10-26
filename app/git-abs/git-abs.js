@@ -38,11 +38,7 @@ class GitAbs {
     let branchName;
     const currentBranch = await git.getCurrentBranch(this.repository);
 
-    if (fileName) {
-      branchName = this.metadata.getBranchName(fileName);
-    } else {
-      branchName = currentBranch;
-    }
+    branchName = this.metadata.getBranchName(fileName);
 
     this.metadata.removeFile(
       fileName
@@ -51,7 +47,7 @@ class GitAbs {
     /* if deleting current file, switch to master branch */
     if (branchName === currentBranch) {
       await git.addAndCommit(this.repository)("deleting branch");
-      await git.branch.checkOutMasterBranch();
+      await git.branch.checkOutMasterBranch(this.repository);
     }
 
     await git.branch.remove(this.repository)(branchName);

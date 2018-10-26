@@ -51,6 +51,7 @@ export default class Metadata {
     }
 
     if (!this.cfgObj.hasFile(fileName)) {
+      console.log("HERE");
       throw new Error("File doesn't exist");
     }
 
