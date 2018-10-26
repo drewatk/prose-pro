@@ -27,6 +27,5 @@
   },
   "eslint.enable": true,
   "editor.formatOnSave": true,
-  "editor.minimap.enabled": false,
-  "editor.fontFamily": "Inconsolata, Menlo, Monaco, 'Courier New', monospace"
+  "editor.minimap.enabled": false
 }
