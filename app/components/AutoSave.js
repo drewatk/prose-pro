@@ -23,10 +23,6 @@ export class AutoSave extends React.Component {
         currentFile,
         convertToRaw(editorState.getCurrentContent())
       );
-
-      console.log("Editor saved!");
-    } else {
-      console.warn("Editor failed to save");
     }
   }
 
