@@ -1,15 +1,26 @@
 import React from "react";
 import { connect } from "react-redux";
+import { convertToRaw } from "draft-js";
+
 import EditorPanel from "app/components/EditorPanel";
 import TitleBar from "app/components/TitleBar";
 import FileList from "app/components/FileList";
 import History from "app/components/History";
 import CheckpointForm from "app/components/Forms/CheckpointForm";
-
+import { Button } from "reactstrap";
 import styles from "./EditorPage.scss";
 
+import updateHistory from "app/actions/history";
+
 const EditorPage = props => {
-  const { showHistory, showFileList, currentFile } = props;
+  const {
+    dispatch,
+    showHistory,
+    showFileList,
+    currentFile,
+    gitAbstractions,
+    editorState
+  } = props;
   return (
     <div>
       <TitleBar />
@@ -24,9 +35,26 @@ const EditorPage = props => {
             {/* TODO: should this onSubmit be in a different place? */}
             <CheckpointForm
               onSubmit={({ commitMessage }) =>
-                console.log("Submitted new checkpoint: ", commitMessage)
+                gitAbstractions
+                  .saveFile(
+                    currentFile,
+                    convertToRaw(editorState.getCurrentContent()),
+                    commitMessage
+                  )
+                  .then(() => gitAbstractions.getVersions(currentFile))
+                  .then(({ versions }) => dispatch(updateHistory(versions)))
               }
             />
+            <Button
+              onClick={() =>
+                gitAbstractions.saveFile(
+                  currentFile,
+                  convertToRaw(editorState.getCurrentContent())
+                )
+              }
+            >
+              Save
+            </Button>
             {/* TODO: remove prop */}
             {currentFile && <EditorPanel isEditable={true} />}
           </div>
@@ -43,16 +71,25 @@ const EditorPage = props => {
 
 const mapStateToProps = ({
   view: { showFileList, showHistory },
-  currentFile
+  editor: { editorState },
+  currentFile,
+  gitAbstractions
 }) => {
   return {
     showFileList,
     showHistory,
-    currentFile
+    currentFile,
+    gitAbstractions,
+    editorState
   };
 };
 
-const WithEditorPage = connect(mapStateToProps)(EditorPage);
+const mapDispatchToProps = dispatch => ({ dispatch });
+
+const WithEditorPage = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditorPage);
 
 WithEditorPage.displayName = "EditorPage";
 export default WithEditorPage;

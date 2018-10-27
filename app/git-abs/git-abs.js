@@ -33,10 +33,28 @@ class GitAbs {
    * Deletes branch for the given file name
    * @param {String} fileName
    */
-  deleteFile = fileName => {
-    // switch branch
-    // delete branch
-    // update project.json
+  deleteFile = async fileName => {
+    // if filename is not given, current branch is deleted
+    let branchName;
+    const currentBranch = await git.getCurrentBranch(this.repository);
+
+    if (fileName) {
+      branchName = this.metadata.getBranchName(fileName);
+    } else {
+      branchName = currentBranch;
+    }
+
+    this.metadata.removeFile(
+      fileName
+    ); /* don't need to wait for async to return */
+
+    /* if deleting current file, switch to master branch */
+    if (branchName === currentBranch) {
+      await git.addAndCommit(this.repository)("deleting branch");
+      await git.branch.checkOutMasterBranch();
+    }
+
+    await git.branch.remove(this.repository)(branchName);
   };
 
   /**
@@ -78,13 +96,17 @@ class GitAbs {
     await this.editFile.updateFileJson(obj);
 
     // save current state as a commit
-    const commitMessage = "placeholder message";
+    const commitMessage = "placeholder message 💎";
     const commitHash = await git.addAndCommit(this.repository)(commitMessage);
 
     // if version name is given
     if (versionName) {
       // update project.json with new version-commit mapping
-      this.metadata.addVersion(fileName, versionName, commitHash.toString());
+      await this.metadata.addVersion(
+        fileName,
+        versionName,
+        commitHash.toString()
+      );
     }
   };
 
@@ -95,16 +117,33 @@ class GitAbs {
    */
   switchVersion = async (fileName, versionName) => {
     // TODO: ensure current branch is fileName's branch
+    const currentBranch = await git.getCurrentBranch(this.repository);
+    const branchName = this.metadata.getBranchName(fileName);
+
+    if (branchName != currentBranch) {
+      throw new Error("Given file is not the current open file");
+    }
+
     // get commit for version from project.json
-    // const versions = await this.metadata.getAllVersions(fileName);
-    // const commitHash = versions[fileName];
-    // if (!commitHash) {
-    //   throw new Error(`Version not found: ${commitHash}`);
-    // }
-    // // save current state of branch
-    // await this.saveFile(fileName);
+    let commitHash;
+    const versions = await this.metadata.getAllVersions(fileName);
+    for (let v of versions.versions) {
+      if (v.getVersionName() === versionName) {
+        commitHash = v.getCommitId();
+        break;
+      }
+    }
+    if (!commitHash) {
+      throw new Error(
+        `Version name: ${versionName} not found for file ${fileName}`
+      );
+    }
+
+    // save current state of branch
+    await git.addAndCommit(this.repository)("switching version");
+
     // checkout to selected commit
-    // TODO: implement
+    await git.branch.checkOutCommit(this.repository)(commitHash);
   };
 
   /**
@@ -119,20 +158,43 @@ class GitAbs {
     return this.openFile(fileName);
   };
 
+  getLatestTime = async fileName => {
+    const currentBranch = await git.getCurrentBranch(this.repository);
+    const branchName = this.metadata.getBranchName(fileName);
+
+    if (currentBranch !== branchName) {
+      throw new Error(
+        "requested file's latest time is not currently open file "
+      );
+    }
+
+    const latest_time = await git.getLatestCommitTime(this.repository)(
+      fileName
+    );
+    return latest_time;
+  };
+
   /**
    * Returns list of versions saved for given file name
    * @param {String} fileName
    */
   getVersions = async fileName => {
     // use metedata object to get version names for the given fileName
-    const obj = await this.metadata.getAllVersions(fileName);
-    return Object.keys(obj);
+    return await this.metadata.getAllVersions(fileName);
   };
 
   /**
    * Returns list of files in the project
    */
   getFiles = () => this.metadata.getAllBranches();
+
+  /**
+   * Performs a hard reset on the given file to a previous commit
+   * @param {String} fileName
+   * @param {String} commitHash
+   */
+  reset = async (fileName, commitHash) =>
+    await git.reset(this.repository, fileName, commitHash);
 }
 
 /* eslint-enable */

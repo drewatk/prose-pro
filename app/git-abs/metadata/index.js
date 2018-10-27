@@ -45,6 +45,27 @@ export default class Metadata {
     await utils.writeJSONToFile(filePath, emptyObj);
   }
 
+  async removeFile(fileName) {
+    if (!this.cfgObj) {
+      throw new Error("Project Config not initialized");
+    }
+
+    if (!this.cfgObj.hasFile(fileName)) {
+      throw new Error("File doesn't exist");
+    }
+
+    /* remove metadata file */
+    const filePath = path.join(
+      this.dirPath,
+      this.cfgObj.getBranchForFile(fileName)
+    );
+    utils.deleteFile(filePath); /* don't need to wait for async to return */
+
+    /* remove file-branch mapping */
+    this.cfgObj.removeFile(fileName);
+    await this.updateCfgFile();
+  }
+
   /**
    * Stores the mapping of version to commit for the given file in the metadata folder
    * @param {String} fileName

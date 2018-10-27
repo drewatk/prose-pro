@@ -19,6 +19,10 @@ CfgObject.prototype.addFile = function(fileName, branchName) {
   this.cfg[BRANCHES][fileName] = branchName;
 };
 
+CfgObject.prototype.removeFile = function(fileName) {
+  delete this.cfg[BRANCHES][fileName];
+};
+
 CfgObject.prototype.getFileNames = function() {
   return Object.keys(this.cfg[BRANCHES]);
 };

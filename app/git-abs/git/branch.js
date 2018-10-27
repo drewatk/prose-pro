@@ -1,4 +1,4 @@
-import { Branch } from "nodegit";
+import { Branch, Checkout } from "nodegit";
 
 /**
  * Creates a branch with given branchName in the given Repo
@@ -6,10 +6,18 @@ import { Branch } from "nodegit";
  * @param {String} branchName
  */
 const create = repo => branchName => {
-  console.log(repo.refreshIndex());
   return repo
     .getMasterCommit()
     .then(commit => Branch.create(repo, branchName, commit, false));
+};
+
+const remove = repo => branchName => {
+  return repo
+    .getBranch(branchName)
+    .then(ref => Branch.delete(ref))
+    .catch(e => {
+      throw new Error(`Error in deleting branch ${e}`);
+    });
 };
 
 /**
@@ -23,11 +31,19 @@ const checkOut = repo => branchName => {
     .then(reference => repo.checkoutBranch(reference));
 };
 
-/* eslint-disable */
 const checkOutCommit = repo => commitHash => {
-  //TODO
+  return repo.getCommit(commitHash).then(commit =>
+    Checkout.tree(repo, commit, {
+      checkoutStrategy: Checkout.STRATEGY.SAFE
+    }).then(() =>
+      repo.setHeadDetached(
+        commit,
+        repo.defaultSignature,
+        "Checkout: HEAD " + commit.id()
+      )
+    )
+  );
 };
-/* eslint-enable */
 
 const checkOutMasterBranch = repo => {
   return checkOut(repo)("master");
@@ -39,6 +55,7 @@ const isDetachedHead = repo => {
 
 export default {
   create,
+  remove,
   checkOut,
   checkOutCommit,
   checkOutMasterBranch,
