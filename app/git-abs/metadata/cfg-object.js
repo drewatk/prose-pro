@@ -12,7 +12,7 @@ function CfgObject(object) {
 }
 
 CfgObject.prototype.hasFile = function(fileName) {
-  return this.cfg[BRANCHES][fileName] ? true : false;
+  return fileName in this.cfg[BRANCHES];
 };
 
 CfgObject.prototype.addFile = function(fileName, branchName) {
