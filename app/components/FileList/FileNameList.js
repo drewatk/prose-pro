@@ -1,5 +1,6 @@
 import React from "react";
-import { ListGroup, ListGroupItem } from "reactstrap";
+import { ListGroup } from "reactstrap";
+import FileNameListItem from "./FileNameListItem";
 
 const FileNameList = props => {
   const { files, onFileItemClick } = props;
@@ -8,14 +9,11 @@ const FileNameList = props => {
       <ListGroup>
         {files.map((file, index) => {
           return (
-            <ListGroupItem
-              id="file-item"
+            <FileNameListItem
               key={index}
-              onClick={() => onFileItemClick(file)}
-              style={{ cursor: "pointer" }}
-            >
-              {file}
-            </ListGroupItem>
+              onFileItemClick={onFileItemClick}
+              file={file}
+            />
           );
         })}
       </ListGroup>
