@@ -11,6 +11,7 @@ export const CreateFileForm = ({ handleSubmit, submitting, pristine }) => (
     <Field
       name="fileName"
       component={Input}
+      label="File Name"
       validate={[required]}
       type="text"
     />

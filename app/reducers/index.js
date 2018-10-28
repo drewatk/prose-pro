@@ -22,7 +22,8 @@ const rootReducer = combineReducers({
   checkpointHistory,
   gitAbstractions,
   form: formReducer.plugin({
-    checkpoint: clearFormOnSuccess
+    checkpoint: clearFormOnSuccess,
+    createfile: clearFormOnSuccess
   })
 });
 
