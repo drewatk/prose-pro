@@ -1,8 +1,8 @@
 import React from "react";
 import { ListGroup, ListGroupItem } from "reactstrap";
-
+import { connect } from "react-redux";
 const FileNameList = props => {
-  const { files, onFileItemClick } = props;
+  const { files, onFileItemClick, currentFile } = props;
   return (
     <div>
       <ListGroup>
@@ -12,7 +12,10 @@ const FileNameList = props => {
               id="file-item"
               key={index}
               onClick={() => onFileItemClick(file)}
-              style={{ cursor: "pointer" }}
+              style={{
+                cursor: "pointer",
+                backgroundColor: currentFile === file ? "#e8e9ea" : "#fff"
+              }}
             >
               {file}
             </ListGroupItem>
@@ -23,4 +26,6 @@ const FileNameList = props => {
   );
 };
 
-export default FileNameList;
+const mapStateToProps = ({ currentFile }) => ({ currentFile });
+
+export default connect(mapStateToProps)(FileNameList);
