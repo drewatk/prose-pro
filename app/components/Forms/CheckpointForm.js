@@ -13,6 +13,7 @@ export const CheckpointForm = ({ handleSubmit, submitting, pristine }) => (
     <Field
       name="commitMessage"
       component={Input}
+      label="Message"
       validate={[required]}
       type="text"
     />
