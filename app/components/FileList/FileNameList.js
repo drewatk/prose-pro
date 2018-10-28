@@ -1,6 +1,8 @@
 import React from "react";
-import { ListGroup, ListGroupItem } from "reactstrap";
 import { connect } from "react-redux";
+
+import { ListGroup } from "reactstrap";
+import FileNameListItem from "./FileNameListItem";
 
 const FileNameList = props => {
   const { files, onFileItemClick, currentFile } = props;
@@ -9,17 +11,15 @@ const FileNameList = props => {
       <ListGroup>
         {files.map((file, index) => {
           return (
-            <ListGroupItem
-              id="file-item"
+            <FileNameListItem
               key={index}
-              onClick={() => onFileItemClick(file)}
-              style={{
+              onFileItemClick={onFileItemClick}
+              file={file}
+              styles={{
                 cursor: "pointer",
                 backgroundColor: currentFile === file ? "#e8e9ea" : "#fff"
               }}
-            >
-              {file}
-            </ListGroupItem>
+            />
           );
         })}
       </ListGroup>
