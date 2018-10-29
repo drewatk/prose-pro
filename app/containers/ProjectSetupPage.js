@@ -7,7 +7,6 @@ import ProjectSelectionForm from "app/components/Forms/ProjectSelectionForm";
 import NewProjectForm from "app/components/Forms/NewProjectForm";
 
 import projectSelect from "app/actions/project_selection";
-import { showError } from "app/actions/error";
 
 const ProjectSetupPage = ({ projects, dispatch }) => (
   <div>
@@ -16,10 +15,7 @@ const ProjectSetupPage = ({ projects, dispatch }) => (
       onSubmit={({ project }) => {
         createProject(project)
           .then(() => dispatch(projectSelect(project)))
-          .catch(err => {
-            console.error(err);
-            dispatch(showError(err.message));
-          });
+          .catch(err => console.error(err));
       }}
     />
     <ProjectSelectionForm
