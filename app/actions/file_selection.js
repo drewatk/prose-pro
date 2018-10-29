@@ -25,7 +25,7 @@ const selectFile = (gitAbs, file) => dispatch => {
 };
 
 export const deSelectFile = () => {
-  [
+  return [
     {
       type: SELECT_FILE,
       payload: null

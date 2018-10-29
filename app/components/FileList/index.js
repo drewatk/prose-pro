@@ -11,7 +11,6 @@ const FileList = ({ files, gitAbstractions, currentFile, dispatch }) => {
   return (
     <div>
       <div>
-
         <CreateFileForm
           onSubmit={({ fileName }) => {
             gitAbstractions
@@ -35,12 +34,15 @@ const FileList = ({ files, gitAbstractions, currentFile, dispatch }) => {
             dispatch(selectFile(gitAbstractions, file));
           }}
           onFileDeleteClick={file => {
+            const current = currentFile;
             gitAbstractions
               .deleteFile(file)
-              .then(() => dispatch(updateFiles(gitAbstractions.getFiles())))
               .then(() => {
-                if (currentFile === file) {
-                  deSelectFile(file);
+                dispatch(updateFiles(gitAbstractions.getFiles()));
+              })
+              .then(() => {
+                if (current === file) {
+                  dispatch(deSelectFile());
                 }
               })
               .catch(err =>
