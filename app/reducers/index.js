@@ -10,6 +10,7 @@ import files from "app/reducers/files";
 import checkpointHistory from "app/reducers/checkpoint_history";
 import gitAbstractions from "app/reducers/git_abs";
 import error from "app/reducers/error";
+import lastSaved from "app/reducers/last_saved";
 
 import { clearFormOnSuccess } from "./helpers";
 
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
   form: formReducer.plugin({
     checkpoint: clearFormOnSuccess,
     createfile: clearFormOnSuccess
-  })
+  }),
+  lastSaved
 });
 
 export default rootReducer;
