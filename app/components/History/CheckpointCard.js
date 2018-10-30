@@ -16,6 +16,8 @@ import { EditorState, convertFromRaw } from "draft-js";
 import { UPDATE_EDITOR_STATE } from "app/actions/editor";
 import updateHistory from "app/actions/history";
 
+import { FileObject } from "app/git-abs/metadata/file-object";
+
 class CheckpointCard extends React.Component {
   constructor(props) {
     super(props);
@@ -34,9 +36,9 @@ class CheckpointCard extends React.Component {
 
   render() {
     const {
-      message,
-      date,
-      commitHash,
+      version,
+      timestamp,
+      commit,
       gitAbstractions,
       currentFile,
       checkpointHistory,
@@ -47,10 +49,10 @@ class CheckpointCard extends React.Component {
       <Card>
         <CardBody>
           <CardSubtitle>Checkpoint:</CardSubtitle>
-          <CardText>{message}</CardText>
+          <CardText>{version}</CardText>
           <CardSubtitle>Date:</CardSubtitle>
           <CardText>
-            {new Date(date).toLocaleString("en-US", {
+            {new Date(timestamp).toLocaleString("en-US", {
               timeZone: "America/New_York"
             })}
           </CardText>
@@ -67,7 +69,7 @@ class CheckpointCard extends React.Component {
               <DropdownItem
                 onClick={() => {
                   gitAbstractions
-                    .reset(currentFile, commitHash)
+                    .reset(currentFile, commit)
                     .then(fileData =>
                       dispatch({
                         type: UPDATE_EDITOR_STATE,
@@ -77,9 +79,14 @@ class CheckpointCard extends React.Component {
                       })
                     )
                     .then(() =>
-                      R.dropLastWhile(
-                        cp => cp.commitHash !== commitHash,
-                        checkpointHistory
+                      console.log(
+                        "FILE OBJECT -> ",
+                        new FileObject({
+                          versions: R.dropLastWhile(
+                            cp => cp.commit !== commit,
+                            checkpointHistory
+                          )
+                        })
                       )
                     )
                     .then(() => gitAbstractions.getVersions(currentFile))
