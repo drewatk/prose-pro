@@ -9,8 +9,8 @@ import History from "app/components/History";
 import CheckpointForm from "app/components/Forms/CheckpointForm";
 import { Button } from "reactstrap";
 import styles from "./EditorPage.scss";
-
 import updateHistory from "app/actions/history";
+import ErrorModal from "app/components/ErrorModal";
 
 const EditorPage = props => {
   const {
@@ -22,49 +22,52 @@ const EditorPage = props => {
     editorState
   } = props;
   return (
-    <div>
-      <TitleBar />
-      <div className={`${styles.container} conatiner-fluid`}>
-        <div className={`${styles.rowHeight} row no-gutters`}>
-          {showFileList && (
-            <div className={`${styles.left} col-2`}>
-              <FileList />
-            </div>
-          )}
-          <div className={`${styles.mid} col`}>
-            {/* TODO: should this onSubmit be in a different place? */}
-            <CheckpointForm
-              onSubmit={({ commitMessage }) =>
-                gitAbstractions
-                  .saveFile(
+    <ErrorModal>
+      <div>
+        <TitleBar />
+        <div className={`${styles.container} conatiner-fluid`}>
+          <div className={`${styles.rowHeight} row no-gutters`}>
+            {showFileList && (
+              <div className={`${styles.left} col-2`}>
+                <FileList />
+              </div>
+            )}
+            <div className={`${styles.mid} col`}>
+              {/* TODO: should this onSubmit be in a different place? */}
+              <CheckpointForm
+                onSubmit={({ commitMessage }) =>
+                  gitAbstractions
+                    .saveFile(
+                      currentFile,
+                      convertToRaw(editorState.getCurrentContent()),
+                      commitMessage
+                    )
+                    .then(() => gitAbstractions.getVersions(currentFile))
+                    .then(({ versions }) => dispatch(updateHistory(versions)))
+                }
+              />
+              <Button
+                onClick={() =>
+                  gitAbstractions.saveFile(
                     currentFile,
-                    convertToRaw(editorState.getCurrentContent()),
-                    commitMessage
+                    convertToRaw(editorState.getCurrentContent())
                   )
-                  .then(() => gitAbstractions.getVersions(currentFile))
-                  .then(({ versions }) => dispatch(updateHistory(versions)))
-              }
-            />
-            <Button
-              onClick={() =>
-                gitAbstractions.saveFile(
-                  currentFile,
-                  convertToRaw(editorState.getCurrentContent())
-                )
-              }
-            >
-              Save
-            </Button>
-            {currentFile && <EditorPanel />}
-          </div>
-          {showHistory && (
-            <div className={`${styles.right} col-2`}>
-              <History />
+                }
+              >
+                Save
+              </Button>
+              {currentFile && <EditorPanel />}
             </div>
-          )}
+
+            {showHistory && (
+              <div className={`${styles.right} col-2`}>
+                <History />
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </ErrorModal>
   );
 };
 
