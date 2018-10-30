@@ -5,7 +5,7 @@ import { stateToHTML } from "draft-js-export-html";
 import { Button } from "reactstrap";
 
 import { EditorState, convertFromRaw } from "draft-js";
-import { UPDATE_EDITOR_STATE, TOGGLE_EDIT_STATE } from "app/actions/editor";
+import { UPDATE_EDITOR_STATE, SET_EDIT_STATE } from "app/actions/editor";
 
 const Viewer = props => {
   const { editorState, currentFile, gitAbstractions, dispatch } = props;
@@ -26,7 +26,7 @@ const Viewer = props => {
                 payload: EditorState.createWithContent(convertFromRaw(fileData))
               })
             )
-            .then(() => dispatch({ type: TOGGLE_EDIT_STATE }))
+            .then(() => dispatch({ type: SET_EDIT_STATE }))
             .catch(err =>
               console.error("Error in exiting checkpoint view: ", err)
             )

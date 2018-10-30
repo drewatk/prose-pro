@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 
 import { EditorState, convertFromRaw } from "draft-js";
-import { UPDATE_EDITOR_STATE, TOGGLE_EDIT_STATE } from "app/actions/editor";
+import { UPDATE_EDITOR_STATE, SET_VIEW_STATE } from "app/actions/editor";
 import updateHistory from "app/actions/history";
 
 import { FileObject } from "app/git-abs/metadata/file-object";
@@ -64,7 +64,10 @@ class CheckpointCard extends React.Component {
               <DropdownItem
                 onClick={() => {
                   gitAbstractions
-                    .switchVersion(currentFile, commit)
+                    .switchToCurrentVersion(currentFile)
+                    .then(() =>
+                      gitAbstractions.switchVersion(currentFile, commit)
+                    )
                     .then(fileData =>
                       dispatch({
                         type: UPDATE_EDITOR_STATE,
@@ -73,7 +76,7 @@ class CheckpointCard extends React.Component {
                         )
                       })
                     )
-                    .then(() => dispatch({ type: TOGGLE_EDIT_STATE }))
+                    .then(() => dispatch({ type: SET_VIEW_STATE }))
                     .catch(e => console.error("we got e => ", e));
                 }}
               >
