@@ -56,12 +56,14 @@ exports[`CheckpointCard matches snapshot 1`] = `
         tag="div"
       >
         <DropdownItem
+          onClick={[Function]}
           tag="button"
           toggle={true}
         >
           View
         </DropdownItem>
         <DropdownItem
+          onClick={[Function]}
           tag="button"
           toggle={true}
         >
