@@ -1,53 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FileNameList matches snapshot 1`] = `
-<ListGroupItem
-  id="file-item"
-  onClick={[Function]}
-  tag="li"
->
-  file1
-  <Dropdown
-    active={false}
-    addonType={false}
-    direction="down"
-    inNavbar={false}
-    isOpen={false}
-    nav={false}
-    setActiveFromChild={false}
-    toggle={[Function]}
-  >
-    <DropdownToggle
-      aria-haspopup={true}
-      color="secondary"
-      onClick={[Function]}
-      tag="span"
-    >
-      <i
-        className="fas fa-ellipsis-h"
-        style={
-          Object {
-            "float": "right",
-          }
-        }
-      />
-    </DropdownToggle>
-    <DropdownMenu
-      flip={true}
-      tag="div"
-    >
-      <DropdownItem
-        onClick={[Function]}
-        tag="button"
-        toggle={true}
-      >
-        Delete File
-      </DropdownItem>
-    </DropdownMenu>
-  </Dropdown>
-</ListGroupItem>
-`;
-
 exports[`FileNameListItem matches snapshot 1`] = `
 <ListGroupItem
   id="file-item"
