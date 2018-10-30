@@ -1,3 +1,4 @@
+/* Dont change constants as they are hardcoded into react components */
 const COMMIT_SHA = "commit";
 const TIMESTAMP = "timestamp";
 const VERSION_NAME = "version";

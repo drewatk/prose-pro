@@ -7,9 +7,9 @@ const updateHistory = versions => dispatch => {
   dispatch({
     type: UPDATE_HISTORY_STATE,
     payload: versions.map(v => ({
-      message: v.getVersionName(),
-      commitHash: v.getCommitId(),
-      date: v.getTimestamp()
+      version: v.getVersionName(),
+      commit: v.getCommitId(),
+      timestamp: v.getTimestamp()
     }))
   });
 };

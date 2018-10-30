@@ -93,7 +93,7 @@ class GitAbs {
     await this.editFile.updateFileJson(obj);
 
     // save current state as a commit
-    const commitMessage = "placeholder message 💎";
+    const commitMessage = versionName || "placeholder message 💎";
     const commitHash = await git.addAndCommit(this.repository)(commitMessage);
 
     // if version name is given
@@ -180,6 +180,10 @@ class GitAbs {
     return await this.metadata.getAllVersions(fileName);
   };
 
+  updateVersions = async (fileName, fileObj) => {
+    return await this.metadata.overwriteVersions(fileName, fileObj);
+  };
+
   /**
    * Returns list of files in the project
    */
@@ -190,8 +194,12 @@ class GitAbs {
    * @param {String} fileName
    * @param {String} commitHash
    */
-  reset = async (fileName, commitHash) =>
+  reset = async (fileName, commitHash) => {
     await git.reset(this.repository, fileName, commitHash);
+
+    // return updated file content
+    return await this.editFile.getFileJson();
+  };
 }
 
 const getUniqueBranchName = async repo => {
