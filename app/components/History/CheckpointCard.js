@@ -91,7 +91,7 @@ class CheckpointCard extends React.Component {
                     )
                     .then(() => gitAbstractions.getVersions(currentFile))
                     .then(({ versions }) => dispatch(updateHistory(versions)))
-                    .catch(err => console.log("reset failed...", err));
+                    .catch(err => console.err("Reset Failed: ", err));
                 }}
               >
                 Revert
