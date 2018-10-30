@@ -141,6 +141,9 @@ class GitAbs {
 
     // checkout to selected commit
     await git.branch.checkOutCommit(this.repository)(commitHash);
+
+    // return file data
+    return await this.editFile.getFileJson();
   };
 
   /**
