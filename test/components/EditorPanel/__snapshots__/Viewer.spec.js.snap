@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditorPanel matches snapshot (editable) 1`] = `
+<div
+  dangerouslySetInnerHTML={
+    Object {
+      "__html": undefined,
+    }
+  }
+  id="viewer-content"
+/>
+`;
