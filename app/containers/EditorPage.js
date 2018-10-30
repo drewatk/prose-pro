@@ -55,8 +55,7 @@ const EditorPage = props => {
             >
               Save
             </Button>
-            {/* TODO: remove prop */}
-            {currentFile && <EditorPanel isEditable={true} />}
+            {currentFile && <EditorPanel />}
           </div>
           {showHistory && (
             <div className={`${styles.right} col-2`}>
