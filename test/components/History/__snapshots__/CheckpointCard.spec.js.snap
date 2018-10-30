@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CheckpointCard matches snapshot 1`] = `
+<Card
+  tag="div"
+>
+  <CardBody
+    tag="div"
+  >
+    <CardSubtitle
+      tag="h6"
+    >
+      Checkpoint:
+    </CardSubtitle>
+    <CardText
+      tag="p"
+    >
+      test message
+    </CardText>
+    <CardSubtitle
+      tag="h6"
+    >
+      Date:
+    </CardSubtitle>
+    <CardText
+      tag="p"
+    >
+      12/31/1969, 7:00:10 PM
+    </CardText>
+    <Dropdown
+      active={false}
+      addonType={false}
+      direction="down"
+      inNavbar={false}
+      isOpen={false}
+      nav={false}
+      setActiveFromChild={false}
+      toggle={[Function]}
+    >
+      <DropdownToggle
+        aria-haspopup={true}
+        color="secondary"
+        tag="span"
+      >
+        <i
+          className="fas fa-ellipsis-h"
+          style={
+            Object {
+              "float": "right",
+            }
+          }
+        />
+      </DropdownToggle>
+      <DropdownMenu
+        flip={true}
+        tag="div"
+      >
+        <DropdownItem
+          tag="button"
+          toggle={true}
+        >
+          View
+        </DropdownItem>
+        <DropdownItem
+          tag="button"
+          toggle={true}
+        >
+          Revert
+        </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
+  </CardBody>
+</Card>
+`;
