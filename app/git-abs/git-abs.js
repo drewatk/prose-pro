@@ -179,6 +179,10 @@ class GitAbs {
     return await this.metadata.getAllVersions(fileName);
   };
 
+  updateVersions = async (fileName, fileObj) => {
+    return await this.metadata.overwriteVersions(fileName, fileObj);
+  };
+
   /**
    * Returns list of files in the project
    */
