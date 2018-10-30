@@ -94,6 +94,22 @@ export default class Metadata {
     return fileObj;
   }
 
+  /**
+   *
+   * @param {String} fileName
+   * @param {FileObject} fileObj
+   */
+  async overwriteVersions(fileName, fileObj) {
+    const filePath = path.join(
+      this.dirPath,
+      this.cfgObj.getBranchForFile(fileName)
+    );
+
+    await utils.writeJSONToFile(filePath, fileObj.getObject());
+
+    return fileObj;
+  }
+
   async getAllVersions(fileName) {
     const filePath = path.join(this.dirPath, fileName);
 
