@@ -79,8 +79,8 @@ class CheckpointCard extends React.Component {
                       })
                     )
                     .then(() =>
-                      console.log(
-                        "FILE OBJECT -> ",
+                      gitAbstractions.updateVersions(
+                        currentFile,
                         new FileObject({
                           versions: R.dropLastWhile(
                             cp => cp.commit !== commit,

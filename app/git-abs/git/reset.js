@@ -7,9 +7,6 @@ import { Commit, Reset, Oid, CheckoutOptions } from "nodegit";
  * @param {String} commitHash
  */
 const reset = (repo, branchName, commitHash) => {
-  console.log(
-    `reset is being called with ${repo} ${branchName} and ${commitHash}`
-  );
   return Commit.lookup(repo, Oid.fromString(commitHash))
     .then(commit =>
       Reset.reset(
