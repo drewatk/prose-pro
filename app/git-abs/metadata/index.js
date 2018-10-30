@@ -95,7 +95,10 @@ export default class Metadata {
   }
 
   async getAllVersions(fileName) {
-    const filePath = path.join(this.dirPath, fileName);
+    const filePath = path.join(
+      this.dirPath,
+      this.cfgObj.getBranchForFile(fileName)
+    );
 
     const obj = await utils.readJSONFromFile(filePath);
     return new FileObject(obj);
