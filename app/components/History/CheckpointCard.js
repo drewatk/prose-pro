@@ -77,7 +77,7 @@ class CheckpointCard extends React.Component {
                       })
                     )
                     .then(() => dispatch({ type: SET_VIEW_STATE }))
-                    .catch(e => console.error("we got e => ", e));
+                    .catch(e => console.error("Error in Checkpoint View: ", e));
                 }}
               >
                 View
