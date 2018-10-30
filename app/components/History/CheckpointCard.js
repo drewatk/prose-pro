@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import * as R from "ramda";
 import {
   Card,
   CardBody,
@@ -38,9 +39,10 @@ class CheckpointCard extends React.Component {
       commitHash,
       gitAbstractions,
       currentFile,
+      checkpointHistory,
       dispatch
     } = this.props;
-    console.log("getting gitAbs = ", gitAbstractions);
+
     return (
       <Card>
         <CardBody>
@@ -74,7 +76,12 @@ class CheckpointCard extends React.Component {
                         )
                       })
                     )
-                    //.then(() => /* write to versions file... */)
+                    .then(() =>
+                      R.dropLastWhile(
+                        cp => cp.commitHash !== commitHash,
+                        checkpointHistory
+                      )
+                    )
                     .then(() => gitAbstractions.getVersions(currentFile))
                     .then(({ versions }) => dispatch(updateHistory(versions)))
                     .catch(err => console.log("reset failed...", err));
@@ -90,9 +97,14 @@ class CheckpointCard extends React.Component {
   }
 }
 
-const mapStateToProps = ({ gitAbstractions, currentFile }) => ({
+const mapStateToProps = ({
   gitAbstractions,
-  currentFile
+  currentFile,
+  checkpointHistory
+}) => ({
+  gitAbstractions,
+  currentFile,
+  checkpointHistory
 });
 
 export default connect(mapStateToProps)(CheckpointCard);
