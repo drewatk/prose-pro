@@ -112,7 +112,7 @@ class GitAbs {
    * @param {String} fileName
    * @param {String} versionName
    */
-  switchVersion = async (fileName, versionName) => {
+  switchVersion = async (fileName, commitID) => {
     // TODO: ensure current branch is fileName's branch
     const currentBranch = await git.getCurrentBranch(this.repository);
     const branchName = this.metadata.getBranchName(fileName);
@@ -124,23 +124,21 @@ class GitAbs {
     // get commit for version from project.json
     let commitHash;
     const versions = await this.metadata.getAllVersions(fileName);
-    for (let v of versions.versions) {
-      if (v.getVersionName() === versionName) {
-        commitHash = v.getCommitId();
-        break;
-      }
-    }
-    if (!commitHash) {
+    const commitExists = versions.versions.reduce(
+      (acc, o) => acc || o.getCommitId == commitID,
+      false
+    );
+
+    if (!commitExists)
       throw new Error(
-        `Version name: ${versionName} not found for file ${fileName}`
+        `Given commit ${commit} does not exist for file ${fileName}`
       );
-    }
 
     // save current state of branch
     await git.addAndCommit(this.repository)("switching version");
 
     // checkout to selected commit
-    await git.branch.checkOutCommit(this.repository)(commitHash);
+    await git.branch.checkOutCommit(this.repository)(commitID);
 
     // return file data
     return await this.editFile.getFileJson();
