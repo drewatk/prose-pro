@@ -18,5 +18,5 @@ const gitCons = {
 };
 
 const rootDir = path.join(app.getPath("userData"), "projects");
-
+console.log("PROJECT PATHS -> ", rootDir);
 export default { projCons, gitCons, rootDir };

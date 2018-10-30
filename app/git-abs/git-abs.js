@@ -92,7 +92,7 @@ class GitAbs {
     await this.editFile.updateFileJson(obj);
 
     // save current state as a commit
-    const commitMessage = "placeholder message 💎";
+    const commitMessage = versionName || "placeholder message 💎";
     const commitHash = await git.addAndCommit(this.repository)(commitMessage);
 
     // if version name is given
@@ -189,8 +189,12 @@ class GitAbs {
    * @param {String} fileName
    * @param {String} commitHash
    */
-  reset = async (fileName, commitHash) =>
+  reset = async (fileName, commitHash) => {
     await git.reset(this.repository, fileName, commitHash);
+
+    // return updated file content
+    return await this.editFile.getFileJson();
+  };
 }
 
 /* eslint-enable */

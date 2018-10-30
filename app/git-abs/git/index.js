@@ -5,6 +5,7 @@ import createInitialCommit from "./create-initial-commit";
 import repository from "./repository";
 import getCurrentBranch from "./current-branch";
 import getLatestCommitTime from "app/git-abs/git/latest-time";
+import reset from "./reset";
 
 export default {
   addAndCommit,
@@ -13,5 +14,6 @@ export default {
   createInitialCommit,
   repository,
   getCurrentBranch,
-  getLatestCommitTime
+  getLatestCommitTime,
+  reset
 };
