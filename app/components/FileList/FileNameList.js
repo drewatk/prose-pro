@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { ListGroup } from "reactstrap";
 import FileNameListItem from "./FileNameListItem";
 
-const FileNameList = props => {
+export const FileNameList = props => {
   const { files, onFileItemClick, onFileDeleteClick, currentFile } = props;
   return (
     <div>
