@@ -24,4 +24,18 @@ const selectFile = (gitAbs, file) => dispatch => {
     .catch(err => console.error("Error in file select action creator: ", err));
 };
 
+export const deSelectFile = () => {
+  return [
+    {
+      type: SELECT_FILE,
+      payload: null
+    },
+    {
+      type: UPDATE_EDITOR_STATE,
+      payload: EditorState.createEmpty()
+    },
+    updateHistory([])
+  ];
+};
+
 export default selectFile;

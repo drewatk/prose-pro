@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 import CreateFileForm from "../Forms/CreateFileForm";
 import FileNameList from "./FileNameList";
 
-import selectFile from "app/actions/file_selection";
+import selectFile, { deSelectFile } from "app/actions/file_selection";
 import updateFiles from "app/actions/files";
 
-const FileList = ({ files, gitAbstractions, dispatch }) => {
+const FileList = ({ files, gitAbstractions, currentFile, dispatch }) => {
   return (
     <div>
       <div>
@@ -33,15 +33,35 @@ const FileList = ({ files, gitAbstractions, dispatch }) => {
           onFileItemClick={file => {
             dispatch(selectFile(gitAbstractions, file));
           }}
+          onFileDeleteClick={file => {
+            const current = currentFile;
+            gitAbstractions
+              .deleteFile(file)
+              .then(() => {
+                dispatch(updateFiles(gitAbstractions.getFiles()));
+              })
+              .then(() => {
+                if (current === file) {
+                  dispatch(deSelectFile());
+                }
+              })
+              .catch(err =>
+                console.error(
+                  "Error in CreateFileForm onFileDeleteClick: ",
+                  err
+                )
+              );
+          }}
         />
       </div>
     </div>
   );
 };
 
-const mapStateToProps = ({ files, gitAbstractions }) => ({
+const mapStateToProps = ({ files, gitAbstractions, currentFile }) => ({
   files,
-  gitAbstractions
+  gitAbstractions,
+  currentFile
 });
 
 const mapDispatchToProps = dispatch => ({ dispatch });

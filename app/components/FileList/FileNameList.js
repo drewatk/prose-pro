@@ -5,7 +5,7 @@ import { ListGroup } from "reactstrap";
 import FileNameListItem from "./FileNameListItem";
 
 const FileNameList = props => {
-  const { files, onFileItemClick, currentFile } = props;
+  const { files, onFileItemClick, onFileDeleteClick, currentFile } = props;
   return (
     <div>
       <ListGroup>
@@ -19,6 +19,7 @@ const FileNameList = props => {
                 cursor: "pointer",
                 backgroundColor: currentFile === file ? "#e8e9ea" : "#fff"
               }}
+              onFileDeleteClick={onFileDeleteClick}
             />
           );
         })}
