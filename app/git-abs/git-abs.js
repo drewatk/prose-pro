@@ -110,7 +110,7 @@ class GitAbs {
   /**
    * Switches fileName's branch to given version's tag
    * @param {String} fileName
-   * @param {String} versionName
+   * @param {String} commitID
    */
   switchVersion = async (fileName, commitID) => {
     // TODO: ensure current branch is fileName's branch
@@ -125,13 +125,13 @@ class GitAbs {
     let commitHash;
     const versions = await this.metadata.getAllVersions(fileName);
     const commitExists = versions.versions.reduce(
-      (acc, o) => acc || o.getCommitId == commitID,
+      (acc, o) => acc || o.getCommitId() === commitID,
       false
     );
 
     if (!commitExists)
       throw new Error(
-        `Given commit ${commit} does not exist for file ${fileName}`
+        `Given commit ${commitID} does not exist for file ${fileName}`
       );
 
     // save current state of branch
