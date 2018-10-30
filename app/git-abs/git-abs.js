@@ -1,4 +1,5 @@
 import git from "app/git-abs/git";
+import uuid from "uuid/v1";
 import Metadata from "app/git-abs/metadata";
 import EditFile from "app/git-abs/edit-file.js";
 import getProjectPath from "./projectPath";
@@ -23,7 +24,7 @@ class GitAbs {
    */
   createFile = async fileName => {
     // create branch
-    const branchName = fileName; //TODO create unique branch name
+    const branchName = await getUniqueBranchName(this.repository); //TODO create unique branch name
 
     await git.branch.create(this.repository)(branchName); // create a branch
     await this.metadata.addFile(fileName, branchName); // update metadata
@@ -192,6 +193,17 @@ class GitAbs {
   reset = async (fileName, commitHash) =>
     await git.reset(this.repository, fileName, commitHash);
 }
+
+const getUniqueBranchName = async repo => {
+  const branchList = await git.branch.getBranchList(repo);
+
+  let newName;
+  do {
+    newName = uuid();
+  } while (branchList.indexOf(newName) != -1);
+
+  return newName;
+};
 
 /* eslint-enable */
 const openProject = async projName => {

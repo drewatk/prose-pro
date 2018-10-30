@@ -1,4 +1,4 @@
-import { Branch, Checkout } from "nodegit";
+import { Branch, Checkout, Reference } from "nodegit";
 
 /**
  * Creates a branch with given branchName in the given Repo
@@ -53,11 +53,24 @@ const isDetachedHead = repo => {
   return repo.headDetached() ? true : false;
 };
 
+const getBranchList = async repo => {
+  const localRef = "refs/heads/";
+  return repo.getReferenceNames(Reference.TYPE.LISTALL).then(arr =>
+    arr.reduce((acc, el) => {
+      if (el.includes(localRef)) {
+        acc.push(el.replace(localRef, ""));
+      }
+      return acc;
+    }, [])
+  );
+};
+
 export default {
   create,
   remove,
   checkOut,
   checkOutCommit,
   checkOutMasterBranch,
-  isDetachedHead
+  isDetachedHead,
+  getBranchList
 };
