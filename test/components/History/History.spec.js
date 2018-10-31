@@ -1,21 +1,44 @@
 import React from "react";
 import Enzyme, { shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import { History } from "app/components/History";
+import CheckpointCard from "app/components/History/CheckpointCardTest";
 
 Enzyme.configure({ adapter: new Adapter() });
 
 describe("History View", () => {
-  it("should should display History View", () => {
+  it("should display History View", () => {
     const now = new Date().toLocaleString("en-US", { timeZone: "UTC" });
-    const mockHistory = [
-      { message: "first commit", date: now },
-      { message: "second commit", date: now },
-      { message: "third commit", date: now }
+    const history = [
+      { version: "first commit", timestamp: now, commit: "<placehold commit>" },
+      {
+        version: "second commit",
+        timestamp: now,
+        commit: "<placehold commit>"
+      },
+      { version: "third commit", timestamp: now, commit: "<placehold commit>" }
     ];
 
-    const wrapper = shallow(<History history={mockHistory} />);
-    expect(wrapper.find("CheckpointCard")).toHaveLength(mockHistory.length);
-    mockHistory.forEach(({ message }) => expect(wrapper.find(message)));
+    const wrapper = shallow(
+      <div>
+        {history.map((data, index) => (
+          <CheckpointCard key={index} {...data} />
+        ))}
+      </div>
+    );
+
+    expect(wrapper.find("CheckpointCard")).toHaveLength(history.length);
+  });
+
+  it("should toggle CheckpointCard options", () => {
+    const now = new Date().toLocaleString("en-US", { timeZone: "UTC" });
+    const checkpoint = {
+      version: "welcome to git",
+      timestamp: now,
+      commit: "12KjkJ4554"
+    };
+    const wrapper = shallow(<CheckpointCard {...checkpoint} />);
+    expect(wrapper.state("dropdownOpen")).toBe(false);
+    wrapper.setState({ dropdownOpen: true });
+    expect(wrapper.find("DropdownItem")).toHaveLength(2);
   });
 });
