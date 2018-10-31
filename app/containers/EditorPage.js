@@ -9,7 +9,7 @@ import History from "app/components/History";
 import CheckpointForm from "app/components/Forms/CheckpointForm";
 import { Button } from "reactstrap";
 import styles from "./EditorPage.scss";
-import updateHistory from "app/actions/history";
+import updateHistory, { UPDATE_LAST_SAVED } from "app/actions/history";
 import ErrorModal from "app/components/ErrorModal";
 
 const EditorPage = props => {
@@ -19,7 +19,8 @@ const EditorPage = props => {
     showFileList,
     currentFile,
     gitAbstractions,
-    editorState
+    editorState,
+    lastSaved
   } = props;
   return (
     <ErrorModal>
@@ -44,18 +45,33 @@ const EditorPage = props => {
                     )
                     .then(() => gitAbstractions.getVersions(currentFile))
                     .then(({ versions }) => dispatch(updateHistory(versions)))
+                    .then(() => gitAbstractions.getLatestTime(currentFile))
+                    .then(time =>
+                      dispatch({ type: UPDATE_LAST_SAVED, payload: time })
+                    )
                 }
               />
               <Button
                 onClick={() =>
-                  gitAbstractions.saveFile(
-                    currentFile,
-                    convertToRaw(editorState.getCurrentContent())
-                  )
+                  gitAbstractions
+                    .saveFile(
+                      currentFile,
+                      convertToRaw(editorState.getCurrentContent())
+                    )
+                    .then(() => gitAbstractions.getLatestTime(currentFile))
+                    .then(time =>
+                      dispatch({ type: UPDATE_LAST_SAVED, payload: time })
+                    )
                 }
               >
                 Save
               </Button>
+              <p>
+                <em>
+                  Last Saved:&nbsp;
+                  {lastSaved && new Date(lastSaved).toLocaleString()}
+                </em>
+              </p>
               {currentFile && <EditorPanel />}
             </div>
 
@@ -75,14 +91,16 @@ const mapStateToProps = ({
   view: { showFileList, showHistory },
   editor: { editorState },
   currentFile,
-  gitAbstractions
+  gitAbstractions,
+  lastSaved
 }) => {
   return {
     showFileList,
     showHistory,
     currentFile,
     gitAbstractions,
-    editorState
+    editorState,
+    lastSaved
   };
 };
 
