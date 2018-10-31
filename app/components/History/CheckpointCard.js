@@ -49,7 +49,7 @@ class CheckpointCard extends React.Component {
     return (
       <Card
         style={{
-          backgroundColor: viewedCheckpoint === commit ? "#e8e9ea" : "#fff"
+          backgroundColor: viewedCheckpoint === commit ? "" : ""
         }}
       >
         <CardBody>
