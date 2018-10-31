@@ -5,7 +5,7 @@ import { CheckpointForm } from "app/components/Forms/CheckpointForm";
 
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import { reduxForm } from "redux-form";
+import { reduxForm, reducer as formReducer } from "redux-form";
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -22,27 +22,27 @@ describe("Checkpoint Creation Form", () => {
   });
 
   it("should add a checkpoint message and submit", () => {
-    const store = createStore(state => state, { form: {} });
+    const store = createStore(formReducer);
     const ReduxCheckpointForm = reduxForm({ form: "checkpoint" })(
       CheckpointForm
     );
     const wrapper = mount(
       <Provider store={store}>
-        <ReduxCheckpointForm
-          handleSubmit={() => {}}
-          pristine={true}
-          submitting={false}
-        />
+        <ReduxCheckpointForm onSubmit={() => {}} />
       </Provider>
     );
 
     expect(wrapper.find("Form")).toHaveLength(1);
     expect(wrapper.find("Input")).toHaveLength(1);
-    wrapper.find("Input").simulate("change", { target: { value: "foo" } });
-    console.log(store.getState());
-    expect(wrapper.find("button")).toHaveLength(1);
-    wrapper.find("button").simulate("click");
-  });
+    expect(wrapper.find("Button")).toHaveLength(1);
 
-  // TODO: Add tests for input manipulation once redux connected to testing.
+    const commitMessage = "Draft 1 Commit";
+    wrapper
+      .find("Input")
+      .simulate("change", { target: { value: commitMessage } });
+    expect(store.getState().checkpoint.values.commitMessage).toBe(
+      commitMessage
+    );
+    wrapper.find("Button").simulate("click");
+  });
 });
