@@ -167,7 +167,7 @@ class GitAbs {
     }
 
     const latest_time = await git.getLatestCommitTime(this.repository)(
-      fileName
+      branchName
     );
     return latest_time;
   };
