@@ -42,11 +42,16 @@ export class CheckpointCard extends React.Component {
       gitAbstractions,
       currentFile,
       checkpointHistory,
+      viewedCheckpoint,
       dispatch
     } = this.props;
 
     return (
-      <Card>
+      <Card
+        style={{
+          backgroundColor: viewedCheckpoint === commit ? "#E8E9EA" : "#FFF"
+        }}
+      >
         <CardBody>
           <CardSubtitle>Checkpoint:</CardSubtitle>
           <CardText>{version}</CardText>
@@ -76,7 +81,9 @@ export class CheckpointCard extends React.Component {
                         )
                       })
                     )
-                    .then(() => dispatch({ type: SET_VIEW_STATE }))
+                    .then(() =>
+                      dispatch({ type: SET_VIEW_STATE, payload: commit })
+                    )
                     .catch(e => console.error("Error in Checkpoint View: ", e));
                 }}
               >
@@ -123,11 +130,13 @@ export class CheckpointCard extends React.Component {
 const mapStateToProps = ({
   gitAbstractions,
   currentFile,
-  checkpointHistory
+  checkpointHistory,
+  editor: { viewedCheckpoint }
 }) => ({
   gitAbstractions,
   currentFile,
-  checkpointHistory
+  checkpointHistory,
+  viewedCheckpoint
 });
 
 export default connect(mapStateToProps)(CheckpointCard);

@@ -7,6 +7,7 @@ import {
 
 const defaultState = {
   editorState: EditorState.createEmpty(),
+  viewedCheckpoint: null,
   isEditable: true
 };
 
@@ -20,12 +21,14 @@ export default function editor(state = defaultState, { payload, type }) {
     case SET_EDIT_STATE:
       return {
         ...state,
-        isEditable: true
+        isEditable: true,
+        viewedCheckpoint: null
       };
     case SET_VIEW_STATE:
       return {
         ...state,
-        isEditable: false
+        isEditable: false,
+        viewedCheckpoint: payload
       };
   }
 
