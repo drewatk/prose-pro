@@ -7,15 +7,14 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe("History View", () => {
   it("should should display History View", () => {
-    const now = new Date().toLocaleString("en-US", { timeZone: "UTC" });
+    const now = new Date(10101).toLocaleString("en-US", { timeZone: "UTC" });
     const mockHistory = [
-      { message: "first commit", date: now },
-      { message: "second commit", date: now },
-      { message: "third commit", date: now }
+      { version: "first commit", timestamp: now },
+      { version: "second commit", timestamp: now },
+      { version: "third commit", timestamp: now }
     ];
 
     const wrapper = shallow(<History history={mockHistory} />);
-    expect(wrapper.find("CheckpointCard")).toHaveLength(mockHistory.length);
-    mockHistory.forEach(({ message }) => expect(wrapper.find(message)));
+    expect(wrapper).toMatchSnapshot();
   });
 });
