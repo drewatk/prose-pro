@@ -1,8 +1,13 @@
 import { EditorState } from "draft-js";
-import { UPDATE_EDITOR_STATE, TOGGLE_EDIT_STATE } from "../actions/editor";
+import {
+  UPDATE_EDITOR_STATE,
+  SET_EDIT_STATE,
+  SET_VIEW_STATE
+} from "../actions/editor";
 
 const defaultState = {
   editorState: EditorState.createEmpty(),
+  viewedCheckpoint: null,
   isEditable: true
 };
 
@@ -13,10 +18,17 @@ export default function editor(state = defaultState, { payload, type }) {
         ...state,
         editorState: payload
       };
-    case TOGGLE_EDIT_STATE:
+    case SET_EDIT_STATE:
       return {
         ...state,
-        isEditable: !state.isEditable
+        isEditable: true,
+        viewedCheckpoint: null
+      };
+    case SET_VIEW_STATE:
+      return {
+        ...state,
+        isEditable: false,
+        viewedCheckpoint: payload
       };
   }
 

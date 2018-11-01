@@ -13,12 +13,12 @@ import {
 } from "reactstrap";
 
 import { EditorState, convertFromRaw } from "draft-js";
-import { UPDATE_EDITOR_STATE } from "app/actions/editor";
+import { UPDATE_EDITOR_STATE, SET_VIEW_STATE } from "app/actions/editor";
 import updateHistory from "app/actions/history";
 
 import { FileObject } from "app/git-abs/metadata/file-object";
 
-class CheckpointCard extends React.Component {
+export class CheckpointCard extends React.Component {
   constructor(props) {
     super(props);
 
@@ -42,11 +42,16 @@ class CheckpointCard extends React.Component {
       gitAbstractions,
       currentFile,
       checkpointHistory,
+      viewedCheckpoint,
       dispatch
     } = this.props;
 
     return (
-      <Card>
+      <Card
+        style={{
+          backgroundColor: viewedCheckpoint === commit ? "#E8E9EA" : "#FFF"
+        }}
+      >
         <CardBody>
           <CardSubtitle>Checkpoint:</CardSubtitle>
           <CardText>{version}</CardText>
@@ -62,7 +67,25 @@ class CheckpointCard extends React.Component {
             </DropdownToggle>
             <DropdownMenu>
               <DropdownItem
-                onClick={() => console.log("IMPLEMENT CHECKPOINT VIEW")}
+                onClick={() => {
+                  gitAbstractions
+                    .switchToCurrentVersion(currentFile)
+                    .then(() =>
+                      gitAbstractions.switchVersion(currentFile, commit)
+                    )
+                    .then(fileData =>
+                      dispatch({
+                        type: UPDATE_EDITOR_STATE,
+                        payload: EditorState.createWithContent(
+                          convertFromRaw(fileData)
+                        )
+                      })
+                    )
+                    .then(() =>
+                      dispatch({ type: SET_VIEW_STATE, payload: commit })
+                    )
+                    .catch(e => console.error("Error in Checkpoint View: ", e));
+                }}
               >
                 View
               </DropdownItem>
@@ -107,11 +130,13 @@ class CheckpointCard extends React.Component {
 const mapStateToProps = ({
   gitAbstractions,
   currentFile,
-  checkpointHistory
+  checkpointHistory,
+  editor: { viewedCheckpoint }
 }) => ({
   gitAbstractions,
   currentFile,
-  checkpointHistory
+  checkpointHistory,
+  viewedCheckpoint
 });
 
 export default connect(mapStateToProps)(CheckpointCard);

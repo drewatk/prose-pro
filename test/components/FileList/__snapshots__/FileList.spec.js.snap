@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FileNameList matches snapshot 1`] = `
+<div>
+  <ListGroup
+    tag="ul"
+  >
+    <FileNameListItem
+      file="File1"
+      key="0"
+      styles={
+        Object {
+          "backgroundColor": "#fff",
+          "cursor": "pointer",
+        }
+      }
+    />
+    <FileNameListItem
+      file="file2"
+      key="1"
+      styles={
+        Object {
+          "backgroundColor": "#fff",
+          "cursor": "pointer",
+        }
+      }
+    />
+    <FileNameListItem
+      file="File3"
+      key="2"
+      styles={
+        Object {
+          "backgroundColor": "#fff",
+          "cursor": "pointer",
+        }
+      }
+    />
+  </ListGroup>
+</div>
+`;
