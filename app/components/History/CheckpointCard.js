@@ -13,7 +13,11 @@ import {
 } from "reactstrap";
 
 import { EditorState, convertFromRaw } from "draft-js";
-import { UPDATE_EDITOR_STATE, SET_VIEW_STATE } from "app/actions/editor";
+import {
+  UPDATE_EDITOR_STATE,
+  SET_VIEW_STATE,
+  SET_EDIT_STATE
+} from "app/actions/editor";
 import updateHistory from "app/actions/history";
 
 import { FileObject } from "app/git-abs/metadata/file-object";
@@ -101,6 +105,7 @@ export class CheckpointCard extends React.Component {
                         )
                       })
                     )
+                    .then(() => dispatch({ type: SET_EDIT_STATE }))
                     .then(() =>
                       gitAbstractions.updateVersions(
                         currentFile,
@@ -114,7 +119,7 @@ export class CheckpointCard extends React.Component {
                     )
                     .then(() => gitAbstractions.getVersions(currentFile))
                     .then(({ versions }) => dispatch(updateHistory(versions)))
-                    .catch(err => console.err("Reset Failed: ", err));
+                    .catch(err => console.error("Reset Failed: ", err));
                 }}
               >
                 Revert
