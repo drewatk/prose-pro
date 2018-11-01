@@ -18,7 +18,7 @@ import updateHistory from "app/actions/history";
 
 import { FileObject } from "app/git-abs/metadata/file-object";
 
-class CheckpointCard extends React.Component {
+export class CheckpointCard extends React.Component {
   constructor(props) {
     super(props);
 
