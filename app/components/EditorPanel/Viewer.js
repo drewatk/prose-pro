@@ -7,7 +7,7 @@ import { Button } from "reactstrap";
 import { EditorState, convertFromRaw } from "draft-js";
 import { UPDATE_EDITOR_STATE, SET_EDIT_STATE } from "app/actions/editor";
 
-const Viewer = props => {
+export const Viewer = props => {
   const { editorState, currentFile, gitAbstractions, dispatch } = props;
   // TODO: Bring blockquote & code styles from editor
 

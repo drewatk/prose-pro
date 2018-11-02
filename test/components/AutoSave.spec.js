@@ -15,6 +15,7 @@ jest.mock("draft-js", () => {
 
 describe("AutoSave", () => {
   beforeEach(() => {
+    jest.resetAllMocks();
     jest.useFakeTimers();
   });
 
@@ -27,10 +28,13 @@ describe("AutoSave", () => {
   });
 
   it("calls saveFile", () => {
+    const time = 1541179857371;
     const props = {
       gitAbstractions: {
-        saveFile: jest.fn()
+        saveFile: jest.fn().mockResolvedValueOnce(),
+        getLatestTime: jest.fn().mockResolvedValueOnce(time)
       },
+      dispatch: jest.fn(),
       currentFile: "testfile",
       editorState: { getCurrentContent: jest.fn() }
     };
@@ -42,9 +46,11 @@ describe("AutoSave", () => {
     expect(setInterval).toHaveBeenCalledTimes(1);
     expect(wrapper.instance().interval).toBeDefined();
 
-    jest.advanceTimersByTime(5000);
+    jest.advanceTimersByTime(6000);
 
-    expect(props.gitAbstractions.saveFile).toHaveBeenCalledTimes(1);
     expect(props.editorState.getCurrentContent).toHaveBeenCalledTimes(1);
+    expect(props.gitAbstractions.saveFile).toHaveBeenCalledTimes(1);
+    // expect(props.gitAbstractions.getLatestTime).toHaveBeenCalledTimes(1);
+    // expect(props.dispatch).toHaveBeenCalledTimes(1);
   });
 });

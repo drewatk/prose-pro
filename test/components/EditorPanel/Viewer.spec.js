@@ -7,28 +7,43 @@ import { stateToHTML } from "draft-js-export-html";
 Enzyme.configure({ adapter: new Adapter() });
 
 jest.mock("draft-js-export-html", () => ({ stateToHTML: jest.fn() }));
+jest.mock("draft-js");
 
-describe("EditorPanel", () => {
+describe("Viewer", () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
-  it("matches snapshot (editable)", () => {
-    const editorState = { getCurrentContent: jest.fn() };
-    const wrapper = shallow(<Viewer editorState={editorState} />);
+  it("matches snapshot", () => {
+    const props = {
+      editorState: { getCurrentContent: jest.fn() },
+      dispatch: jest.fn(),
+      currentFile: "currentfile",
+      gitAbstractions: {
+        switchToCurrentVersion: jest.fn().mockResolvedValue("fileData")
+      }
+    };
+    const wrapper = shallow(<Viewer {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
 
   it("sets inner html", () => {
-    const editorState = { getCurrentContent: jest.fn() };
+    const props = {
+      editorState: { getCurrentContent: jest.fn() },
+      dispatch: jest.fn(),
+      currentFile: "currentfile",
+      gitAbstractions: {
+        switchToCurrentVersion: jest.fn().mockResolvedValue("fileData")
+      }
+    };
     const mockHTML = '<p id="test-id">Foobar!</p>';
     stateToHTML.mockReturnValueOnce(mockHTML);
 
-    const wrapper = render(<Viewer editorState={editorState} />);
+    const wrapper = render(<Viewer {...props} />);
 
-    expect(editorState.getCurrentContent).toHaveBeenCalledTimes(1);
+    expect(props.editorState.getCurrentContent).toHaveBeenCalledTimes(1);
     expect(stateToHTML).toHaveBeenCalledTimes(1);
 
-    expect(wrapper.html()).toEqual(mockHTML);
+    expect(wrapper.html()).toMatchSnapshot();
   });
 });
