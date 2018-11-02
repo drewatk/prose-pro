@@ -1,12 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`EditorPanel matches snapshot (editable) 1`] = `
-<div
-  dangerouslySetInnerHTML={
-    Object {
-      "__html": undefined,
+exports[`Viewer matches snapshot 1`] = `
+<div>
+  <Button
+    close={true}
+    color="secondary"
+    onClick={[Function]}
+    style={
+      Object {
+        "cursor": "pointer",
+        "float": "right",
+        "marginRight": "50px",
+      }
     }
-  }
-  id="viewer-content"
-/>
+    tag="button"
+  />
+  <div
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": undefined,
+      }
+    }
+  />
+</div>
 `;
+
+exports[`Viewer sets inner html 1`] = `"<button type=\\"button\\" style=\\"cursor:pointer;float:right;margin-right:50px\\" class=\\"close\\" aria-label=\\"Close\\"><span aria-hidden=\\"true\\">&#xD7;</span></button><div><p id=\\"test-id\\">Foobar!</p></div>"`;
