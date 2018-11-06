@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { ContentState, convertToRaw } from "draft-js";
 
 import CreateFileForm from "../Forms/CreateFileForm";
 import FileNameList from "./FileNameList";
@@ -13,8 +14,9 @@ const FileList = ({ files, gitAbstractions, currentFile, dispatch }) => {
       <div>
         <CreateFileForm
           onSubmit={({ fileName }) => {
+            const emptyFileContentState = ContentState.createFromText("");
             gitAbstractions
-              .createFile(fileName)
+              .createFile(fileName, convertToRaw(emptyFileContentState))
               .then(() => dispatch(updateFiles(gitAbstractions.getFiles())))
               .then(() => dispatch(selectFile(gitAbstractions, fileName)))
               .catch(err =>
