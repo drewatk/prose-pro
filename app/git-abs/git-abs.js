@@ -22,11 +22,23 @@ class GitAbs {
    * Creates a branch for the given file name
    * @param {String} fileName
    */
-  createFile = async fileName => {
+  createFile = async (fileName, initObj) => {
     // create branch
-    const branchName = await getUniqueBranchName(this.repository); //TODO create unique branch name
+    const branchName = await getUniqueBranchName(this.repository);
 
-    await git.branch.create(this.repository)(branchName); // create a branch
+    // create a branch
+    await git.branch.create(this.repository)(branchName);
+
+    // create file
+    const currentBranch = await git.getCurrentBranch(this.repository);
+    await git.addAndCommit(this.repository)("initializing new file");
+
+    await git.branch.checkOut(this.repository)(branchName);
+    await this.editFile.createFileJson(initObj);
+    await git.addAndCommit(this.repository)("first commit for text.json");
+
+    await git.branch.checkOut(this.repository)(currentBranch);
+
     await this.metadata.addFile(fileName, branchName); // update metadata
   };
 
@@ -67,9 +79,6 @@ class GitAbs {
 
     // switch to branch for fileName
     await git.branch.checkOut(this.repository)(branchName);
-
-    // if file hasn't been created, create it (can be made more efficient)
-    await this.editFile.createFileJson(this.repository);
 
     // return json content
     const fileObj = await this.editFile.getFileJson();
