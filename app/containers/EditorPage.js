@@ -1,115 +1,54 @@
 import React from "react";
 import { connect } from "react-redux";
-import { convertToRaw } from "draft-js";
 
 import EditorPanel from "app/components/EditorPanel";
 import TitleBar from "app/components/TitleBar";
 import FileList from "app/components/FileList";
 import History from "app/components/History";
-import CheckpointForm from "app/components/Forms/CheckpointForm";
-import { Button } from "reactstrap";
+
 import styles from "./EditorPage.scss";
-import updateHistory, { UPDATE_LAST_SAVED } from "app/actions/history";
+
 import ErrorModal from "app/components/ErrorModal";
 
-const EditorPage = props => {
-  const {
-    dispatch,
-    showHistory,
-    showFileList,
-    currentFile,
-    gitAbstractions,
-    editorState,
-    lastSaved
-  } = props;
-  return (
-    <ErrorModal>
-      <div>
-        <TitleBar />
-        <div className={`${styles.container} conatiner-fluid`}>
-          <div className={`${styles.rowHeight} row no-gutters`}>
-            {showFileList && (
-              <div className={`${styles.left} col-2`}>
-                <FileList />
-              </div>
-            )}
-            <div className={`${styles.mid} col`}>
-              {/* TODO: should this onSubmit be in a different place? */}
-              <CheckpointForm
-                onSubmit={({ commitMessage }) =>
-                  gitAbstractions
-                    .saveFile(
-                      currentFile,
-                      convertToRaw(editorState.getCurrentContent()),
-                      commitMessage
-                    )
-                    .then(() => gitAbstractions.getVersions(currentFile))
-                    .then(({ versions }) => dispatch(updateHistory(versions)))
-                    .then(() => gitAbstractions.getLatestTime(currentFile))
-                    .then(time =>
-                      dispatch({ type: UPDATE_LAST_SAVED, payload: time })
-                    )
-                }
-              />
-              <Button
-                onClick={() =>
-                  gitAbstractions
-                    .saveFile(
-                      currentFile,
-                      convertToRaw(editorState.getCurrentContent())
-                    )
-                    .then(() => gitAbstractions.getLatestTime(currentFile))
-                    .then(time =>
-                      dispatch({ type: UPDATE_LAST_SAVED, payload: time })
-                    )
-                }
-              >
-                Save
-              </Button>
-              <p>
-                <em>
-                  Last Saved:&nbsp;
-                  {lastSaved && new Date(lastSaved).toLocaleString()}
-                </em>
-              </p>
-              {currentFile && <EditorPanel />}
+const EditorPage = ({ showHistory, showFileList, currentFile }) => (
+  <ErrorModal>
+    <div>
+      <TitleBar />
+      <div className={`${styles.container} conatiner-fluid`}>
+        <div className={`${styles.rowHeight} row no-gutters`}>
+          {showFileList && (
+            <div className={`${styles.left} col-2`}>
+              <FileList />
             </div>
+          )}
 
-            {showHistory && (
-              <div className={`${styles.right} col-2`}>
-                <History />
-              </div>
-            )}
+          <div className={`${styles.mid} col`}>
+            {currentFile && <EditorPanel />}
           </div>
+
+          {showHistory && (
+            <div className={`${styles.right} col-2`}>
+              <History />
+            </div>
+          )}
         </div>
       </div>
-    </ErrorModal>
-  );
-};
+    </div>
+  </ErrorModal>
+);
 
 const mapStateToProps = ({
   view: { showFileList, showHistory },
-  editor: { editorState },
-  currentFile,
-  gitAbstractions,
-  lastSaved
+  currentFile
 }) => {
   return {
     showFileList,
     showHistory,
-    currentFile,
-    gitAbstractions,
-    editorState,
-    lastSaved
+    currentFile
   };
 };
 
-const mapDispatchToProps = dispatch => ({ dispatch });
-
-const WithEditorPage = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EditorPage);
+const WithEditorPage = connect(mapStateToProps)(EditorPage);
 
 WithEditorPage.displayName = "EditorPage";
 export default WithEditorPage;

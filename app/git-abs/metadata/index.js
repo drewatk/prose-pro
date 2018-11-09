@@ -16,7 +16,6 @@ export default class Metadata {
    */
   async init() {
     this.cfgObj = await this.getCfgFromFile();
-    console.log(this.cfgObj);
   }
 
   /**
@@ -85,8 +84,6 @@ export default class Metadata {
     const newVersion = new Version(versionName, commitHash, Date.now());
     fileObj.addVersion(newVersion);
 
-    console.log(newVersion);
-
     // write object back to metadata file
     await utils.writeJSONToFile(filePath, fileObj.getObject());
 
@@ -142,7 +139,6 @@ export default class Metadata {
    */
   static async initEmptyConfig(filePath) {
     const emptyObj = Metadata.getEmptyCfgObj();
-    console.log(emptyObj);
     await utils.writeJSONToFile(filePath, emptyObj.getObject());
   }
 
