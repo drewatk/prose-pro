@@ -1,11 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Editor, RichUtils, getDefaultKeyBinding } from "draft-js";
+import {
+  Editor,
+  RichUtils,
+  getDefaultKeyBinding,
+  convertToRaw
+} from "draft-js";
+import { Button } from "reactstrap";
 
+import CheckpointForm from "app/components/Forms/CheckpointForm";
+import LastSaved from "./LastSaved";
 import InlineStyleControls from "./InlineStyleControls";
 import BlockStyleControls from "./BlockStyleControls";
-import { UPDATE_EDITOR_STATE } from "../../actions/editor";
-
+import { UPDATE_EDITOR_STATE } from "app/actions/editor";
+import updateHistory, { UPDATE_LAST_SAVED } from "app/actions/history";
 import styles from "./ProseEditor.css";
 
 const MAX_TAB_DEPTH = 4;
@@ -66,7 +74,7 @@ export class ProseEditor extends React.Component {
   }
 
   render() {
-    const { editorState } = this.props;
+    const { editorState, gitAbstractions, currentFile, dispatch } = this.props;
 
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
@@ -84,6 +92,38 @@ export class ProseEditor extends React.Component {
     }
     return (
       <div className={styles.root}>
+        <CheckpointForm
+          onSubmit={({ commitMessage }) =>
+            gitAbstractions
+              .saveFile(
+                currentFile,
+                convertToRaw(editorState.getCurrentContent()),
+                commitMessage
+              )
+              .then(() => gitAbstractions.getVersions(currentFile))
+              .then(({ versions }) => dispatch(updateHistory(versions)))
+              .then(() => gitAbstractions.getLatestTime(currentFile))
+              .then(time =>
+                dispatch({ type: UPDATE_LAST_SAVED, payload: time })
+              )
+          }
+        />
+        <Button
+          onClick={() =>
+            gitAbstractions
+              .saveFile(
+                currentFile,
+                convertToRaw(editorState.getCurrentContent())
+              )
+              .then(() => gitAbstractions.getLatestTime(currentFile))
+              .then(time =>
+                dispatch({ type: UPDATE_LAST_SAVED, payload: time })
+              )
+          }
+        >
+          Save
+        </Button>
+        <LastSaved />
         <BlockStyleControls
           editorState={editorState}
           onToggle={this.toggleBlockType}
@@ -134,9 +174,14 @@ function getBlockStyle(block) {
   }
 }
 
-const mapStateToProps = ({ editor: { editorState } }) => ({ editorState });
+const mapStateToProps = ({
+  editor: { editorState },
+  currentFile,
+  gitAbstractions
+}) => ({ editorState, currentFile, gitAbstractions });
 
 const mapDispatchToProps = dispatch => ({
+  dispatch,
   onSaveEditorState: editorState => {
     dispatch({
       type: UPDATE_EDITOR_STATE,
