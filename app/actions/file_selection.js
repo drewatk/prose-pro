@@ -1,6 +1,6 @@
 import { EditorState, convertFromRaw } from "draft-js";
 import { UPDATE_EDITOR_STATE } from "./editor";
-import updateHistory from "./history";
+import updateHistory, { UPDATE_LAST_SAVED } from "./history";
 
 export const SELECT_FILE = "SELECT_FILE";
 
@@ -34,7 +34,8 @@ export const deSelectFile = () => {
       type: UPDATE_EDITOR_STATE,
       payload: EditorState.createEmpty()
     },
-    updateHistory([])
+    updateHistory([]),
+    { type: UPDATE_LAST_SAVED, payload: null }
   ];
 };
 
