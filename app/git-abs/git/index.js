@@ -15,8 +15,8 @@ class Git {
       remove: branch.remove(repo),
       checkOut: branch.checkOut(repo),
       checkOutCommit: branch.checkOutCommit(repo),
-      checkoutMasterBranch: branch.checkOutMasterBranch(repo),
-      isDetachecHead: branch.isDetachedHead(repo),
+      checkOutMasterBranch: branch.checkOutMasterBranch(repo),
+      isDetachedHead: branch.isDetachedHead(repo),
       getBranchList: branch.getBranchList(repo)
     };
   }
@@ -26,7 +26,11 @@ class Git {
   };
 
   get branch() {
-    return this.branch;
+    return this._branch;
+  }
+
+  set branch(obj) {
+    return (this._branch = obj);
   }
 
   createInitialCommit = async () => {

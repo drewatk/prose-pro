@@ -22,7 +22,7 @@ class GitAbs {
    */
   createFile = async (fileName, initObj) => {
     // create branch
-    const branchList = await this.git.branch.getBranchList;
+    const branchList = await this.git.branch.getBranchList();
     const branchName = await getUniqueBranchName(branchList);
 
     // create a branch
