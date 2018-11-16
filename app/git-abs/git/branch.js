@@ -45,15 +45,15 @@ const checkOutCommit = repo => commitHash => {
   );
 };
 
-const checkOutMasterBranch = repo => {
+const checkOutMasterBranch = repo => () => {
   return checkOut(repo)("master");
 };
 
-const isDetachedHead = repo => {
+const isDetachedHead = repo => () => {
   return repo.headDetached() ? true : false;
 };
 
-const getBranchList = async repo => {
+const getBranchList = repo => async () => {
   const localRef = "refs/heads/";
   return repo.getReferenceNames(Reference.TYPE.LISTALL).then(arr =>
     arr.reduce((acc, el) => {

@@ -1,10 +1,8 @@
-import git from "app/git-abs/git";
+import { Git, repository } from "app/git-abs/git";
 import uuid from "uuid/v1";
 import Metadata from "app/git-abs/metadata";
 import EditFile from "app/git-abs/edit-file.js";
 import getProjectPath from "./projectPath";
-
-/* eslint-disable */
 
 class GitAbs {
   /**
@@ -12,10 +10,10 @@ class GitAbs {
    * @param {Metadata (./metadata.js)} metadata
    * @param {Repository (nodegit)} repository
    */
-  constructor(metadata, repository, editFile) {
+  constructor(metadata, editFile, git) {
     this.metadata = metadata;
-    this.repository = repository;
     this.editFile = editFile;
+    this.git = git;
   }
 
   /**
@@ -24,20 +22,21 @@ class GitAbs {
    */
   createFile = async (fileName, initObj) => {
     // create branch
-    const branchName = await getUniqueBranchName(this.repository);
+    const branchList = await this.git.branch.getBranchList;
+    const branchName = await getUniqueBranchName(branchList);
 
     // create a branch
-    await git.branch.create(this.repository)(branchName);
+    await this.git.branch.create(branchName);
 
     // create file
-    const currentBranch = await git.getCurrentBranch(this.repository);
-    await git.addAndCommit(this.repository)("initializing new file");
+    const currentBranch = await this.git.getCurrentBranch();
+    await this.git.addAndCommit("initializing new file");
 
-    await git.branch.checkOut(this.repository)(branchName);
+    await this.git.branch.checkOut(branchName);
     await this.editFile.createFileJson(initObj);
-    await git.addAndCommit(this.repository)("first commit for text.json");
+    await this.git.addAndCommit("first commit for text.json");
 
-    await git.branch.checkOut(this.repository)(currentBranch);
+    await this.git.branch.checkOut(currentBranch);
 
     await this.metadata.addFile(fileName, branchName); // update metadata
   };
@@ -49,7 +48,7 @@ class GitAbs {
   deleteFile = async fileName => {
     // if filename is not given, current branch is deleted
     let branchName;
-    const currentBranch = await git.getCurrentBranch(this.repository);
+    const currentBranch = await this.git.getCurrentBranch();
 
     branchName = this.metadata.getBranchName(fileName);
 
@@ -59,11 +58,11 @@ class GitAbs {
 
     /* if deleting current file, switch to master branch */
     if (branchName === currentBranch) {
-      await git.addAndCommit(this.repository)("deleting branch");
-      await git.branch.checkOutMasterBranch(this.repository);
+      await this.git.addAndCommit("deleting branch");
+      await this.git.branch.checkOutMasterBranch();
     }
 
-    await git.branch.remove(this.repository)(branchName);
+    await this.git.branch.remove(branchName);
   };
 
   /**
@@ -72,13 +71,13 @@ class GitAbs {
    */
   openFile = async fileName => {
     // save current state of branch
-    await git.addAndCommit(this.repository)("switching file");
+    await this.git.addAndCommit("switching file");
 
     // get branch from project.json
     const branchName = this.metadata.getBranchName(fileName);
 
     // switch to branch for fileName
-    await git.branch.checkOut(this.repository)(branchName);
+    await this.git.branch.checkOut(branchName);
 
     // return json content
     const fileObj = await this.editFile.getFileJson();
@@ -94,7 +93,7 @@ class GitAbs {
     // check if in right branch
 
     //Don't allow save if current state of branch not at head commit
-    if (git.branch.isDetachedHead(this.repository)) {
+    if (this.git.branch.isDetachedHead()) {
       throw new Error("Cannot save while in previous version.");
     }
 
@@ -103,7 +102,7 @@ class GitAbs {
 
     // save current state as a commit
     const commitMessage = versionName || "placeholder message 💎";
-    const commitHash = await git.addAndCommit(this.repository)(commitMessage);
+    const commitHash = await this.git.addAndCommit(commitMessage);
 
     // if version name is given
     if (versionName) {
@@ -122,8 +121,7 @@ class GitAbs {
    * @param {String} commitID
    */
   switchVersion = async (fileName, commitID) => {
-    // TODO: ensure current branch is fileName's branch
-    const currentBranch = await git.getCurrentBranch(this.repository);
+    const currentBranch = await this.git.getCurrentBranch();
     const branchName = this.metadata.getBranchName(fileName);
 
     if (branchName != currentBranch) {
@@ -131,7 +129,6 @@ class GitAbs {
     }
 
     // get commit for version from project.json
-    let commitHash;
     const versions = await this.metadata.getAllVersions(fileName);
     const commitExists = versions.versions.reduce(
       (acc, o) => acc || o.getCommitId() === commitID,
@@ -144,10 +141,10 @@ class GitAbs {
       );
 
     // save current state of branch
-    await git.addAndCommit(this.repository)("switching version");
+    await this.git.addAndCommit("switching version");
 
     // checkout to selected commit
-    await git.branch.checkOutCommit(this.repository)(commitID);
+    await this.git.branch.checkOutCommit(commitID);
 
     // return file data
     return await this.editFile.getFileJson();
@@ -157,7 +154,7 @@ class GitAbs {
    *
    */
   switchToCurrentVersion = async fileName => {
-    if (!git.branch.isDetachedHead(this.repository)) {
+    if (!this.git.branch.isDetachedHead()) {
       // this means already at head commit
       return;
     }
@@ -166,7 +163,7 @@ class GitAbs {
   };
 
   getLatestTime = async fileName => {
-    const currentBranch = await git.getCurrentBranch(this.repository);
+    const currentBranch = await this.git.getCurrentBranch();
     const branchName = this.metadata.getBranchName(fileName);
 
     if (currentBranch !== branchName) {
@@ -175,9 +172,7 @@ class GitAbs {
       );
     }
 
-    const latest_time = await git.getLatestCommitTime(this.repository)(
-      branchName
-    );
+    const latest_time = await this.git.getLatestCommitTime(branchName);
     return latest_time;
   };
 
@@ -205,16 +200,14 @@ class GitAbs {
    * @param {String} commitHash
    */
   reset = async (fileName, commitHash) => {
-    await git.reset(this.repository, fileName, commitHash);
+    await this.git.reset(fileName, commitHash);
 
     // return updated file content
     return await this.editFile.getFileJson();
   };
 }
 
-const getUniqueBranchName = async repo => {
-  const branchList = await git.branch.getBranchList(repo);
-
+const getUniqueBranchName = branchList => {
   let newName;
   do {
     newName = uuid();
@@ -223,19 +216,20 @@ const getUniqueBranchName = async repo => {
   return newName;
 };
 
-/* eslint-enable */
 const openProject = async projName => {
   const projPath = getProjectPath(projName);
 
   const metadata = new Metadata(projPath);
   await metadata.init();
-  const repo = await git.repository.open(projPath);
+  const repo = await repository.open(projPath);
   const editFile = new EditFile(projPath);
+
+  const git = new Git(repo);
 
   // Ensure master branch is checked out when project is opened
   await git.branch.checkOutMasterBranch(repo);
 
-  return new GitAbs(metadata, repo, editFile);
+  return new GitAbs(metadata, editFile, git);
 };
 
 export default openProject;

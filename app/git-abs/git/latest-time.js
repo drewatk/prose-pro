@@ -1,4 +1,4 @@
-const getLatestCommitTime = repo => async branch => {
+const getLatestCommitTime = async (repo, branch) => {
   const commit = await repo.getBranchCommit(branch);
   return commit.date();
 };
