@@ -18,8 +18,7 @@ const reset = (repo, branchName, commitHash) => {
       )
     )
     .catch(e => {
-      console.log("error in commit lookup.");
-      throw new Error(`Error in checkpoint reset ${e}`);
+      throw new Error(`git.reset: ${e}`);
     });
 };
 

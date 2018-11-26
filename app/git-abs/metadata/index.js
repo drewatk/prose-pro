@@ -18,36 +18,47 @@ export default class Metadata {
     this.cfgObj = await this.getCfgFromFile();
   }
 
+  checkInit() {
+    if (!this.cfgObj) {
+      throw new Error("Project Config not initialized");
+    }
+  }
+
   /**
    * Add file to a project
    * @param {String} fileName
    */
   async addFile(fileName, branchName) {
-    if (!this.cfgObj) {
-      throw new Error("Project Config not initialized");
-    }
+    this.checkInit();
 
     if (this.cfgObj.hasFile(fileName)) {
       throw new Error("File Already exists");
     }
 
-    /* create filename - branch mapping */
-    this.cfgObj.addFile(fileName, branchName);
+    try {
+      /* create metadata file for version - commit mapping */
+      const filePath = path.join(this.dirPath, branchName);
+      await utils.createFile(filePath);
 
-    await this.updateCfgFile();
+      const emptyObj = Metadata.genEmptyFileObj().getObject();
+      await utils.writeJSONToFile(filePath, emptyObj);
+    } catch (e) {
+      throw new Error(`Metadata addFile: could not add file. \n ${e}`);
+    }
 
-    /* create metadata file for version - commit mapping */
-    const filePath = path.join(this.dirPath, branchName);
-    await utils.createFile(filePath);
-
-    const emptyObj = Metadata.genEmptyFileObj().getObject();
-    await utils.writeJSONToFile(filePath, emptyObj);
+    try {
+      /* create filename - branch mapping */
+      this.cfgObj.addFile(fileName, branchName);
+      await this.updateCfgFile();
+    } catch (e) {
+      throw new Error(
+        `Metadata addFile: could not update config file. \n ${e}`
+      );
+    }
   }
 
   async removeFile(fileName) {
-    if (!this.cfgObj) {
-      throw new Error("Project Config not initialized");
-    }
+    this.checkInit();
 
     if (!this.cfgObj.hasFile(fileName)) {
       throw new Error("File doesn't exist");
@@ -72,20 +83,32 @@ export default class Metadata {
    * @param {String} commitHash
    */
   async addVersion(fileName, versionName, commitHash) {
+    this.checkInit();
+
     const filePath = path.join(
       this.dirPath,
       this.cfgObj.getBranchForFile(fileName)
     );
-    // read object from metadata file
-    const obj = await utils.readJSONFromFile(filePath);
-    const fileObj = new FileObject(obj);
+
+    let fileObj;
+    try {
+      // read object from metadata file
+      const obj = await utils.readJSONFromFile(filePath);
+      fileObj = new FileObject(obj);
+    } catch (e) {
+      throw new Error(`Metadata add Version: reading old versions \n${e}`);
+    }
+
+    try {
+      // write object back to metadata file
+      await utils.writeJSONToFile(filePath, fileObj.getObject());
+    } catch (e) {
+      throw new Error(`Metadata addVersion: writing new versions \n${e}`);
+    }
 
     // update object
     const newVersion = new Version(versionName, commitHash, Date.now());
     fileObj.addVersion(newVersion);
-
-    // write object back to metadata file
-    await utils.writeJSONToFile(filePath, fileObj.getObject());
 
     // return new object?
     return fileObj;
@@ -97,27 +120,41 @@ export default class Metadata {
    * @param {FileObject} fileObj
    */
   async overwriteVersions(fileName, fileObj) {
+    this.checkInit();
+
     const filePath = path.join(
       this.dirPath,
       this.cfgObj.getBranchForFile(fileName)
     );
 
-    await utils.writeJSONToFile(filePath, fileObj.getObject());
+    try {
+      await utils.writeJSONToFile(filePath, fileObj.getObject());
+    } catch (e) {
+      throw new Error(`Metadata overwriteVersions ${e}`);
+    }
 
     return fileObj;
   }
 
   async getAllVersions(fileName) {
+    this.checkInit();
+
     const filePath = path.join(
       this.dirPath,
       this.cfgObj.getBranchForFile(fileName)
     );
 
-    const obj = await utils.readJSONFromFile(filePath);
-    return new FileObject(obj);
+    try {
+      const obj = await utils.readJSONFromFile(filePath);
+      return new FileObject(obj);
+    } catch (e) {
+      throw new Error(`Metadata getAllVersions: ${e}`);
+    }
   }
 
   getAllBranches() {
+    this.checkInit();
+
     return this.cfgObj.getFileNames();
   }
 
@@ -126,6 +163,8 @@ export default class Metadata {
    * @param {String} fileName
    */
   getBranchName(fileName) {
+    this.checkInit();
+
     if (!this.cfgObj.hasFile(fileName)) {
       throw new Error("File doesn't exist");
     }
@@ -160,6 +199,8 @@ export default class Metadata {
    * write the current state of the project config to config file
    */
   async updateCfgFile() {
+    this.checkInit();
+
     await utils.writeJSONToFile(this.cfgPath, this.cfgObj.getObject());
   }
 
