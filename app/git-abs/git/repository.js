@@ -26,10 +26,9 @@ const init = repoPath => {
     nodegit.Repository.init(pathToRepo, isBare)
       .then(repo => createInitialCommit(repo))
       .then(() => resolve())
-      .catch(
-        err =>
-          throw new Error(`git.repository.init for path: ${repoPath} \n ${err}`)
-      );
+      .catch(err => {
+        throw new Error(`git.repository.init for path: ${repoPath} \n ${err}`);
+      });
   });
 };
 
