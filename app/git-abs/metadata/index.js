@@ -207,14 +207,8 @@ export default class Metadata {
   /**
    * read config file to get the object
    */
-  getCfgFromFile() {
-    return new Promise((resolve, reject) =>
-      utils
-        .readJSONFromFile(this.cfgPath)
-        .then(obj => {
-          resolve(new CfgObject(obj));
-        })
-        .catch(e => reject(e))
-    );
+  async getCfgFromFile() {
+    const obj = await utils.readJSONFromFile(this.cfgPath);
+    return new CfgObject(obj);
   }
 }
