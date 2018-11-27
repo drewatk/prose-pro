@@ -4,8 +4,11 @@ import { AppContainer } from "react-hot-loader";
 import Root from "app/containers/Root";
 import { configureStore, history } from "app/store/configureStore";
 import "app/app.global.css";
+import configureMenuActions from "app/store/configureMenuActions";
 
 const store = configureStore();
+
+configureMenuActions(store);
 
 render(
   <AppContainer>
