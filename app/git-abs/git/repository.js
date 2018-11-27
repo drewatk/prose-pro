@@ -22,13 +22,13 @@ const init = repoPath => {
   const pathToRepo = path.resolve(repoPath);
   const isBare = 0; /* create .git subdirectory */
 
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     nodegit.Repository.init(pathToRepo, isBare)
       .then(repo => createInitialCommit(repo))
       .then(() => resolve())
-      .catch(err =>
-        reject(`Error initialising repository in path: ${repoPath} \n ${err}`)
-      );
+      .catch(err => {
+        throw new Error(`git.repository.init for path: ${repoPath} \n ${err}`);
+      });
   });
 };
 

@@ -66,11 +66,20 @@ function readJSONFromFile(path) {
   );
 }
 
+/**
+ * Removes the directory at the given path
+ * @param {String} path
+ */
+function removeDir(path) {
+  fs.rmdirSync(path);
+}
+
 export default {
   pathExist,
   createDirectory,
   createFile,
   deleteFile,
   writeJSONToFile,
-  readJSONFromFile
+  readJSONFromFile,
+  removeDir
 };

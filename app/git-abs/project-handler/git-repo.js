@@ -11,7 +11,6 @@ async function create(projPath) {
   const repoPath = path.join(projPath, projCons.gitDir);
 
   await utils.createDirectory(repoPath);
-
   await repository.init(repoPath);
 }
 

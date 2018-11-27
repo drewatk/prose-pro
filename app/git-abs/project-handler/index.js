@@ -15,14 +15,19 @@ async function createProject(projName) {
     throw new Error(`Project path already exists: ${projPath}`);
   }
 
-  await utils.createDirectory(projPath);
+  try {
+    await utils.createDirectory(projPath);
+    await Promise.all([projectJSON.create(projPath), gitRepo.create(projPath)]);
 
-  await Promise.all([projectJSON.create(projPath), gitRepo.create(projPath)]);
-
-  // create text file in repo's master branch to handle edge case
-  // where add and commit is done before switching branches.
-  const editFile = new EditFile(projPath);
-  await editFile.createFileJson({});
+    // create text file in repo's master branch to handle edge case
+    // where add and commit is done before switching branches.
+    const editFile = new EditFile(projPath);
+    await editFile.createFileJson({});
+  } catch (e) {
+    // clean up in case of error
+    utils.removeDir(projPath);
+    throw e;
+  }
 }
 
 export default {

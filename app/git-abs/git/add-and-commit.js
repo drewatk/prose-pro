@@ -22,7 +22,7 @@ addAndCommit('test.js')('this commit was brought to you by the folks inside pros
 ***/
 
 const addAndCommit = (repo, commitMessage) => {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     let index = null,
       oid = null;
 
@@ -59,9 +59,8 @@ const addAndCommit = (repo, commitMessage) => {
         );
       })
       .then(commitId => resolve(commitId))
-      .catch(err => {
-        console.error("Error in addAndCommit:");
-        reject(err);
+      .catch(e => {
+        throw new Error(`git.addAndCommit: ${e}`);
       });
   });
 };
