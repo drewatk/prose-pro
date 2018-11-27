@@ -27,8 +27,6 @@ function createFile(path) {
       else resolve();
     })
   );
-  //TODO: WHY DOES THIS NOT WORK?! WHY DOES IT NEED A FREAKING CALLBACK?!?!?!!?!
-  // return fs.ensureFile(path);
 }
 
 function deleteFile(path) {

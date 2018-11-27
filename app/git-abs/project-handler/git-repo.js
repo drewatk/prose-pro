@@ -1,7 +1,7 @@
 import utils from "app/git-abs/utils";
 import path from "path";
 import { projCons } from "app/git-abs/constants";
-import { init } from "app/git-abs/git";
+import { repository } from "app/git-abs/git";
 
 /**
  * Creates the git repo for the given project name
@@ -12,7 +12,7 @@ async function create(projPath) {
 
   await utils.createDirectory(repoPath);
 
-  await init(repoPath);
+  await repository.init(repoPath);
 }
 
 export default { create };

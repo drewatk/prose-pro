@@ -21,7 +21,7 @@ addAndCommit('test.js')('this commit was brought to you by the folks inside pros
 
 ***/
 
-const addAndCommit = repo => commitMessage => {
+const addAndCommit = (repo, commitMessage) => {
   return new Promise((resolve, reject) => {
     let index = null,
       oid = null;
