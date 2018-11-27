@@ -99,16 +99,16 @@ export default class Metadata {
       throw new Error(`Metadata add Version: reading old versions \n${e}`);
     }
 
+    // update object
+    const newVersion = new Version(versionName, commitHash, Date.now());
+    fileObj.addVersion(newVersion);
+
     try {
       // write object back to metadata file
       await utils.writeJSONToFile(filePath, fileObj.getObject());
     } catch (e) {
       throw new Error(`Metadata addVersion: writing new versions \n${e}`);
     }
-
-    // update object
-    const newVersion = new Version(versionName, commitHash, Date.now());
-    fileObj.addVersion(newVersion);
 
     // return new object?
     return fileObj;

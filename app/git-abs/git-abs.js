@@ -184,7 +184,15 @@ class GitAbs {
       return;
     }
 
-    return this.openFile(fileName);
+    // get branch from project.json
+    const branchName = this.metadata.getBranchName(fileName);
+
+    // switch to branch for fileName
+    await this.git.branch.checkOut(branchName);
+
+    // return json content
+    const fileObj = await this.editFile.getFileJson();
+    return fileObj;
   };
 
   getLatestTime = async fileName => {
