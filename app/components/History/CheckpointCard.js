@@ -12,7 +12,12 @@ import {
   DropdownItem
 } from "reactstrap";
 
-import { EditorState, convertFromRaw } from "draft-js";
+import {
+  EditorState,
+  ContentState,
+  convertFromRaw,
+  convertToRaw
+} from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
 import diff from "app/utils/diff";
@@ -76,7 +81,7 @@ export class CheckpointCard extends React.Component {
               <DropdownItem
                 onClick={() => {
                   gitAbstractions
-                    .switchToselectedVersion(currentFile)
+                    .switchToCurrentVersion(currentFile)
                     .then(() =>
                       gitAbstractions.switchVersion(currentFile, commit)
                     )
@@ -131,35 +136,38 @@ export class CheckpointCard extends React.Component {
                 onClick={() => {
                   let selectedVersion = null,
                     previousVersion = null;
-                  gitAbstractions.editFile
-                    .getFileJson()
-                    //.switchToCurrentVersion(currentFile)
-                    //.then(() => gitAbstractions.switchVersion(currentFile, commit))
+                  gitAbstractions
+                    .switchToCurrentVersion(currentFile)
+                    .then(() =>
+                      gitAbstractions.switchVersion(currentFile, commit)
+                    )
                     .then(selectedVersionData => {
                       selectedVersion = stateToHTML(
                         convertFromRaw(selectedVersionData)
                       );
-                      console.log(selectedVersion);
                       return gitAbstractions.getVersions(currentFile);
                     })
                     .then(({ versions }) => {
-                      console.log(versions);
                       const previousCommit = R.last(
                         R.takeWhile(v => v.commit !== commit, versions)
                       );
                       if (previousCommit) {
-                        return gitAbstractions.switchVersion(
-                          currentFile,
-                          previousCommit.commit
-                        );
+                        return gitAbstractions
+                          .switchToCurrentVersion(currentFile)
+                          .then(() =>
+                            gitAbstractions.switchVersion(
+                              currentFile,
+                              previousCommit.commit
+                            )
+                          );
                       }
-                      return "";
+                      // return an empty file
+                      return convertToRaw(ContentState.createFromText(""));
                     })
                     .then(previousVersionData => {
                       previousVersion = stateToHTML(
                         convertFromRaw(previousVersionData)
                       );
-                      console.log(previousVersion);
                       return gitAbstractions.switchToCurrentVersion(
                         currentFile
                       );

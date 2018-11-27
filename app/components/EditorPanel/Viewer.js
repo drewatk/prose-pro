@@ -1,10 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { stateToHTML } from "draft-js-export-html";
-import diff from "app/utils/diff";
+import { EditorState, convertFromRaw } from "draft-js";
+
 import { Button } from "reactstrap";
 
-import { EditorState, convertFromRaw } from "draft-js";
 import { UPDATE_EDITOR_STATE, SET_EDIT_STATE } from "app/actions/editor";
 
 export const Viewer = props => {
@@ -12,11 +12,6 @@ export const Viewer = props => {
   // TODO: Bring blockquote & code styles from editor
 
   const html = stateToHTML(editorState.getCurrentContent());
-  console.log(html);
-  const test =
-    "<p><strong>this is not in bold though.</strong></p>\n<p><br></p>\n<p>this is a test.</p>";
-  console.log(diff(html, test));
-
   return (
     <div>
       <Button
