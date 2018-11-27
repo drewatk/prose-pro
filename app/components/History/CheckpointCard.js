@@ -12,7 +12,15 @@ import {
   DropdownItem
 } from "reactstrap";
 
-import { EditorState, convertFromRaw } from "draft-js";
+import {
+  EditorState,
+  ContentState,
+  convertFromRaw,
+  convertToRaw
+} from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
+
+import diff from "app/utils/diff";
 import {
   UPDATE_EDITOR_STATE,
   SET_VIEW_STATE,
@@ -123,6 +131,54 @@ export class CheckpointCard extends React.Component {
                 }}
               >
                 Revert
+              </DropdownItem>
+              <DropdownItem
+                onClick={() => {
+                  let selectedVersion = null,
+                    previousVersion = null;
+                  gitAbstractions
+                    .switchToCurrentVersion(currentFile)
+                    .then(() =>
+                      gitAbstractions.switchVersion(currentFile, commit)
+                    )
+                    .then(selectedVersionData => {
+                      selectedVersion = stateToHTML(
+                        convertFromRaw(selectedVersionData)
+                      );
+                      return gitAbstractions.getVersions(currentFile);
+                    })
+                    .then(({ versions }) => {
+                      const previousCommit = R.last(
+                        R.takeWhile(v => v.commit !== commit, versions)
+                      );
+                      if (previousCommit) {
+                        return gitAbstractions
+                          .switchToCurrentVersion(currentFile)
+                          .then(() =>
+                            gitAbstractions.switchVersion(
+                              currentFile,
+                              previousCommit.commit
+                            )
+                          );
+                      }
+                      // return an empty file
+                      return convertToRaw(ContentState.createFromText(""));
+                    })
+                    .then(previousVersionData => {
+                      previousVersion = stateToHTML(
+                        convertFromRaw(previousVersionData)
+                      );
+                      return gitAbstractions.switchToCurrentVersion(
+                        currentFile
+                      );
+                    })
+                    .then(() =>
+                      console.log(diff(previousVersion, selectedVersion))
+                    )
+                    .catch(e => console.error("Error in Checkpoint Diff: ", e));
+                }}
+              >
+                Diff
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>

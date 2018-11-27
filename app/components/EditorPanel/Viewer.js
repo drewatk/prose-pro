@@ -1,10 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { stateToHTML } from "draft-js-export-html";
+import { EditorState, convertFromRaw } from "draft-js";
 
 import { Button } from "reactstrap";
 
-import { EditorState, convertFromRaw } from "draft-js";
 import { UPDATE_EDITOR_STATE, SET_EDIT_STATE } from "app/actions/editor";
 
 export const Viewer = props => {
