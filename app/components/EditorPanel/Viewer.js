@@ -20,11 +20,15 @@ export const Viewer = props => {
         onClick={() =>
           gitAbstractions
             .switchToCurrentVersion(currentFile)
-            .then(fileData =>
-              dispatch({
-                type: UPDATE_EDITOR_STATE,
-                payload: EditorState.createWithContent(convertFromRaw(fileData))
-              })
+            .then(
+              fileData =>
+                console.log("file data to exit view", fileData) ||
+                dispatch({
+                  type: UPDATE_EDITOR_STATE,
+                  payload: EditorState.createWithContent(
+                    convertFromRaw(fileData)
+                  )
+                })
             )
             .then(() => dispatch({ type: SET_EDIT_STATE }))
             .catch(err =>

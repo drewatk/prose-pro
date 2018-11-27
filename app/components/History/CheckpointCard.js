@@ -16,7 +16,8 @@ import {
   EditorState,
   ContentState,
   convertFromRaw,
-  convertToRaw
+  convertToRaw,
+  convertFromHTML
 } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
@@ -172,8 +173,28 @@ export class CheckpointCard extends React.Component {
                         currentFile
                       );
                     })
+                    .then(() => {
+                      const file_diff = diff(
+                        previousVersion,
+                        selectedVersion
+                      ).join("");
+                      console.log(file_diff);
+                      const blocksFromHTML = convertFromHTML(file_diff);
+                      console.log("converted from html -> ", blocksFromHTML);
+                      const state = ContentState.createFromBlockArray(
+                        blocksFromHTML.contentBlocks,
+                        blocksFromHTML.entityMap
+                      );
+                      return state;
+                    })
+                    .then(state =>
+                      dispatch({
+                        type: UPDATE_EDITOR_STATE,
+                        payload: EditorState.createWithContent(state)
+                      })
+                    )
                     .then(() =>
-                      console.log(diff(previousVersion, selectedVersion))
+                      dispatch({ type: SET_VIEW_STATE, payload: commit })
                     )
                     .catch(e => console.error("Error in Checkpoint Diff: ", e));
                 }}
