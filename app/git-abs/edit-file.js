@@ -11,12 +11,13 @@ export default class EditFile {
   }
 
   createFileJson = async initObj => {
-    //if file exists, return
-    if (utils.pathExist(this.filePath)) return;
-
+    //overwrites file if aleady exists
     try {
       //create file
-      await utils.createFile(this.filePath);
+      if (!utils.pathExist(this.filePath)) {
+        await utils.createFile(this.filePath);
+      }
+
       //initialize file with given json obj
       await utils.writeJSONToFile(this.filePath, initObj);
     } catch (e) {
