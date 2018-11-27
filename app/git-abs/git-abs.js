@@ -184,15 +184,19 @@ class GitAbs {
       return;
     }
 
-    // get branch from project.json
-    const branchName = this.metadata.getBranchName(fileName);
+    try {
+      // get branch from project.json
+      const branchName = this.metadata.getBranchName(fileName);
 
-    // switch to branch for fileName
-    await this.git.branch.checkOut(branchName);
+      // switch to branch for fileName
+      await this.git.branch.checkOut(branchName);
 
-    // return json content
-    const fileObj = await this.editFile.getFileJson();
-    return fileObj;
+      // return json content
+      const fileObj = await this.editFile.getFileJson();
+      return fileObj;
+    } catch (e) {
+      throw new Error(`git-abs switchToCurrentVersion \n ${e}`);
+    }
   };
 
   getLatestTime = async fileName => {
