@@ -12,20 +12,15 @@ import {
   DropdownItem
 } from "reactstrap";
 
-import {
-  EditorState,
-  ContentState,
-  convertFromRaw,
-  convertToRaw,
-  convertFromHTML
-} from "draft-js";
+import { EditorState, convertFromRaw } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
 import diff from "app/utils/diff";
 import {
   UPDATE_EDITOR_STATE,
   SET_VIEW_STATE,
-  SET_EDIT_STATE
+  SET_EDIT_STATE,
+  SET_DIFF_STATE
 } from "app/actions/editor";
 import updateHistory from "app/actions/history";
 
@@ -163,38 +158,28 @@ export class CheckpointCard extends React.Component {
                           );
                       }
                       // return an empty file
-                      return convertToRaw(ContentState.createFromText(""));
+                      return null;
                     })
                     .then(previousVersionData => {
-                      previousVersion = stateToHTML(
-                        convertFromRaw(previousVersionData)
-                      );
+                      if (previousVersionData === null) {
+                        previousVersion = "";
+                      } else {
+                        previousVersion = stateToHTML(
+                          convertFromRaw(previousVersionData)
+                        );
+                      }
+
                       return gitAbstractions.switchToCurrentVersion(
                         currentFile
                       );
                     })
                     .then(() => {
-                      const file_diff = diff(
-                        previousVersion,
-                        selectedVersion
-                      ).join("");
-                      console.log(file_diff);
-                      const blocksFromHTML = convertFromHTML(file_diff);
-                      console.log("converted from html -> ", blocksFromHTML);
-                      const state = ContentState.createFromBlockArray(
-                        blocksFromHTML.contentBlocks,
-                        blocksFromHTML.entityMap
-                      );
-                      return state;
+                      const p = diff(previousVersion, selectedVersion).join("");
+                      console.log("p => ", p);
+                      return p;
                     })
                     .then(state =>
-                      dispatch({
-                        type: UPDATE_EDITOR_STATE,
-                        payload: EditorState.createWithContent(state)
-                      })
-                    )
-                    .then(() =>
-                      dispatch({ type: SET_VIEW_STATE, payload: commit })
+                      dispatch({ type: SET_DIFF_STATE, payload: state })
                     )
                     .catch(e => console.error("Error in Checkpoint Diff: ", e));
                 }}

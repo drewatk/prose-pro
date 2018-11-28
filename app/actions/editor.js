@@ -1,3 +1,4 @@
 export const UPDATE_EDITOR_STATE = "UPDATE_EDITOR_STATE";
 export const SET_EDIT_STATE = "SET_EDIT_STATE";
 export const SET_VIEW_STATE = "SET_VIEW_STATE";
+export const SET_DIFF_STATE = "SET_DIFF_STATE";

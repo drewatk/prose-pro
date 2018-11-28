@@ -1,17 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import { stateToHTML } from "draft-js-export-html";
+
 import { EditorState, convertFromRaw } from "draft-js";
 
 import { Button } from "reactstrap";
 
 import { UPDATE_EDITOR_STATE, SET_EDIT_STATE } from "app/actions/editor";
 
-export const Viewer = props => {
-  const { editorState, currentFile, gitAbstractions, dispatch } = props;
+export const DiffViewer = props => {
+  const { diffData, currentFile, gitAbstractions, dispatch } = props;
   // TODO: Bring blockquote & code styles from editor
-
-  const html = stateToHTML(editorState.getCurrentContent());
   return (
     <div>
       <Button
@@ -20,15 +18,11 @@ export const Viewer = props => {
         onClick={() =>
           gitAbstractions
             .switchToCurrentVersion(currentFile)
-            .then(
-              fileData =>
-                console.log("file data to exit view", fileData) ||
-                dispatch({
-                  type: UPDATE_EDITOR_STATE,
-                  payload: EditorState.createWithContent(
-                    convertFromRaw(fileData)
-                  )
-                })
+            .then(fileData =>
+              dispatch({
+                type: UPDATE_EDITOR_STATE,
+                payload: EditorState.createWithContent(convertFromRaw(fileData))
+              })
             )
             .then(() => dispatch({ type: SET_EDIT_STATE }))
             .catch(err =>
@@ -36,17 +30,16 @@ export const Viewer = props => {
             )
         }
       />
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+      <div style={{ height: "30px" }} />
+      <div dangerouslySetInnerHTML={{ __html: diffData }} />
     </div>
   );
 };
 
 const mapStateToProps = ({
-  editor: { editorState },
+  editor: { diffData },
   currentFile,
   gitAbstractions
-}) => ({ editorState, currentFile, gitAbstractions });
+}) => ({ diffData, currentFile, gitAbstractions });
 
-const WithViewer = connect(mapStateToProps)(Viewer);
-
-export default WithViewer;
+export default connect(mapStateToProps)(DiffViewer);

@@ -1,27 +1,29 @@
 import React from "react";
 import { connect } from "react-redux";
 import ProseEditor from "app/components/ProseEditor";
-import Viewer from "./Viewer";
+import DiffViewer from "./DiffViewer";
+import MDViewer from "./MDViewer";
 import AutoSave from "app/components/AutoSave";
 
-export const EditorPanel = props => {
-  const { isEditable } = props;
+import { EDIT_MODE, DIFF_MODE } from "app/reducers/editor";
 
-  return (
-    <React.Fragment>
-      {isEditable && (
-        <AutoSave>
-          <ProseEditor />
-        </AutoSave>
-      )}
-      {!isEditable && <Viewer />}
-    </React.Fragment>
-  );
+export const EditorPanel = ({ editorMode }) => {
+  if (editorMode === EDIT_MODE) {
+    return (
+      <AutoSave>
+        <ProseEditor />
+      </AutoSave>
+    );
+  } else if (editorMode === DIFF_MODE) {
+    return <DiffViewer />;
+  } else {
+    return <MDViewer />;
+  }
 };
 
 EditorPanel.displayName = "EditorPanel";
 
-const mapStateToProps = ({ editor: { isEditable } }) => ({ isEditable });
+const mapStateToProps = ({ editor: { editorMode } }) => ({ editorMode });
 const WithEditorPanel = connect(mapStateToProps)(EditorPanel);
 
 export default WithEditorPanel;
