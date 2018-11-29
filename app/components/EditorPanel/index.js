@@ -5,21 +5,19 @@ import DiffViewer from "./DiffViewer";
 import MDViewer from "./MDViewer";
 import AutoSave from "app/components/AutoSave";
 
-import { EDIT_MODE, DIFF_MODE } from "app/reducers/editor";
+import { EDIT_MODE, DIFF_MODE, VIEW_MODE } from "app/reducers/editor";
 
-export const EditorPanel = ({ editorMode }) => {
-  if (editorMode === EDIT_MODE) {
-    return (
-      <AutoSave>
-        <ProseEditor />
-      </AutoSave>
-    );
-  } else if (editorMode === DIFF_MODE) {
-    return <DiffViewer />;
-  } else {
-    return <MDViewer />;
-  }
+const viewSelect = {
+  [EDIT_MODE]: (
+    <AutoSave>
+      <ProseEditor />
+    </AutoSave>
+  ),
+  [DIFF_MODE]: <DiffViewer />,
+  [VIEW_MODE]: <MDViewer />
 };
+
+export const EditorPanel = ({ editorMode }) => viewSelect[editorMode];
 
 EditorPanel.displayName = "EditorPanel";
 
