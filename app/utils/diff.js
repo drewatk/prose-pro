@@ -1,7 +1,7 @@
 import { diffLines } from "diff";
 
 const green = "#ccffb3",
-  red = "#ff6666";
+  red = "#ff9999";
 const diffColor = line => (line.added ? green : line.removed ? red : "");
 
 /**
