@@ -21,6 +21,16 @@ function configureMenuActions(store) {
         });
     }
   });
+
+  ipcRenderer.on("export-project", (_, filePath) => {
+    //const { dispatch } = store;
+    const { currentProject, files } = store.getState();
+    console.log(currentProject, files, filePath);
+    if (currentProject) {
+      // iterate through each file and convert it's raw state to plain markdown.
+      // save all files in a new directory within filePath
+    }
+  });
 }
 
 export default configureMenuActions;

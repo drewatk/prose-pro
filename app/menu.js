@@ -1,4 +1,4 @@
-import { app, Menu, shell, BrowserWindow } from "electron";
+import { app, Menu, shell, BrowserWindow, dialog } from "electron";
 
 export default class MenuBuilder {
   mainWindow: BrowserWindow;
@@ -54,7 +54,21 @@ export default class MenuBuilder {
         {
           label: "New Project"
         },
-        { label: "New Document" }
+        { label: "New Document" },
+        {
+          label: "Export",
+          click: () => {
+            dialog.showOpenDialog(
+              this.mainWindow,
+              {
+                properties: ["openDirectory"]
+              },
+              ([filePath]) => {
+                this.mainWindow.webContents.send("export-project", filePath);
+              }
+            );
+          }
+        }
       ]
     };
     const subMenuAbout = {
@@ -207,7 +221,21 @@ export default class MenuBuilder {
             label: "New Project",
             accelerator: "CommandOrControl+N"
           },
-          { label: "New Document", accelerator: "CommandOrControl+D" }
+          { label: "New Document", accelerator: "CommandOrControl+D" },
+          {
+            label: "Export",
+            click: () => {
+              dialog.showOpenDialog(
+                this.mainWindow,
+                {
+                  properties: ["openDirectory"]
+                },
+                ([filePath]) => {
+                  this.mainWindow.webContents.send("export-project", filePath);
+                }
+              );
+            }
+          }
         ]
       },
       {
