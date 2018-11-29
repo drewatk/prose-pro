@@ -173,13 +173,11 @@ export class CheckpointCard extends React.Component {
                         currentFile
                       );
                     })
-                    .then(() => {
-                      const p = diff(previousVersion, selectedVersion).join("");
-                      console.log("p => ", p);
-                      return p;
-                    })
-                    .then(state =>
-                      dispatch({ type: SET_DIFF_STATE, payload: state })
+                    .then(() =>
+                      dispatch({
+                        type: SET_DIFF_STATE,
+                        payload: diff(previousVersion, selectedVersion).join("")
+                      })
                     )
                     .catch(e => console.error("Error in Checkpoint Diff: ", e));
                 }}
