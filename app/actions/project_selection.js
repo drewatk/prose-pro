@@ -25,4 +25,15 @@ const projectSelect = project => dispatch => {
     );
 };
 
+export const deSelectProject = () => {
+  return [
+    initGitAbs(null),
+    updateFiles([]),
+    {
+      type: SELECT_PROJECT,
+      payload: null
+    }
+  ];
+};
+
 export default projectSelect;

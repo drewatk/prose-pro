@@ -27,8 +27,6 @@ function createFile(path) {
       else resolve();
     })
   );
-  //TODO: WHY DOES THIS NOT WORK?! WHY DOES IT NEED A FREAKING CALLBACK?!?!?!!?!
-  // return fs.ensureFile(path);
 }
 
 function deleteFile(path) {
@@ -68,11 +66,20 @@ function readJSONFromFile(path) {
   );
 }
 
+/**
+ * Removes the directory at the given path
+ * @param {String} path
+ */
+function removeDir(path) {
+  fs.rmdirSync(path);
+}
+
 export default {
   pathExist,
   createDirectory,
   createFile,
   deleteFile,
   writeJSONToFile,
-  readJSONFromFile
+  readJSONFromFile,
+  removeDir
 };

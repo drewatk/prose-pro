@@ -8,7 +8,10 @@ import { Branch, Checkout, Reference } from "nodegit";
 const create = repo => branchName => {
   return repo
     .getMasterCommit()
-    .then(commit => Branch.create(repo, branchName, commit, false));
+    .then(commit => Branch.create(repo, branchName, commit, false))
+    .catch(e => {
+      throw new Error(`git.branch.create: ${e}`);
+    });
 };
 
 const remove = repo => branchName => {
@@ -16,7 +19,7 @@ const remove = repo => branchName => {
     .getBranch(branchName)
     .then(ref => Branch.delete(ref))
     .catch(e => {
-      throw new Error(`Error in deleting branch ${e}`);
+      throw new Error(`git.branch.remove: ${e}`);
     });
 };
 
@@ -28,7 +31,10 @@ const remove = repo => branchName => {
 const checkOut = repo => branchName => {
   return repo
     .getBranch(branchName)
-    .then(reference => repo.checkoutBranch(reference));
+    .then(reference => repo.checkoutBranch(reference))
+    .catch(e => {
+      throw new Error(`git.branch.checkOut: ${e}`);
+    });
 };
 
 const checkOutCommit = repo => commitHash => {
@@ -45,24 +51,29 @@ const checkOutCommit = repo => commitHash => {
   );
 };
 
-const checkOutMasterBranch = repo => {
+const checkOutMasterBranch = repo => () => {
   return checkOut(repo)("master");
 };
 
-const isDetachedHead = repo => {
+const isDetachedHead = repo => () => {
   return repo.headDetached() ? true : false;
 };
 
-const getBranchList = async repo => {
+const getBranchList = repo => async () => {
   const localRef = "refs/heads/";
-  return repo.getReferenceNames(Reference.TYPE.LISTALL).then(arr =>
-    arr.reduce((acc, el) => {
-      if (el.includes(localRef)) {
-        acc.push(el.replace(localRef, ""));
-      }
-      return acc;
-    }, [])
-  );
+  return repo
+    .getReferenceNames(Reference.TYPE.LISTALL)
+    .then(arr =>
+      arr.reduce((acc, el) => {
+        if (el.includes(localRef)) {
+          acc.push(el.replace(localRef, ""));
+        }
+        return acc;
+      }, [])
+    )
+    .catch(e => {
+      throw new Error(`git.branch.getBranchList: ${e}`);
+    });
 };
 
 export default {

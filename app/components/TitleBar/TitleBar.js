@@ -4,13 +4,16 @@ import { Nav, NavItem, NavLink } from "reactstrap";
 import { platform } from "os";
 import routes from "app/constants/routes.json";
 import { toggleShowHistory, toggleShowFileList } from "app/actions/view";
+import { push } from "connected-react-router";
 import styles from "./TitleBar.scss";
+import { deSelectFile } from "app/actions/file_selection";
+import { deSelectProject } from "app/actions/project_selection";
 
 // True if on OSX
 const darwin = platform() === "darwin";
 
 export const TitleBar = props => {
-  const { title, pathname, onFilesClick, onHistoryClick } = props;
+  const { title, pathname, onFilesClick, onHistoryClick, onBackClick } = props;
 
   return (
     <div
@@ -27,6 +30,18 @@ export const TitleBar = props => {
 
       {pathname === routes.EDITOR && (
         <Nav className="ml-auto">
+          <NavItem>
+            <NavLink
+              id="back-button"
+              onClick={() => {
+                onBackClick();
+              }}
+              href="#"
+            >
+              <i className="fas fa-arrow-left" />
+              &nbsp;Back
+            </NavLink>
+          </NavItem>
           <NavItem>
             <NavLink
               id="files-button"
@@ -64,7 +79,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     onFilesClick: () => dispatch(toggleShowFileList()),
-    onHistoryClick: () => dispatch(toggleShowHistory())
+    onHistoryClick: () => dispatch(toggleShowHistory()),
+    onBackClick: () => {
+      dispatch([deSelectFile(), deSelectProject(), push(routes.PROJECT_SETUP)]);
+    }
   };
 };
 
