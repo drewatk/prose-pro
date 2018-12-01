@@ -2,6 +2,8 @@ import { convertFromRaw, convertToRaw } from "draft-js";
 import { UPDATE_LAST_SAVED } from "app/actions/history";
 import { ipcRenderer } from "electron";
 import { stateToMarkdown } from "draft-js-export-markdown";
+import path from "path";
+import fs from "fs-extra";
 
 function configureMenuActions(store) {
   ipcRenderer.on("save-file", () => {
@@ -23,34 +25,26 @@ function configureMenuActions(store) {
     }
   });
 
-  ipcRenderer.on("export-project", (_, filePath) => {
+  ipcRenderer.on("export-project", async (_, filePath) => {
     const { currentProject, files, gitAbstractions } = store.getState();
-    console.log(currentProject, files, filePath);
+    const withFileExtension = file => file + ".md";
     if (currentProject) {
-      // MAY PROVIDE THIS THING ACCESS TO gitAbstractions FOR EASY FILE PATH INFO.
-      // TODO: MAKE directory fs.ensureDir(filePath + projectName)
+      const projectPath = path.resolve(filePath, currentProject);
 
-      // convert all file's data to raw markdown
+      await fs.ensureDir(projectPath);
+      let fileData = [];
+      for (const file of files) {
+        const rawData = await gitAbstractions.openFile(file);
+        /* NOTE: stateToMarkdown does not handle underlined Markdown correctly */
+        const mdData = stateToMarkdown(convertFromRaw(rawData));
+        fileData.push({ fileName: withFileExtension(file), data: mdData });
+      }
+
       Promise.all(
-        files.map(
-          file =>
-            new Promise((resolve, reject) => {
-              gitAbstractions
-                .openFile(file)
-                .then(fileData => stateToMarkdown(convertFromRaw(fileData)))
-                .then(mdData => resolve({ name: file, data: mdData }))
-                .catch(err => reject(err));
-            })
+        fileData.map(({ fileName, data }) =>
+          fs.writeFile(path.resolve(projectPath, fileName), data)
         )
-      )
-        // save all files in a new directory within filePath
-        .then(
-          fileData =>
-            console.log(
-              fileData
-            ) /*Promise.all(fileData.map(({ name, data }) => perform write of data */
-        )
-        .catch(err => console.err("Error in exporting: ", err));
+      ).catch(err => console.error("Error in exporting: ", err));
     }
   });
 }
