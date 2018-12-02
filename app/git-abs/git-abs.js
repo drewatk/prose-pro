@@ -180,8 +180,9 @@ class GitAbs {
    *
    */
   switchToCurrentVersion = async fileName => {
-    if (!this.git.branch.isDetachedHead()) {
-      return;
+    if (!this.git.branch.isDetachedHead(this.repository)) {
+      // this means already at head commit
+      return await this.editFile.getFileJson();
     }
 
     try {

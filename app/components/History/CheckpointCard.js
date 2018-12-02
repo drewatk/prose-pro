@@ -12,19 +12,15 @@ import {
   DropdownItem
 } from "reactstrap";
 
-import {
-  EditorState,
-  ContentState,
-  convertFromRaw,
-  convertToRaw
-} from "draft-js";
+import { EditorState, convertFromRaw } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
 import diff from "app/utils/diff";
 import {
   UPDATE_EDITOR_STATE,
   SET_VIEW_STATE,
-  SET_EDIT_STATE
+  SET_EDIT_STATE,
+  SET_DIFF_STATE
 } from "app/actions/editor";
 import updateHistory from "app/actions/history";
 
@@ -162,18 +158,26 @@ export class CheckpointCard extends React.Component {
                           );
                       }
                       // return an empty file
-                      return convertToRaw(ContentState.createFromText(""));
+                      return null;
                     })
                     .then(previousVersionData => {
-                      previousVersion = stateToHTML(
-                        convertFromRaw(previousVersionData)
-                      );
+                      if (previousVersionData === null) {
+                        previousVersion = "";
+                      } else {
+                        previousVersion = stateToHTML(
+                          convertFromRaw(previousVersionData)
+                        );
+                      }
+
                       return gitAbstractions.switchToCurrentVersion(
                         currentFile
                       );
                     })
                     .then(() =>
-                      console.log(diff(previousVersion, selectedVersion))
+                      dispatch({
+                        type: SET_DIFF_STATE,
+                        payload: diff(previousVersion, selectedVersion).join("")
+                      })
                     )
                     .catch(e => console.error("Error in Checkpoint Diff: ", e));
                 }}
