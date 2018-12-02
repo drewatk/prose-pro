@@ -48,7 +48,8 @@ export default class MenuBuilder {
       submenu: [
         {
           label: "Save",
-          accelerator: "Ctrl+S"
+          accelerator: "Command+S",
+          click: () => this.mainWindow.webContents.send("save-file")
         },
         {
           label: "New Project"
@@ -199,7 +200,8 @@ export default class MenuBuilder {
         submenu: [
           {
             label: "Save",
-            accelerator: "CommandOrControl+S"
+            accelerator: "CommandOrControl+S",
+            click: () => this.mainWindow.webContents.send("save-file")
           },
           {
             label: "New Project",

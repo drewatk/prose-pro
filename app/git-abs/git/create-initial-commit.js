@@ -16,7 +16,10 @@ const createInitialCommit = repo => {
     .then(index => index.writeTree())
     .then(oid =>
       repo.createCommit(HEAD_REF, author, committer, "initial commit", oid, [])
-    );
+    )
+    .catch(e => {
+      throw new Error(`git.createInitialCommit: ${e}`);
+    });
 };
 
 export default createInitialCommit;
