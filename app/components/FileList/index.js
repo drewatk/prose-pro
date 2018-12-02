@@ -21,6 +21,7 @@ const FileList = ({ files, gitAbstractions, currentFile, dispatch }) => {
               .then(() => dispatch(updateFiles(gitAbstractions.getFiles())))
               .then(() => dispatch(selectFile(gitAbstractions, fileName)))
               .catch(err => {
+                console.error("Error in CreateFileForm onSubmit: ", err);
                 dispatch(showError(err.message));
               });
           }}

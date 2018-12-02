@@ -91,6 +91,7 @@ export class CheckpointCard extends React.Component {
                       dispatch({ type: SET_VIEW_STATE, payload: commit })
                     )
                     .catch(e => {
+                      console.error("Error in Checkpoint View: ", e);
                       dispatch(showError(e.message));
                     });
                 }}

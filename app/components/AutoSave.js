@@ -26,6 +26,7 @@ export class AutoSave extends React.Component {
         .then(() => gitAbstractions.getLatestTime(currentFile))
         .then(time => dispatch({ type: UPDATE_LAST_SAVED, payload: time }))
         .catch(err => {
+          console.error("Error autosaving", err);
           dispatch(showError(err.message));
         });
     }

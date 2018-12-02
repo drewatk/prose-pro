@@ -29,6 +29,7 @@ export const Viewer = props => {
             )
             .then(() => dispatch({ type: SET_EDIT_STATE }))
             .catch(err => {
+              console.error("Error in exiting checkpoint view: ", err);
               dispatch(showError(err.message));
             })
         }
