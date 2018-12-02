@@ -4,10 +4,15 @@ import { stateToMarkdown } from "draft-js-export-markdown";
 import path from "path";
 import fs from "fs-extra";
 
-import { UPDATE_LAST_SAVED } from "app/actions/history";
 import routes from "app/constants/routes.json";
 
+import updateHistory, { UPDATE_LAST_SAVED } from "app/actions/history";
+import { toggleShowHistory, toggleShowFileList } from "app/actions/view";
+
 function configureMenuActions(store) {
+  /**
+   * Save File Menu Action
+   */
   ipcRenderer.on("save-file", () => {
     const { dispatch } = store;
     const {
@@ -27,6 +32,9 @@ function configureMenuActions(store) {
     }
   });
 
+  /**
+   * Export Project Action
+   **/
   ipcRenderer.on("export-project", async (_, filePath) => {
     const { currentProject, files, gitAbstractions, router } = store.getState();
     const withFileExtension = file => file + ".md";
@@ -47,6 +55,63 @@ function configureMenuActions(store) {
           fs.writeFile(path.resolve(projectPath, fileName), data)
         )
       ).catch(err => console.error("Error in exporting: ", err));
+    }
+  });
+
+  /**
+   * Quick Checkpoint Action
+   */
+  ipcRenderer.on("quick-checkpoint", () => {
+    const { dispatch } = store;
+    const {
+      editor: { editorState },
+      gitAbstractions,
+      currentFile
+    } = store.getState();
+    const commitMessage = "Quick Checkpoint";
+
+    gitAbstractions
+      .saveFile(
+        currentFile,
+        convertToRaw(editorState.getCurrentContent()),
+        commitMessage
+      )
+      .then(() => gitAbstractions.getVersions(currentFile))
+      .then(({ versions }) => dispatch(updateHistory(versions)))
+      .then(() => gitAbstractions.getLatestTime(currentFile))
+      .then(time => dispatch({ type: UPDATE_LAST_SAVED, payload: time }))
+      .catch(err => {
+        console.error("Error creating quick checkpoint: ", err);
+      });
+  });
+
+  /**
+   * File View Toggler
+   */
+  ipcRenderer.on("toggle-file-view", () => {
+    const { dispatch } = store;
+    const {
+      router: {
+        location: { pathname }
+      }
+    } = store.getState();
+    if (pathname === "/editor") {
+      dispatch(toggleShowFileList());
+    }
+  });
+
+  /**
+   * History view toggler
+   */
+  ipcRenderer.on("toggle-history-view", () => {
+    const { dispatch } = store;
+    const {
+      router: {
+        location: { pathname }
+      }
+    } = store.getState();
+    if (pathname === "/editor") {
+      dispatch(toggleShowHistory());
     }
   });
 }
