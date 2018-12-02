@@ -57,14 +57,18 @@ export default class MenuBuilder {
         { label: "New Document" },
         {
           label: "Export",
+          accelerator: "Command+E",
           click: () => {
             dialog.showOpenDialog(
               this.mainWindow,
               {
                 properties: ["openDirectory"]
               },
-              ([filePath]) => {
-                this.mainWindow.webContents.send("export-project", filePath);
+              selection => {
+                if (selection) {
+                  const [filePath] = selection;
+                  this.mainWindow.webContents.send("export-project", filePath);
+                }
               }
             );
           }
@@ -224,14 +228,21 @@ export default class MenuBuilder {
           { label: "New Document", accelerator: "CommandOrControl+D" },
           {
             label: "Export",
+            accelerator: "CommandOrControl+E",
             click: () => {
               dialog.showOpenDialog(
                 this.mainWindow,
                 {
                   properties: ["openDirectory"]
                 },
-                ([filePath]) => {
-                  this.mainWindow.webContents.send("export-project", filePath);
+                selection => {
+                  if (selection) {
+                    const [filePath] = selection;
+                    this.mainWindow.webContents.send(
+                      "export-project",
+                      filePath
+                    );
+                  }
                 }
               );
             }
