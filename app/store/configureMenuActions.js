@@ -1,9 +1,11 @@
-import { convertFromRaw, convertToRaw } from "draft-js";
-import { UPDATE_LAST_SAVED } from "app/actions/history";
 import { ipcRenderer } from "electron";
+import { convertFromRaw, convertToRaw } from "draft-js";
 import { stateToMarkdown } from "draft-js-export-markdown";
 import path from "path";
 import fs from "fs-extra";
+
+import { UPDATE_LAST_SAVED } from "app/actions/history";
+import routes from "app/constants/routes.json";
 
 function configureMenuActions(store) {
   ipcRenderer.on("save-file", () => {
@@ -26,9 +28,9 @@ function configureMenuActions(store) {
   });
 
   ipcRenderer.on("export-project", async (_, filePath) => {
-    const { currentProject, files, gitAbstractions } = store.getState();
+    const { currentProject, files, gitAbstractions, router } = store.getState();
     const withFileExtension = file => file + ".md";
-    if (currentProject) {
+    if (router.location.pathname === routes.EDITOR) {
       const projectPath = path.resolve(filePath, currentProject);
 
       await fs.ensureDir(projectPath);
