@@ -1,23 +1,30 @@
 import { diffLines } from "diff";
 
-const green = "#ccffb3",
-  red = "#ff9999";
-const diffColor = line => (line.added ? green : line.removed ? red : "");
+const addedLine = line =>
+  `<div style="background: rgba(153, 255, 153, 0.3); border-left-style: solid; border-left-width: 10px; border-left-color: rgba(153, 255, 153, 0.8); padding-left: 10px;">
+      ${line}
+   </div>`;
+
+const removedLine = line =>
+  `<div style="background: rgba(255, 102, 102, 0.3); border-left-style: solid; border-left-width: 10px; border-left-color: rgba(255, 102, 102, 0.8); padding-left: 10px;">
+      ${line}
+   </div>`;
 
 /**
- * Accepts a color and wraps the line with a span component with a background color of color
- * @param {String} color
- * @param {String} line
+ * Accepts a line diff object from diff-js and wraps the line with a appropriate styles
  */
-const wrapWithStyle = (color, line) =>
-  `<div style="background-color: ${color}">${line}</div>`;
+const wrapWithStyle = line =>
+  line.added
+    ? addedLine(line.value)
+    : line.removed
+      ? removedLine(line.value)
+      : line.value;
 
 /**
  * Accepts two html strings, runs the diff and wraps each line with diff color scheme.
  * @param {String} v1
  * @param {String} v2
  */
-const diff = (v1, v2) =>
-  diffLines(v1, v2).map(line => wrapWithStyle(diffColor(line), line.value));
+const diff = (v1, v2) => diffLines(v1, v2).map(line => wrapWithStyle(line));
 
 export default diff;
