@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import { EditorState, convertFromRaw } from "draft-js";
+
 import { Button } from "reactstrap";
 
-import { EditorState, convertFromRaw } from "draft-js";
 import { UPDATE_EDITOR_STATE, SET_EDIT_STATE } from "app/actions/editor";
 import { showError } from "app/actions/error";
 
