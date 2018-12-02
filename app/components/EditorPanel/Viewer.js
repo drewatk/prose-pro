@@ -6,6 +6,7 @@ import { Button } from "reactstrap";
 
 import { EditorState, convertFromRaw } from "draft-js";
 import { UPDATE_EDITOR_STATE, SET_EDIT_STATE } from "app/actions/editor";
+import { showError } from "app/actions/error";
 
 export const Viewer = props => {
   const { editorState, currentFile, gitAbstractions, dispatch } = props;
@@ -27,9 +28,9 @@ export const Viewer = props => {
               })
             )
             .then(() => dispatch({ type: SET_EDIT_STATE }))
-            .catch(err =>
-              console.error("Error in exiting checkpoint view: ", err)
-            )
+            .catch(err => {
+              dispatch(showError(err.message));
+            })
         }
       />
       <div dangerouslySetInnerHTML={{ __html: html }} />

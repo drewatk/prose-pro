@@ -7,6 +7,7 @@ import FileNameList from "./FileNameList";
 
 import selectFile, { deSelectFile } from "app/actions/file_selection";
 import updateFiles from "app/actions/files";
+import { showError } from "app/actions/error";
 
 const FileList = ({ files, gitAbstractions, currentFile, dispatch }) => {
   return (
@@ -19,9 +20,9 @@ const FileList = ({ files, gitAbstractions, currentFile, dispatch }) => {
               .createFile(fileName, convertToRaw(emptyFileContentState))
               .then(() => dispatch(updateFiles(gitAbstractions.getFiles())))
               .then(() => dispatch(selectFile(gitAbstractions, fileName)))
-              .catch(err =>
-                console.error("Error in CreateFileForm onSubmit: ", err)
-              );
+              .catch(err => {
+                dispatch(showError(err.message));
+              });
           }}
         />
       </div>
@@ -47,12 +48,13 @@ const FileList = ({ files, gitAbstractions, currentFile, dispatch }) => {
                   dispatch(deSelectFile());
                 }
               })
-              .catch(err =>
+              .catch(err => {
                 console.error(
                   "Error in CreateFileForm onFileDeleteClick: ",
                   err
-                )
-              );
+                );
+                dispatch(showError(err.message));
+              });
           }}
         />
       </div>
