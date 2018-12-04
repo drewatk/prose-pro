@@ -9,12 +9,12 @@ import {
 import { Button } from "reactstrap";
 
 import CheckpointForm from "app/components/Forms/CheckpointForm";
-import LastSaved from "./LastSaved";
-import InlineStyleControls from "./InlineStyleControls";
-import BlockStyleControls from "./BlockStyleControls";
+import LastSaved from "app/components/ProseEditor/LastSaved";
+import InlineStyleControls from "app/components/ProseEditor/InlineStyleControls";
+import BlockStyleControls from "app/components/ProseEditor/BlockStyleControls";
 import { UPDATE_EDITOR_STATE } from "app/actions/editor";
 import updateHistory, { UPDATE_LAST_SAVED } from "app/actions/history";
-import styles from "./ProseEditor.css";
+import styles from "app/components/ProseEditor/ProseEditor.css";
 
 const MAX_TAB_DEPTH = 4;
 
