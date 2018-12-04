@@ -13,7 +13,7 @@ export default class Editor {
     );
 
     await this.client.click("[data-test-id='create-file-button']");
-    await delay(1000);
+    await delay(500);
   }
 
   async type(text) {
@@ -30,5 +30,15 @@ export default class Editor {
     return (await this.client.getText(".public-DraftEditor-content")).includes(
       text
     );
+  }
+
+  async newCheckpoint(checkpointName) {
+    await this.client.setValue(
+      "[data-test-id='create-checkpoint-field'] input",
+      checkpointName
+    );
+
+    await this.client.click("[data-test-id='create-checkpoint-button']");
+    await delay(500);
   }
 }
