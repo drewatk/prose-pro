@@ -90,18 +90,24 @@ describe("E2E", function spec() {
 
       await editorPage.save();
 
+      await editorPage.newCheckpoint(`test_file_${uuid()}`);
+
+      await editorPage.newCheckpoint(`test_file_${uuid()}`);
+
       expect(await editorPage.hasContent(text)).toBeTruthy();
+
+      expect(await editorPage.historyLength()).toBe(2);
     });
   });
 });
 
 const checkForConsoleErrors = async client => {
   const logs = await client.getRenderProcessLogs();
-  // Print render er process logs
+  // Print renderer process logs
   logs.forEach(log => {
-    console.log(log.message);
-    console.log(log.source);
-    console.log(log.level);
+    console.log(log.level, log.message, log.source);
+  });
+  logs.forEach(log => {
     expect(log.level).not.toEqual("SEVERE");
   });
   // @NOTE: Temporarily have to disable this assertion because there are some warnings in

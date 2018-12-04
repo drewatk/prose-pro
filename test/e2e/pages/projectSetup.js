@@ -1,4 +1,4 @@
-const delay = time => new Promise(resolve => setTimeout(resolve, time));
+// const delay = time => new Promise(resolve => setTimeout(resolve, time));
 
 export default class ProjectSetupPage {
   constructor(app) {
@@ -15,7 +15,7 @@ export default class ProjectSetupPage {
     await this.client.click("[data-test-id='create-project-button']");
 
     // Wait for page change
-    await delay(500);
+    await this.client.waitForVisible("[data-test-id='editor-page']");
     await this.client.waitUntilWindowLoaded();
   }
 
@@ -28,7 +28,7 @@ export default class ProjectSetupPage {
     await this.client.click("[data-test-id='project-select-button']");
 
     // wait for page change
-    await delay(500);
+    await this.client.waitForVisible("[data-test-id='editor-page']");
     await this.client.waitUntilWindowLoaded();
   }
 }

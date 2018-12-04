@@ -41,4 +41,9 @@ export default class Editor {
     await this.client.click("[data-test-id='create-checkpoint-button']");
     await delay(500);
   }
+
+  async historyLength() {
+    return (await this.client.elements("[data-test-id='history-list-card']"))
+      .value.length;
+  }
 }
