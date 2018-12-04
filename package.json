@@ -120,6 +120,10 @@
     ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
+    ],
+    "transformIgnorePatterns": [
+      "./node_modules/(?!(nodegit|fs-extra|universalify)).+\\.js$",
+      "./app/node_modules/(?!(nodegit|fs-extra|universalify)).+\\.js$"
     ]
   },
   "devDependencies": {

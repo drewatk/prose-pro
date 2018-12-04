@@ -1,9 +1,12 @@
 import React from "react";
 import Enzyme, { shallow } from "enzyme";
-// import { platform } from "os";
+
 import Adapter from "enzyme-adapter-react-16";
 import routes from "app/constants/routes.json";
 import { TitleBar } from "app/components/TitleBar/TitleBar";
+
+jest.mock("app/actions/project_selection");
+jest.mock("app/git-abs");
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -23,7 +26,7 @@ describe("TitleBar", () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  // TODO: Unable to mock os module correctly
+  //  TODO: Unable to mock os module correctly
   // it("Doesn't show span on Windows", () => {
   //   platform.mockReturnValueOnce("win32");
   //   const wrapper = shallow(<TitleBar />);
