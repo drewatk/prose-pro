@@ -1,7 +1,10 @@
 import { Application } from "spectron";
 import electronPath from "electron";
 import path from "path";
+import uuid from "uuid/v1";
 import "../../internals/scripts/CheckBuiltsExist";
+
+import routes from "app/constants/routes.json";
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000;
 
@@ -34,17 +37,43 @@ describe("main window", function spec() {
 
   it("should haven't any logs in console of main window", async () => {
     const { client } = this.app;
-    const logs = await client.getRenderProcessLogs();
-    // Print renderer process logs
-    logs.forEach(log => {
-      console.log(log.message);
-      console.log(log.source);
-      console.log(log.level);
-      expect(log.level).not.toEqual("SEVERE");
-    });
-    // @NOTE: Temporarily have to disable this assertion because there are some warnings in
-    //        electron@2. Loading files from localhost in development uses http and this causes
-    //        electron to throw warnings
-    // expect(logs).toHaveLength(0);
+    await checkForConsoleErrors(client);
+  });
+
+  it("should create a project", async () => {
+    const { client } = this.app;
+
+    await client.waitUntilWindowLoaded();
+
+    await client.setValue(
+      "#project-name-field input",
+      `Test Project: ${uuid()}`
+    );
+
+    await client.click("#create-project-button");
+
+    await delay(500);
+    await client.waitUntilWindowLoaded();
+
+    const url = await client.getUrl();
+
+    expect(url.endsWith(routes.EDITOR)).toBeTruthy();
+
+    await checkForConsoleErrors(client);
   });
 });
+
+const checkForConsoleErrors = async client => {
+  const logs = await client.getRenderProcessLogs();
+  // Print renderer process logs
+  logs.forEach(log => {
+    console.log(log.message);
+    console.log(log.source);
+    console.log(log.level);
+    expect(log.level).not.toEqual("SEVERE");
+  });
+  // @NOTE: Temporarily have to disable this assertion because there are some warnings in
+  //        electron@2. Loading files from localhost in development uses http and this causes
+  //        electron to throw warnings
+  // expect(logs).toHaveLength(0);
+};
