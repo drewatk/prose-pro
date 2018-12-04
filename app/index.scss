@@ -9,3 +9,7 @@
   --dulled-primary-color: #8fbcbd;
   --error-color: #ad1e1a;
 }
+
+:global(html) {
+  height: 100vh;
+}

@@ -1,26 +1,31 @@
+$title-height: 45px;
+$sidebar-width: 200px;
+$editor-width: 700px;
+
 .container {
-  // TODO: should this be padding or margin?
-  padding-top: 45px;
-  height: 100%;
+  padding-top: $title-height;
+  height: 100vh;
   background: var(--white-color);
 }
 
 .row-height {
-  height: calc(100vh - 45px);
-}
-
-.left {
   height: 100%;
-  overflow-y: scroll;
-}
 
-.right {
-  height: 100%;
-  overflow-y: scroll;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
 }
 
 .mid {
-  height: 100%;
+  // height: 100%;
+  overflow-y: auto;
+  width: $editor-width;
+}
+
+.left,
+.right {
+  min-width: $sidebar-width;
+  width: $sidebar-width;
   overflow-y: scroll;
 }
 
