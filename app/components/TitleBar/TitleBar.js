@@ -17,7 +17,15 @@ import { deSelectProject } from "app/actions/project_selection";
 const darwin = platform() === "darwin";
 
 export const TitleBar = props => {
-  const { title, pathname, onFilesClick, onHistoryClick, onBackClick } = props;
+  const {
+    title,
+    pathname,
+    onFilesClick,
+    onHistoryClick,
+    onBackClick,
+    currentFile,
+    currentProject
+  } = props;
 
   return (
     <div
@@ -27,13 +35,19 @@ export const TitleBar = props => {
     >
       {/* Insert a placeholder to offset for the buttons if we're on OSX */}
       <span className={styles.titleBarDarwinButtonsPlaceholder} />
+
       <h1 className={styles.titleBarHeader}>
         ProsePro
         <small className="text-muted">{title}</small>
       </h1>
 
+      <h5 className={styles.names}>
+        {currentProject}
+        {currentFile ? ` : ${currentFile}` : ""}
+      </h5>
+
       {pathname === routes.EDITOR && (
-        <Nav className="ml-auto">
+        <Nav>
           <NavItem>
             <NavLink
               id="back-button"
@@ -77,7 +91,9 @@ export const TitleBar = props => {
 };
 
 const mapStateToProps = state => ({
-  pathname: state.router.location.pathname
+  pathname: state.router.location.pathname,
+  currentFile: state.currentFile,
+  currentProject: state.currentProject
 });
 
 const mapDispatchToProps = dispatch => {

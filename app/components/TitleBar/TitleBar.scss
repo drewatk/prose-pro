@@ -43,4 +43,9 @@
       color: lighten(#0056b3, 25%);
     }
   }
+
+  .names {
+    margin: 0 auto;
+    color: var(--accent-color);
+  }
 }
