@@ -6,13 +6,19 @@
 .root {
   background: var(--white-color);
   font-size: 14px;
-  padding: 15px;
+  padding: 0 30px;
+
+  --control-height: 75px;
+  --checkpoint-height: 170px;
+  --editor-height: calc(100vh - 75px - 170px - 60px);
 }
 
 .editor {
   cursor: text;
   font-size: 16px;
   margin-top: 10px;
+  height: var(--editor-height);
+  overflow: auto;
 }
 
 .hidePlaceholder :global(.public-DraftEditorPlaceholder-root) {
@@ -37,7 +43,6 @@
 
 .controls {
   font-size: 14px;
-  margin-bottom: 5px;
   user-select: none;
 }
 
@@ -51,4 +56,20 @@
 
 .activeButton {
   color: #5890ff;
+}
+
+.style-controls {
+  background: var(--dark-white-color);
+  padding: 10px 20px;
+  height: var(--control-height);
+}
+
+.checkpoint-container {
+  background: var(--dark-white-color);
+  height: var(--checkpoint-height);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  padding: 5px 20px;
 }

@@ -24,12 +24,12 @@ class FileNameListItem extends React.Component {
   }
 
   render() {
-    const { file, onFileItemClick, styles, onFileDeleteClick } = this.props;
+    const { file, onFileItemClick, className, onFileDeleteClick } = this.props;
     return (
       <ListGroupItem
         id="file-item"
         onClick={() => onFileItemClick(file)}
-        style={styles}
+        className={className}
       >
         {file}
         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>

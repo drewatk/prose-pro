@@ -9,10 +9,13 @@ import selectFile, { deSelectFile } from "app/actions/file_selection";
 import updateFiles from "app/actions/files";
 import { showError } from "app/actions/error";
 
+import styles from "./FileNameList.scss";
+
 const FileList = ({ files, gitAbstractions, currentFile, dispatch }) => {
   return (
     <div>
-      <div>
+      <div className={styles.createForm}>
+        <h6>Create a new file</h6>
         <CreateFileForm
           onSubmit={({ fileName }) => {
             const emptyFileContentState = ContentState.createFromText("");
@@ -26,10 +29,6 @@ const FileList = ({ files, gitAbstractions, currentFile, dispatch }) => {
               });
           }}
         />
-      </div>
-      {/* TODO:  Move Styles to CSS file  */}
-      <div style={{ backgroundColor: "lightblue", height: "100%" }}>
-        FileList View
       </div>
       <div>
         <FileNameList

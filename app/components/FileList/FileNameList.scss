@@ -1,0 +1,36 @@
+.item {
+  cursor: pointer;
+  background-color: var(--white-color) !important;
+  color: var(--dark-color) !important;
+  border: none !important;
+  border-radius: 0 !important;
+
+  overflow-x: scroll;
+
+  &:hover,
+  &:focus {
+    background-color: var(--dark-white-color) !important;
+    color: var(--dark-color) !important;
+  }
+  &:active {
+    background-color: var(--dulled-primary-color) !important;
+    color: var(--white-color) !important;
+  }
+  margin: 2px 0;
+  padding: 3px 10px !important;
+}
+
+.item,
+.create-form {
+  border-top-right-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
+}
+.active-item {
+  background-color: var(--dulled-primary-color) !important;
+  color: var(--white-color) !important;
+}
+
+.create-form {
+  padding: 10px;
+  background: var(--dark-white-color);
+}

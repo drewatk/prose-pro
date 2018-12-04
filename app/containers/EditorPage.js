@@ -16,21 +16,25 @@ const EditorPage = ({ showHistory, showFileList, currentFile }) => (
       <TitleBar />
       <div className={styles.container}>
         <div className={`${styles.rowHeight}`}>
-          {showFileList && (
-            <div className={`${styles.left}`}>
-              <FileList />
-            </div>
-          )}
+          <div>
+            {showFileList && (
+              <div className={`${styles.left}`}>
+                <FileList />
+              </div>
+            )}
+          </div>
 
           <div className={`${styles.mid}`}>
             {currentFile && <EditorPanel />}
           </div>
 
-          {showHistory && (
-            <div className={`${styles.right}`}>
-              <History />
-            </div>
-          )}
+          <div>
+            {showHistory && (
+              <div className={`${styles.right}`}>
+                <History />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

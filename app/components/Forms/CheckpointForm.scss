@@ -1,13 +1,8 @@
 .form {
   display: flex;
   flex-direction: column;
-  width: 350px;
-  border-width: 1px;
-  border-color: #898989;
-  border-style: solid;
-  border-radius: 10px;
+  width: 50%;
   justify-content: center;
-  padding: 20px;
 }
 
 .header {
@@ -17,4 +12,6 @@
 .button {
   margin-top: 20px;
   width: 60px;
+  background: var(--primary-color) !important;
+  border: none !important;
 }
