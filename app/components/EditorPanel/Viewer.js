@@ -6,6 +6,7 @@ import { EditorState, convertFromRaw } from "draft-js";
 import { Button } from "reactstrap";
 
 import { UPDATE_EDITOR_STATE, SET_EDIT_STATE } from "app/actions/editor";
+import { showError } from "app/actions/error";
 
 export const Viewer = ({
   gitAbstractions,
@@ -27,9 +28,10 @@ export const Viewer = ({
             })
           )
           .then(() => dispatch({ type: SET_EDIT_STATE }))
-          .catch(err =>
-            console.error("Error in exiting checkpoint view: ", err)
-          )
+          .catch(err => {
+            console.error("Error in exiting checkpoint view: ", err);
+            dispatch(showError(err.message));
+          })
       }
     />
     {children}

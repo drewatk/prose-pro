@@ -26,6 +26,8 @@ import updateHistory from "app/actions/history";
 
 import { FileObject } from "app/git-abs/metadata/file-object";
 
+import { showError } from "app/actions/error";
+
 export class CheckpointCard extends React.Component {
   constructor(props) {
     super(props);
@@ -92,7 +94,10 @@ export class CheckpointCard extends React.Component {
                     .then(() =>
                       dispatch({ type: SET_VIEW_STATE, payload: commit })
                     )
-                    .catch(e => console.error("Error in Checkpoint View: ", e));
+                    .catch(e => {
+                      console.error("Error in Checkpoint View: ", e);
+                      dispatch(showError(e.message));
+                    });
                 }}
               >
                 View
@@ -123,7 +128,10 @@ export class CheckpointCard extends React.Component {
                     )
                     .then(() => gitAbstractions.getVersions(currentFile))
                     .then(({ versions }) => dispatch(updateHistory(versions)))
-                    .catch(err => console.error("Reset Failed: ", err));
+                    .catch(err => {
+                      console.error("Reset Failed: ", err);
+                      dispatch(showError(err.message));
+                    });
                 }}
               >
                 Revert

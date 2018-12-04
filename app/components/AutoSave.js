@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { convertToRaw } from "draft-js";
 import _ from "lodash";
 import { UPDATE_LAST_SAVED } from "app/actions/history";
+import { showError } from "app/actions/error";
 
 const AUTOSAVE_WAIT = 5 * 1000;
 
@@ -44,6 +45,7 @@ export class AutoSave extends React.Component {
         .then(time => dispatch({ type: UPDATE_LAST_SAVED, payload: time }))
         .catch(err => {
           console.error("Error autosaving", err);
+          dispatch(showError(err.message));
         });
     }
   }

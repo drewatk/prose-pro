@@ -14,7 +14,7 @@ const EditorPage = ({ showHistory, showFileList, currentFile }) => (
   <ErrorModal>
     <div>
       <TitleBar />
-      <div className={`${styles.container} conatiner-fluid`}>
+      <div className={styles.container}>
         <div className={`${styles.rowHeight} row no-gutters`}>
           {showFileList && (
             <div className={`${styles.left} col-2`}>
