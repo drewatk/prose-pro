@@ -4,9 +4,10 @@
  */
 
 .root {
-  background: #fff;
+  background: var(--white-color);
   font-size: 14px;
   padding: 15px;
+  height: 100vh;
 }
 
 .editor {
@@ -20,8 +21,8 @@
 }
 
 .editor .blockquote {
-  border-left: 5px solid #eee;
-  color: #666;
+  border-left: 5px solid var(--accent-color);
+  color: var(--dark-color);
   font-family: "Hoefler Text", "Georgia", serif;
   font-style: italic;
   margin: 16px 0;
@@ -42,7 +43,7 @@
 }
 
 .styleButton {
-  color: #999;
+  color: var(--primary-color);
   cursor: pointer;
   margin-right: 16px;
   padding: 2px 0;
