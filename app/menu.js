@@ -52,9 +52,10 @@ export default class MenuBuilder {
           click: () => this.mainWindow.webContents.send("save-file")
         },
         {
-          label: "New Project"
+          label: "Quick Checkpoint",
+          accelerator: "Command+Shift+S",
+          click: () => this.mainWindow.webContents.send("quick-checkpoint")
         },
-        { label: "New Document" },
         {
           label: "Export",
           accelerator: "Command+E",
@@ -72,6 +73,16 @@ export default class MenuBuilder {
               }
             );
           }
+        },
+        {
+          label: "Toggle Files View",
+          accelerator: "Command+F",
+          click: () => this.mainWindow.webContents.send("toggle-file-view")
+        },
+        {
+          label: "Toggle History View",
+          accelerator: "Command+J",
+          click: () => this.mainWindow.webContents.send("toggle-history-view")
         }
       ]
     };
@@ -222,10 +233,10 @@ export default class MenuBuilder {
             click: () => this.mainWindow.webContents.send("save-file")
           },
           {
-            label: "New Project",
-            accelerator: "CommandOrControl+N"
+            label: "Quick Checkpoint",
+            accelerator: "CommandOrControl+Shift+S",
+            click: () => this.mainWindow.webContents.send("quick-checkpoint")
           },
-          { label: "New Document", accelerator: "CommandOrControl+D" },
           {
             label: "Export",
             accelerator: "CommandOrControl+E",
@@ -246,6 +257,16 @@ export default class MenuBuilder {
                 }
               );
             }
+          },
+          {
+            label: "Toggle Files View",
+            accelerator: "CommandOrControl+F",
+            click: () => this.mainWindow.webContents.send("toggle-file-view")
+          },
+          {
+            label: "Toggle History View",
+            accelerator: "CommandOrControl+J",
+            click: () => this.mainWindow.webContents.send("toggle-history-view")
           }
         ]
       },
