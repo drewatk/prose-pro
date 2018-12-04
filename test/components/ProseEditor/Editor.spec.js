@@ -4,6 +4,9 @@ import Adapter from "enzyme-adapter-react-16";
 import { ContentState, EditorState } from "draft-js";
 import { ProseEditor } from "app/components/ProseEditor/Editor";
 
+jest.mock("app/components/ProseEditor/LastSaved");
+jest.mock("app/components/Forms/CheckpointForm");
+
 async function fillRTE(component, value) {
   const input = component.find("DraftEditor");
 

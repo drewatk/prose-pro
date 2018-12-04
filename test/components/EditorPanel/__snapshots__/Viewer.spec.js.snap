@@ -15,14 +15,5 @@ exports[`Viewer matches snapshot 1`] = `
     }
     tag="button"
   />
-  <div
-    dangerouslySetInnerHTML={
-      Object {
-        "__html": undefined,
-      }
-    }
-  />
 </div>
 `;
-
-exports[`Viewer sets inner html 1`] = `"<button type=\\"button\\" style=\\"cursor:pointer;float:right;margin-right:50px\\" class=\\"close\\" aria-label=\\"Close\\"><span aria-hidden=\\"true\\">&#xD7;</span></button><div><p id=\\"test-id\\">Foobar!</p></div>"`;

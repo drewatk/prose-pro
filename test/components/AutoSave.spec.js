@@ -1,9 +1,13 @@
 import React from "react";
-import Enzyme, { shallow, mount } from "enzyme";
-// import { platform } from "os";
+import Enzyme, { shallow } from "enzyme";
+import _ from "lodash";
 import Adapter from "enzyme-adapter-react-16";
 
 import { AutoSave } from "app/components/AutoSave";
+
+jest.mock("lodash");
+
+_.debounce.mockImplementation(fn => fn);
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -16,7 +20,6 @@ jest.mock("draft-js", () => {
 describe("AutoSave", () => {
   beforeEach(() => {
     jest.resetAllMocks();
-    jest.useFakeTimers();
   });
 
   it("renders children", () => {
@@ -36,21 +39,52 @@ describe("AutoSave", () => {
       },
       dispatch: jest.fn(),
       currentFile: "testfile",
-      editorState: { getCurrentContent: jest.fn() }
+      editorState: {
+        getCurrentContent: jest.fn().mockImplementation(() => {
+          return {
+            hasText: jest.fn().mockReturnValue(true),
+            equals: jest.fn().mockReturnValue(false)
+          };
+        })
+      }
     };
 
     const children = <div id="testid">Test</div>;
 
-    const wrapper = mount(<AutoSave {...props}>{children}</AutoSave>);
+    const wrapper = shallow(<AutoSave {...props}>{children}</AutoSave>);
 
-    expect(setInterval).toHaveBeenCalledTimes(1);
-    expect(wrapper.instance().interval).toBeDefined();
+    // Force a save
+    wrapper.instance().save();
 
-    jest.advanceTimersByTime(6000);
-
-    expect(props.editorState.getCurrentContent).toHaveBeenCalledTimes(1);
     expect(props.gitAbstractions.saveFile).toHaveBeenCalledTimes(1);
-    // expect(props.gitAbstractions.getLatestTime).toHaveBeenCalledTimes(1);
-    // expect(props.dispatch).toHaveBeenCalledTimes(1);
+  });
+
+  it("calls saveFile on unmount", () => {
+    const time = 1541179857371;
+    const props = {
+      gitAbstractions: {
+        saveFile: jest.fn().mockResolvedValueOnce(),
+        getLatestTime: jest.fn().mockResolvedValueOnce(time)
+      },
+      dispatch: jest.fn(),
+      currentFile: "testfile",
+      editorState: {
+        getCurrentContent: jest.fn().mockImplementation(() => {
+          return {
+            hasText: jest.fn().mockReturnValue(true),
+            equals: jest.fn().mockReturnValue(false)
+          };
+        })
+      }
+    };
+
+    const children = <div id="testid">Test</div>;
+
+    const wrapper = shallow(<AutoSave {...props}>{children}</AutoSave>);
+
+    // Force a save
+    wrapper.unmount();
+
+    expect(props.gitAbstractions.saveFile).toHaveBeenCalledTimes(1);
   });
 });
