@@ -74,6 +74,13 @@ exports[`CheckpointCard matches snapshot 1`] = `
         >
           Revert
         </DropdownItem>
+        <DropdownItem
+          onClick={[Function]}
+          tag="button"
+          toggle={true}
+        >
+          Diff
+        </DropdownItem>
       </DropdownMenu>
     </Dropdown>
   </CardBody>

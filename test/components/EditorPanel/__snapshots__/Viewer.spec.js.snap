@@ -15,13 +15,6 @@ exports[`Viewer matches snapshot 1`] = `
     }
     tag="button"
   />
-  <div
-    dangerouslySetInnerHTML={
-      Object {
-        "__html": undefined,
-      }
-    }
-  />
 </div>
 `;
 
