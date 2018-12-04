@@ -10,7 +10,12 @@ const ProjectList = ({ projects, handleSubmit, submitting, pristine }) => (
       <Label for="projectListLabel">Project List</Label>
     </FormGroup>
     <FormGroup>
-      <Field name="project" component="select" validate={[required]}>
+      <Field
+        name="project"
+        component="select"
+        validate={[required]}
+        data-test-id="project-select-field"
+      >
         <option />
         {projects.map((project, index) => {
           return (
@@ -26,6 +31,7 @@ const ProjectList = ({ projects, handleSubmit, submitting, pristine }) => (
       size="sm"
       color="secondary"
       disabled={submitting || pristine}
+      data-test-id="project-select-button"
     >
       Select
     </Button>

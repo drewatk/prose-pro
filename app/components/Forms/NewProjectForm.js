@@ -6,21 +6,24 @@ import { Input } from "app/components/Basic";
 import { required } from "./validators";
 
 const NewProjectForm = ({ handleSubmit, pristine, submitting }) => (
-  <Form onSubmit={handleSubmit} id="new-project-form">
+  <Form onSubmit={handleSubmit}>
     <FormGroup>
       <Label for="newProjectFormLabel">New Project Form</Label>
     </FormGroup>
     <FormGroup>
       <Label for="projectNameLabel">Project Name</Label>
       <Field
-        id="project-name-field"
+        data-test-id="project-name-field"
         name="project"
         placeholder="Name your project"
         component={Input}
         validate={[required]}
         type="text"
       />
-      <Button id="create-project-button" disabled={pristine || submitting}>
+      <Button
+        data-test-id="create-project-button"
+        disabled={pristine || submitting}
+      >
         Create Project
       </Button>
     </FormGroup>

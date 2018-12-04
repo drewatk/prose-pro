@@ -10,8 +10,8 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000;
 
 const delay = time => new Promise(resolve => setTimeout(resolve, time));
 
-describe("main window", function spec() {
-  beforeAll(async () => {
+describe("E2E", function spec() {
+  beforeEach(async () => {
     this.app = new Application({
       path: electronPath,
       args: [path.join(__dirname, "..", "..", "app")]
@@ -20,46 +20,65 @@ describe("main window", function spec() {
     return this.app.start();
   });
 
-  afterAll(() => {
-    if (this.app && this.app.isRunning()) {
-      return this.app.stop();
+  afterEach(async () => {
+    if (this.app && (await this.app.isRunning())) {
+      return await this.app.stop();
     }
   });
 
-  it("should open window", async () => {
-    const { client, browserWindow } = this.app;
+  describe("General", () => {
+    it("should open window", async () => {
+      const { client, browserWindow } = this.app;
 
-    await client.waitUntilWindowLoaded();
-    await delay(500);
-    const title = await browserWindow.getTitle();
-    expect(title).toBe("ProsePro");
+      await client.waitUntilWindowLoaded();
+      await delay(500);
+      const title = await browserWindow.getTitle();
+      expect(title).toBe("ProsePro");
+
+      await checkForConsoleErrors(client);
+    });
   });
 
-  it("should haven't any logs in console of main window", async () => {
-    const { client } = this.app;
-    await checkForConsoleErrors(client);
-  });
+  describe("Projects", () => {
+    it("should create a project", async () => {
+      const { client } = this.app;
 
-  it("should create a project", async () => {
-    const { client } = this.app;
+      await client.waitUntilWindowLoaded();
 
-    await client.waitUntilWindowLoaded();
+      await client.setValue(
+        "[data-test-id='project-name-field'] input",
+        `Test Project: ${uuid()}`
+      );
 
-    await client.setValue(
-      "#project-name-field input",
-      `Test Project: ${uuid()}`
-    );
+      await client.click("[data-test-id='create-project-button']");
 
-    await client.click("#create-project-button");
+      await delay(500);
+      await client.waitUntilWindowLoaded();
 
-    await delay(500);
-    await client.waitUntilWindowLoaded();
+      const url = await client.getUrl();
 
-    const url = await client.getUrl();
+      expect(url.endsWith(routes.EDITOR)).toBeTruthy();
 
-    expect(url.endsWith(routes.EDITOR)).toBeTruthy();
+      await checkForConsoleErrors(client);
+    });
 
-    await checkForConsoleErrors(client);
+    it("open an existing project", async () => {
+      const { client } = this.app;
+      await client.waitUntilWindowLoaded();
+
+      await client.selectByIndex("[data-test-id='project-select-field']", 1);
+
+      await client.click("[data-test-id='project-select-button']");
+
+      await delay(500);
+      await client.waitUntilWindowLoaded();
+
+      const url = await client.getUrl();
+
+      expect(url.endsWith(routes.EDITOR)).toBeTruthy();
+
+      await checkForConsoleErrors(client);
+    });
   });
 });
 
