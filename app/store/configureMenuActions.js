@@ -3,9 +3,7 @@ import { convertFromRaw, convertToRaw } from "draft-js";
 import { stateToMarkdown } from "draft-js-export-markdown";
 import path from "path";
 import fs from "fs-extra";
-
 import routes from "app/constants/routes.json";
-
 import updateHistory, { UPDATE_LAST_SAVED } from "app/actions/history";
 import { toggleShowHistory, toggleShowFileList } from "app/actions/view";
 
@@ -95,7 +93,7 @@ function configureMenuActions(store) {
         location: { pathname }
       }
     } = store.getState();
-    if (pathname === "/editor") {
+    if (pathname === routes.EDITOR) {
       dispatch(toggleShowFileList());
     }
   });
@@ -110,7 +108,7 @@ function configureMenuActions(store) {
         location: { pathname }
       }
     } = store.getState();
-    if (pathname === "/editor") {
+    if (pathname === routes.EDITOR) {
       dispatch(toggleShowHistory());
     }
   });

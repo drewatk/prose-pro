@@ -56,8 +56,6 @@ export default class MenuBuilder {
           accelerator: "Command+Shift+S",
           click: () => this.mainWindow.webContents.send("quick-checkpoint")
         },
-<<<<<<< HEAD
-        { label: "New Document" },
         {
           label: "Export",
           accelerator: "Command+E",
@@ -75,7 +73,7 @@ export default class MenuBuilder {
               }
             );
           }
-=======
+        },
         {
           label: "Toggle Files View",
           accelerator: "Command+F",
@@ -85,7 +83,6 @@ export default class MenuBuilder {
           label: "Toggle History View",
           accelerator: "Command+J",
           click: () => this.mainWindow.webContents.send("toggle-history-view")
->>>>>>> Menu actions
         }
       ]
     };
@@ -240,8 +237,6 @@ export default class MenuBuilder {
             accelerator: "CommandOrControl+Shift+S",
             click: () => this.mainWindow.webContents.send("quick-checkpoint")
           },
-<<<<<<< HEAD
-          { label: "New Document", accelerator: "CommandOrControl+D" },
           {
             label: "Export",
             accelerator: "CommandOrControl+E",
@@ -262,7 +257,7 @@ export default class MenuBuilder {
                 }
               );
             }
-=======
+          },
           {
             label: "Toggle Files View",
             accelerator: "CommandOrControl+F",
@@ -272,7 +267,6 @@ export default class MenuBuilder {
             label: "Toggle History View",
             accelerator: "CommandOrControl+J",
             click: () => this.mainWindow.webContents.send("toggle-history-view")
->>>>>>> Menu actions
           }
         ]
       },
