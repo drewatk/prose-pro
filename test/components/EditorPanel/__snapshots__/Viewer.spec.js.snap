@@ -1,19 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Viewer matches snapshot 1`] = `
-<div>
+<div
+  className="viewer"
+>
   <Button
+    className="closeButton"
     close={true}
     color="secondary"
     onClick={[Function]}
-    style={
-      Object {
-        "cursor": "pointer",
-        "float": "right",
-        "marginRight": "50px",
-      }
-    }
     tag="button"
+  />
+  <div
+    className="container"
   />
 </div>
 `;
