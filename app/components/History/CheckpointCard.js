@@ -95,6 +95,9 @@ export class CheckpointCard extends React.Component {
                       })
                     )
                     .then(() =>
+                      gitAbstractions.switchToCurrentVersion(currentFile)
+                    )
+                    .then(() =>
                       dispatch({ type: SET_VIEW_STATE, payload: commit })
                     )
                     .catch(e => {
