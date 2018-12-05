@@ -81,4 +81,9 @@ export default class Editor {
       })
     );
   }
+
+  async back() {
+    await this.client.click("[data-test-id='title-bar-back']");
+    await delay(500);
+  }
 }

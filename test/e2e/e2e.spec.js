@@ -122,6 +122,24 @@ describe("E2E", function spec() {
       expect(fileNames.includes(fileName)).toBeFalsy();
     });
   });
+
+  describe("Title Bar", () => {
+    it("uses back button", async () => {
+      const { client } = this.app;
+      const projectPage = new ProjectSetupPage(this.app);
+      const editorPage = new EditorPage(this.app);
+
+      await client.waitUntilWindowLoaded();
+
+      await projectPage.selectProject(1);
+
+      await editorPage.back();
+
+      const url = await client.getUrl();
+
+      expect(url.endsWith(routes.PROJECT_SETUP)).toBeTruthy();
+    });
+  });
 });
 
 const checkForConsoleErrors = async client => {
