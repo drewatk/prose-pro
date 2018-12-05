@@ -10,8 +10,14 @@
 }
 
 .button {
-  margin-top: 20px;
+  margin-left: 10px;
   width: 60px;
   background: var(--primary-color) !important;
   border: none !important;
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }

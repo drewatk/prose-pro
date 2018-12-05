@@ -9,25 +9,27 @@ import styles from "./CheckpointForm.scss";
 
 export const CheckpointForm = ({ handleSubmit, submitting, pristine }) => (
   <Form className={styles.form} onSubmit={handleSubmit}>
-    <h4 className={styles.header}>Create Checkpoint</h4>
-    <Field
-      name="commitMessage"
-      component={Input}
-      label="Message"
-      validate={[required]}
-      type="text"
-      data-test-id="create-checkpoint-field"
-    />
-    <Button
-      type="submit"
-      size="sm"
-      color="secondary"
-      disabled={submitting || pristine}
-      className={styles.button}
-      data-test-id="create-checkpoint-button"
-    >
-      Create
-    </Button>
+    <h6 className={styles.header}>Create Checkpoint</h6>
+    <div className={styles.row}>
+      <Field
+        name="commitMessage"
+        component={Input}
+        label="Message"
+        validate={[required]}
+        type="text"
+        data-test-id="create-checkpoint-field"
+      />
+      <Button
+        type="submit"
+        size="sm"
+        color="secondary"
+        disabled={submitting || pristine}
+        className={styles.button}
+        data-test-id="create-checkpoint-button"
+      >
+        Create
+      </Button>
+    </div>
   </Form>
 );
 

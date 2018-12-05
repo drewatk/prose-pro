@@ -1,0 +1,39 @@
+.card {
+  border: none !important;
+  background: var(--dark-white-color) !important;
+  color: var(--accent-color) !important;
+  font-size: 1.2rem !important;
+  margin-bottom: 5px;
+}
+
+.card-viewed {
+  background: var(--accent-color) !important;
+  color: var(--white-color) !important;
+}
+
+:global(.card-body) {
+  padding: 10px !important;
+}
+
+:global(.card-subtitle) {
+  margin-top: 0 !important;
+  font-weight: bold !important;
+}
+
+:global(.card-text) {
+  margin-bottom: 5px !important;
+  font-size: 0.9rem !important;
+}
+
+:global(.dropdown-menu) {
+  background-color: var(--accent-color) !important;
+}
+
+:global(.dropdown-item) {
+  color: var(--white-color) !important;
+
+  &:hover {
+    background-color: var(--dark-white-color) !important;
+    color: var(--dark-color) !important;
+  }
+}

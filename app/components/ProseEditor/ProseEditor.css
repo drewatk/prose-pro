@@ -9,8 +9,8 @@
   padding: 0 30px;
 
   --control-height: 75px;
-  --checkpoint-height: 170px;
-  --editor-height: calc(100vh - 75px - 170px - 60px);
+  --checkpoint-height: 120px;
+  --editor-height: calc(100vh - 75px - 120px - 60px);
 }
 
 .editor {
@@ -35,7 +35,6 @@
 }
 
 .editor :global(.public-DraftStyleDefault-pre) {
-  background-color: rgba(0, 0, 0, 0.05);
   font-family: "Inconsolata", "Menlo", "Consolas", monospace;
   font-size: 16px;
   padding: 20px;
@@ -47,7 +46,7 @@
 }
 
 .styleButton {
-  color: var(--primary-color);
+  color: var(--muted-text-color);
   cursor: pointer;
   margin-right: 16px;
   padding: 2px 0;
@@ -55,7 +54,7 @@
 }
 
 .activeButton {
-  color: #5890ff;
+  color: var(--primary-color);
 }
 
 .style-controls {
@@ -71,5 +70,5 @@
   justify-content: center;
   flex-direction: column;
 
-  padding: 5px 20px;
+  padding: 5px 20px 10px;
 }
