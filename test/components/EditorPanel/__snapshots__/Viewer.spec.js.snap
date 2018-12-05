@@ -8,6 +8,7 @@ exports[`Viewer matches snapshot 1`] = `
     className="closeButton"
     close={true}
     color="secondary"
+    data-test-id="viewer-close-button"
     onClick={[Function]}
     tag="button"
   />

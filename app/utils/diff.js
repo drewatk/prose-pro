@@ -1,12 +1,12 @@
 import { diffLines } from "diff";
 
 const addedLine = line =>
-  `<div style="background: rgba(153, 255, 153, 0.3); border-left-style: solid; border-left-width: 10px; border-left-color: rgba(153, 255, 153, 0.8); padding-left: 10px;">
+  `<div style="background: rgba(153, 255, 153, 0.3); border-left-style: solid; border-left-width: 10px; border-left-color: rgba(153, 255, 153, 0.8); padding-left: 10px;" data-test-id="diff-added-line">
       ${line}
    </div>`;
 
 const removedLine = line =>
-  `<div style="background: rgba(255, 102, 102, 0.3); border-left-style: solid; border-left-width: 10px; border-left-color: rgba(255, 102, 102, 0.8); padding-left: 10px;">
+  `<div style="background: rgba(255, 102, 102, 0.3); border-left-style: solid; border-left-width: 10px; border-left-color: rgba(255, 102, 102, 0.8); padding-left: 10px;" data-test-id="diff-removed-line">
       ${line}
    </div>`;
 

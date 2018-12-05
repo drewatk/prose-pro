@@ -18,6 +18,7 @@ export const Viewer = ({
 }) => (
   <div className={styles.viewer}>
     <Button
+      data-test-id="viewer-close-button"
       close
       className={styles.closeButton}
       onClick={() =>

@@ -4,11 +4,7 @@ import { connect } from "react-redux";
 const App = props => {
   const { children, theme } = props;
 
-  return (
-    <div className={theme}>
-      <React.Fragment>{children}</React.Fragment>
-    </div>
-  );
+  return <div className={theme}>{children}</div>;
 };
 
 App.displayName = App;
