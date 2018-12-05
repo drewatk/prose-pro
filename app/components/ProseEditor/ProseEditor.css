@@ -19,6 +19,7 @@
   margin-top: 10px;
   height: var(--editor-height);
   overflow: auto;
+  color: var(--dark-color);
 }
 
 .hidePlaceholder :global(.public-DraftEditorPlaceholder-root) {
@@ -69,6 +70,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  color: var(--dark-color);
 
   padding: 5px 20px 10px;
 }

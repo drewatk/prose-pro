@@ -8,16 +8,18 @@ import { Button } from "reactstrap";
 import { UPDATE_EDITOR_STATE, SET_EDIT_STATE } from "app/actions/editor";
 import { showError } from "app/actions/error";
 
+import styles from "./Viewer.scss";
+
 export const Viewer = ({
   gitAbstractions,
   currentFile,
   dispatch,
   children
 }) => (
-  <div>
+  <div className={styles.viewer}>
     <Button
       close
-      style={{ cursor: "pointer", float: "right", marginRight: "50px" }}
+      className={styles.closeButton}
       onClick={() =>
         gitAbstractions
           .switchToCurrentVersion(currentFile)
@@ -34,7 +36,7 @@ export const Viewer = ({
           })
       }
     />
-    {children}
+    <div className={styles.container}>{children}</div>
   </div>
 );
 
