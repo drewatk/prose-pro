@@ -6,6 +6,10 @@ import getCurrentBranch from "./current-branch";
 import getLatestCommitTime from "app/git-abs/git/latest-time";
 import reset from "./reset";
 
+/**
+ * A class that makes available all the git functions
+ * Initializes the git functions with the given repositry to reduce redundancy
+ */
 class Git {
   constructor(repo) {
     this.repo = repo;

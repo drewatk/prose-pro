@@ -11,21 +11,12 @@ const { AUTHOR, EMAIL, HEAD_REF } = gitCons;
  *
  * @return {Promise} then(commitId), catch(error)
  */
-
-/***
-Usage Example:
-
-addAndCommit('test.js')('this commit was brought to you by the folks inside prosepro.')
-  .then((commitId) => console.log('Commit made: ', commitId))
-  .catch(err => console.error('Received an error: ', err))
-
-***/
-
 const addAndCommit = (repo, commitMessage) => {
   return new Promise(resolve => {
     let index = null,
       oid = null;
 
+    /* file to commit */
     const filename = projCons.editFile;
 
     repo
@@ -45,7 +36,7 @@ const addAndCommit = (repo, commitMessage) => {
       })
       .then(head => repo.getCommit(head))
       .then(parent => {
-        /* TODO: When should committer be different than author? */
+        /* add commit details */
         const author = nodegit.Signature.now(AUTHOR, EMAIL);
         const committer = nodegit.Signature.now(AUTHOR, EMAIL);
 
