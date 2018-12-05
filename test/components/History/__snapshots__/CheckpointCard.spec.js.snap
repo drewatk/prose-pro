@@ -2,6 +2,7 @@
 
 exports[`CheckpointCard matches snapshot 1`] = `
 <Card
+  data-test-id="history-list-card"
   style={
     Object {
       "backgroundColor": "#E8E9EA",
