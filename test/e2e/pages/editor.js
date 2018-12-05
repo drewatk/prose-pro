@@ -43,7 +43,22 @@ export default class Editor {
   }
 
   async historyLength() {
-    return (await this.client.elements("[data-test-id='history-list-card']"))
-      .value.length;
+    return (await this.client.$$("[data-test-id='history-list-card']")).length;
+  }
+
+  async deleteFile(fileName) {
+    const els = await this.client.$$("[data-test-id='file-list-item']");
+
+    els.forEach(async element => {
+      console.log(element);
+      console.log(element.prototype);
+      const text = await element.getText();
+      if (text === fileName) {
+        await element.click("[data-test-id='file-list-item-toggle']");
+        await element.click("[data-test-id='file-list-item-delete-button']");
+      }
+    });
+
+    await delay(500);
   }
 }

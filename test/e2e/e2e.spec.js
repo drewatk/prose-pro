@@ -41,7 +41,7 @@ describe("E2E", function spec() {
     });
   });
 
-  describe("Projects", () => {
+  describe("Project Setup Page", () => {
     it("should create a project", async () => {
       const { client } = this.app;
       const projectPage = new ProjectSetupPage(this.app);
@@ -72,7 +72,7 @@ describe("E2E", function spec() {
     });
   });
 
-  describe("Editor", () => {
+  describe("Editor Page", () => {
     it("Enters Text into the editor", async () => {
       const text =
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque posuere laoreet tristique. Cras ac lacinia nulla, sit amet ultrices libero. Duis sit amet placerat erat. Sed leo massa, semper non ipsum sit amet, ullamcorper consequat eros. Etiam enim neque, mattis ac est in, vehicula tempor lacus. Cras ac porta quam, a porta sem. Vivamus vitae tincidunt eros. Nam sed scelerisque nisl. Mauris semper a nisi et ultricies. Sed quis mi pretium, commodo sapien vitae, condimentum risus. Sed vitae ante iaculis, elementum velit vitae, pretium turpis. Duis aliquam mauris ut arcu egestas, nec venenatis nunc ornare. Integer id est a enim porta rutrum a et mauris. In quis neque nec mauris viverra gravida vitae non dui.";
@@ -90,9 +90,36 @@ describe("E2E", function spec() {
 
       await editorPage.save();
 
-      await editorPage.newCheckpoint(`test_file_${uuid()}`);
+      await editorPage.newCheckpoint(`test_checkpoint_${uuid()}`);
+
+      await editorPage.newCheckpoint(`test_checkpoint_${uuid()}`);
+
+      expect(await editorPage.hasContent(text)).toBeTruthy();
+
+      expect(await editorPage.historyLength()).toBe(2);
+    });
+
+    it("Deletes a File", async () => {
+      const text =
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque posuere laoreet tristique. Cras ac lacinia nulla, sit amet ultrices libero. Duis sit amet placerat erat. Sed leo massa, semper non ipsum sit amet, ullamcorper consequat eros. Etiam enim neque, mattis ac est in, vehicula tempor lacus. Cras ac porta quam, a porta sem. Vivamus vitae tincidunt eros. Nam sed scelerisque nisl. Mauris semper a nisi et ultricies. Sed quis mi pretium, commodo sapien vitae, condimentum risus. Sed vitae ante iaculis, elementum velit vitae, pretium turpis. Duis aliquam mauris ut arcu egestas, nec venenatis nunc ornare. Integer id est a enim porta rutrum a et mauris. In quis neque nec mauris viverra gravida vitae non dui.";
+
+      const { client } = this.app;
+      const projectPage = new ProjectSetupPage(this.app);
+      const editorPage = new EditorPage(this.app);
+      await client.waitUntilWindowLoaded();
+
+      await projectPage.selectProject(1);
+
+      const fileName = `test_file_${uuid()}`;
+      await editorPage.newFile(fileName);
+
+      await editorPage.type(text);
+
+      await editorPage.save();
 
       await editorPage.newCheckpoint(`test_file_${uuid()}`);
+
+      await editorPage.deleteFile(fileName);
 
       expect(await editorPage.hasContent(text)).toBeTruthy();
 
