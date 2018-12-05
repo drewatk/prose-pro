@@ -58,33 +58,4 @@ describe("AutoSave", () => {
 
     expect(props.gitAbstractions.saveFile).toHaveBeenCalledTimes(1);
   });
-
-  it("calls saveFile on unmount", () => {
-    const time = 1541179857371;
-    const props = {
-      gitAbstractions: {
-        saveFile: jest.fn().mockResolvedValueOnce(),
-        getLatestTime: jest.fn().mockResolvedValueOnce(time)
-      },
-      dispatch: jest.fn(),
-      currentFile: "testfile",
-      editorState: {
-        getCurrentContent: jest.fn().mockImplementation(() => {
-          return {
-            hasText: jest.fn().mockReturnValue(true),
-            equals: jest.fn().mockReturnValue(false)
-          };
-        })
-      }
-    };
-
-    const children = <div id="testid">Test</div>;
-
-    const wrapper = shallow(<AutoSave {...props}>{children}</AutoSave>);
-
-    // Force a save
-    wrapper.unmount();
-
-    expect(props.gitAbstractions.saveFile).toHaveBeenCalledTimes(1);
-  });
 });

@@ -30,7 +30,6 @@ export class AutoSave extends React.Component {
   componentWillUnmount() {
     if (this.debouncedSave) {
       this.debouncedSave.cancel();
-      this.save();
     }
   }
 
@@ -44,8 +43,8 @@ export class AutoSave extends React.Component {
         .then(() => gitAbstractions.getLatestTime(currentFile))
         .then(time => dispatch({ type: UPDATE_LAST_SAVED, payload: time }))
         .catch(err => {
-          console.error("Error autosaving", err);
-          dispatch(showError(err.message));
+          console.error("Error autosaving:", err);
+          dispatch(showError(`Error autosaving: ${err.message}`));
         });
     }
   }

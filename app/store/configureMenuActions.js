@@ -6,6 +6,7 @@ import fs from "fs-extra";
 import routes from "app/constants/routes.json";
 import updateHistory, { UPDATE_LAST_SAVED } from "app/actions/history";
 import { toggleShowHistory, toggleShowFileList } from "app/actions/view";
+import { EDIT_MODE } from "app/reducers/editor";
 
 function configureMenuActions(store) {
   /**
@@ -16,10 +17,15 @@ function configureMenuActions(store) {
     const {
       gitAbstractions,
       currentFile,
-      editor: { editorState }
+      editor: { editorState, editorMode }
     } = store.getState();
 
-    if (gitAbstractions && currentFile && editorState) {
+    if (
+      editorMode === EDIT_MODE &&
+      gitAbstractions &&
+      currentFile &&
+      editorState
+    ) {
       gitAbstractions
         .saveFile(currentFile, convertToRaw(editorState.getCurrentContent()))
         .then(() => gitAbstractions.getLatestTime(currentFile))
@@ -62,25 +68,32 @@ function configureMenuActions(store) {
   ipcRenderer.on("quick-checkpoint", () => {
     const { dispatch } = store;
     const {
-      editor: { editorState },
+      editor: { editorState, editorMode },
       gitAbstractions,
       currentFile
     } = store.getState();
     const commitMessage = "Quick Checkpoint";
 
-    gitAbstractions
-      .saveFile(
-        currentFile,
-        convertToRaw(editorState.getCurrentContent()),
-        commitMessage
-      )
-      .then(() => gitAbstractions.getVersions(currentFile))
-      .then(({ versions }) => dispatch(updateHistory(versions)))
-      .then(() => gitAbstractions.getLatestTime(currentFile))
-      .then(time => dispatch({ type: UPDATE_LAST_SAVED, payload: time }))
-      .catch(err => {
-        console.error("Error creating quick checkpoint: ", err);
-      });
+    if (
+      editorMode === EDIT_MODE &&
+      gitAbstractions &&
+      currentFile &&
+      editorState
+    ) {
+      gitAbstractions
+        .saveFile(
+          currentFile,
+          convertToRaw(editorState.getCurrentContent()),
+          commitMessage
+        )
+        .then(() => gitAbstractions.getVersions(currentFile))
+        .then(({ versions }) => dispatch(updateHistory(versions)))
+        .then(() => gitAbstractions.getLatestTime(currentFile))
+        .then(time => dispatch({ type: UPDATE_LAST_SAVED, payload: time }))
+        .catch(err => {
+          console.error("Error creating quick checkpoint: ", err);
+        });
+    }
   });
 
   /**
