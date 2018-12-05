@@ -16,6 +16,7 @@ export const CheckpointForm = ({ handleSubmit, submitting, pristine }) => (
       label="Message"
       validate={[required]}
       type="text"
+      data-test-id="create-checkpoint-field"
     />
     <Button
       type="submit"
@@ -23,6 +24,7 @@ export const CheckpointForm = ({ handleSubmit, submitting, pristine }) => (
       color="secondary"
       disabled={submitting || pristine}
       className={styles.button}
+      data-test-id="create-checkpoint-button"
     >
       Create
     </Button>

@@ -12,7 +12,7 @@ import ErrorModal from "app/components/ErrorModal";
 
 const EditorPage = ({ showHistory, showFileList, currentFile }) => (
   <ErrorModal>
-    <div>
+    <div data-test-id="editor-page">
       <TitleBar />
       <div className={styles.container}>
         <div className={`${styles.rowHeight} row no-gutters`}>

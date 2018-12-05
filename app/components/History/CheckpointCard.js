@@ -61,6 +61,7 @@ export class CheckpointCard extends React.Component {
         style={{
           backgroundColor: viewedCheckpoint === commit ? "#E8E9EA" : "#FFF"
         }}
+        data-test-id="history-list-card"
       >
         <CardBody>
           <CardSubtitle>Checkpoint:</CardSubtitle>

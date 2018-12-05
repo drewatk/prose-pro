@@ -13,13 +13,19 @@ const NewProjectForm = ({ handleSubmit, pristine, submitting }) => (
     <FormGroup>
       <Label for="projectNameLabel">Project Name</Label>
       <Field
+        data-test-id="project-name-field"
         name="project"
         placeholder="Name your project"
         component={Input}
         validate={[required]}
         type="text"
       />
-      <Button disabled={pristine || submitting}>Create Project</Button>
+      <Button
+        data-test-id="create-project-button"
+        disabled={pristine || submitting}
+      >
+        Create Project
+      </Button>
     </FormGroup>
   </Form>
 );

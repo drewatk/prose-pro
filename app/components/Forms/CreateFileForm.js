@@ -14,12 +14,14 @@ export const CreateFileForm = ({ handleSubmit, submitting, pristine }) => (
       label="File Name"
       validate={[required]}
       type="text"
+      data-test-id="create-file-field"
     />
     <Button
       type="submit"
       size="sm"
       color="secondary"
       disabled={submitting || pristine}
+      data-test-id="create-file-button"
     >
       Create
     </Button>
