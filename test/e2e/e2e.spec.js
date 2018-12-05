@@ -119,11 +119,13 @@ describe("E2E", function spec() {
       await editorPage.type(text);
       await editorPage.save();
 
-      const fileNames = await editorPage.fileNames();
+      let fileNames = await editorPage.fileNames();
 
       expect(fileNames.includes(fileName)).toBe(true);
 
       await editorPage.deleteFile(fileName);
+
+      fileNames = await editorPage.fileNames();
 
       expect(fileNames.includes(fileName)).toBe(false);
 
