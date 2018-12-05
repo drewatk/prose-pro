@@ -18,6 +18,9 @@ export default class Metadata {
     this.cfgObj = await this.getCfgFromFile();
   }
 
+  /**
+   * checks whether the object has the cfgObj initialized
+   */
   checkInit() {
     if (!this.cfgObj) {
       throw new Error("Project Config not initialized");
@@ -57,6 +60,11 @@ export default class Metadata {
     }
   }
 
+  /**
+   * Removes the given fileName from the config
+   * along with the specific metadata
+   * @param {String} fileName
+   */
   async removeFile(fileName) {
     this.checkInit();
 
@@ -69,7 +77,9 @@ export default class Metadata {
       this.dirPath,
       this.cfgObj.getBranchForFile(fileName)
     );
-    utils.deleteFile(filePath); /* don't need to wait for async to return */
+
+    /* don't need to wait for async to return */
+    utils.deleteFile(filePath);
 
     /* remove file-branch mapping */
     this.cfgObj.removeFile(fileName);
@@ -115,7 +125,7 @@ export default class Metadata {
   }
 
   /**
-   *
+   * Versions are updated from the font end
    * @param {String} fileName
    * @param {FileObject} fileObj
    */
@@ -136,6 +146,10 @@ export default class Metadata {
     return fileObj;
   }
 
+  /**
+   * Returns list of versions for the given file name
+   * @param {String} fileName
+   */
   async getAllVersions(fileName) {
     this.checkInit();
 
@@ -152,6 +166,9 @@ export default class Metadata {
     }
   }
 
+  /**
+   * Returns all branches in the config file
+   */
   getAllBranches() {
     this.checkInit();
 
