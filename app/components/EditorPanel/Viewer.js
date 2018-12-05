@@ -16,6 +16,7 @@ export const Viewer = ({
 }) => (
   <div>
     <Button
+      data-test-id="viewer-close-button"
       close
       style={{ cursor: "pointer", float: "right", marginRight: "50px" }}
       onClick={() =>

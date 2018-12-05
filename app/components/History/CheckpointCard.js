@@ -76,7 +76,11 @@ export class CheckpointCard extends React.Component {
           </CardText>
           <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
             <DropdownToggle tag="span">
-              <i className="fas fa-ellipsis-h" style={{ float: "right" }} />
+              <i
+                className="fas fa-ellipsis-h"
+                style={{ float: "right" }}
+                data-test-id="history-list-card-toggle"
+              />
             </DropdownToggle>
             <DropdownMenu>
               <DropdownItem
@@ -105,6 +109,7 @@ export class CheckpointCard extends React.Component {
                       dispatch(showError(e.message));
                     });
                 }}
+                data-test-id="history-list-card-view-button"
               >
                 View
               </DropdownItem>
