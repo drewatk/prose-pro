@@ -4,7 +4,6 @@ import { convertToRaw } from "draft-js";
 import _ from "lodash";
 import { UPDATE_LAST_SAVED } from "app/actions/history";
 import { showError } from "app/actions/error";
-import { EDIT_MODE } from "app/reducers/editor";
 
 const AUTOSAVE_WAIT = 5 * 1000;
 
@@ -17,7 +16,6 @@ export class AutoSave extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (
-      this.props.editorMode === EDIT_MODE &&
       prevProps.editorState &&
       prevProps.editorState.getCurrentContent().hasText() &&
       this.props.editorState !== prevProps.editorState &&
