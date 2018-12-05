@@ -36,11 +36,11 @@
     font-size: 0.9rem;
 
     a {
-      color: lighten(#007bff, 25%);
+      color: var(--dulled-primary-color);
     }
 
     a:hover {
-      color: lighten(#0056b3, 25%);
+      color: var(--primary-color);
     }
   }
 
