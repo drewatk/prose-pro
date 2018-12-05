@@ -6,6 +6,7 @@ import fs from "fs-extra";
 import routes from "app/constants/routes.json";
 import updateHistory, { UPDATE_LAST_SAVED } from "app/actions/history";
 import { toggleShowHistory, toggleShowFileList } from "app/actions/view";
+import { toggleTheme } from "app/actions/theme";
 import { EDIT_MODE } from "app/reducers/editor";
 
 function configureMenuActions(store) {
@@ -124,6 +125,14 @@ function configureMenuActions(store) {
     if (pathname === routes.EDITOR) {
       dispatch(toggleShowHistory());
     }
+  });
+
+  /**
+   * Theme toggler
+   */
+  ipcRenderer.on("toggle-theme", () => {
+    const { dispatch } = store;
+    dispatch(toggleTheme());
   });
 }
 

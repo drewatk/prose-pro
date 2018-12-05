@@ -14,9 +14,7 @@ configureMenuActions(store);
 
 render(
   <AppContainer>
-    <div className={styles.darkTheme}>
-      <Root store={store} history={history} />
-    </div>
+    <Root store={store} history={history} />
   </AppContainer>,
   document.getElementById("root")
 );
