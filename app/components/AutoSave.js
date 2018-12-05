@@ -55,15 +55,14 @@ export class AutoSave extends React.Component {
 }
 
 const mapStateToProps = ({
-  editor: { editorState, editorMode },
+  editor: { editorState },
   currentFile,
   gitAbstractions
 }) => {
   return {
     currentFile,
     gitAbstractions,
-    editorState,
-    editorMode
+    editorState
   };
 };
 
