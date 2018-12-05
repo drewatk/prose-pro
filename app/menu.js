@@ -87,7 +87,7 @@ export default class MenuBuilder {
       ]
     };
     const subMenuAbout = {
-      label: "ProsePro",
+      label: "About",
       submenu: [
         {
           label: "About ProsePro",
