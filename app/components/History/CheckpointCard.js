@@ -11,6 +11,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
+import moment from "moment";
 
 import styles from "./CheckpointCard.scss";
 
@@ -69,11 +70,7 @@ export class CheckpointCard extends React.Component {
           <CardSubtitle>Checkpoint:</CardSubtitle>
           <CardText>{version}</CardText>
           <CardSubtitle>Date:</CardSubtitle>
-          <CardText>
-            {new Date(timestamp).toLocaleString("en-US", {
-              timeZone: "America/New_York"
-            })}
-          </CardText>
+          <CardText>{moment(timestamp).fromNow()}</CardText>
           <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
             <DropdownToggle tag="span">
               <i
