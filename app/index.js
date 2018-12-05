@@ -14,7 +14,7 @@ configureMenuActions(store);
 
 render(
   <AppContainer>
-    <div className={styles.lightTheme}>
+    <div className={styles.darkTheme}>
       <Root store={store} history={history} />
     </div>
   </AppContainer>,

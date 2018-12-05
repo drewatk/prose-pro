@@ -33,4 +33,13 @@
 .create-form {
   padding: 10px;
   background: var(--dark-white-color);
+  color: var(--dark-color);
+}
+
+:global(.btn-secondary) {
+  background: var(--primary-color) !important;
+
+  :global(.disabled) {
+    background: var(--dulled-primary-color) !important;
+  }
 }

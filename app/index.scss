@@ -10,6 +10,18 @@
   --error-color: #ad1e1a;
 }
 
+.dark-theme {
+  --dark-color: #fdfdfd;
+  --muted-text-color: #777;
+  --primary-color: #2e9fa1;
+  --accent-color: #787bb9;
+  --white-color: #222;
+  --dark-white-color: #333;
+  --muted-blue-color: lighten(#007bff, 25%);
+  --dulled-primary-color: #8fbcbd;
+  --error-color: #f57672;
+}
+
 :global(html) {
   height: 100vh;
 }
