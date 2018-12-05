@@ -5,6 +5,7 @@ exports[`Viewer matches snapshot 1`] = `
   <Button
     close={true}
     color="secondary"
+    data-test-id="viewer-close-button"
     onClick={[Function]}
     style={
       Object {
