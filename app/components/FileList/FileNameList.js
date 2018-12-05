@@ -9,7 +9,7 @@ import styles from "./FileNameList.scss";
 export const FileNameList = props => {
   const { files, onFileItemClick, onFileDeleteClick, currentFile } = props;
   return (
-    <div>
+    <div data-test-id="file-list">
       <ListGroup>
         {files.map((file, index) => {
           return (

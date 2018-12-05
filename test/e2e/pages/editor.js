@@ -82,8 +82,26 @@ export default class Editor {
     );
   }
 
+  async fileListVisible() {
+    return await this.client.isVisible("[data-test-id='file-list']");
+  }
+
+  async historyVisible() {
+    return await this.client.isVisible("[data-test-id='history-list']");
+  }
+
   async back() {
     await this.client.click("[data-test-id='title-bar-back']");
+    await delay(500);
+  }
+
+  async toggleFiles() {
+    await this.client.click("[data-test-id='title-bar-files']");
+    await delay(500);
+  }
+
+  async toggleHistory() {
+    await this.client.click("[data-test-id='title-bar-history']");
     await delay(500);
   }
 }

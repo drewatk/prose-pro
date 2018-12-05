@@ -23,8 +23,6 @@ describe("E2E", function spec() {
   });
 
   afterEach(async () => {
-    await checkForConsoleErrors(this.app.client);
-
     if (this.app && (await this.app.isRunning())) {
       return await this.app.stop();
     }
@@ -38,6 +36,8 @@ describe("E2E", function spec() {
       await delay(500);
       const title = await browserWindow.getTitle();
       expect(title).toBe("ProsePro");
+
+      await checkForConsoleErrors(this.app.client);
     });
   });
 
@@ -55,7 +55,9 @@ describe("E2E", function spec() {
 
       const url = await client.getUrl();
 
-      expect(url.endsWith(routes.EDITOR)).toBeTruthy();
+      expect(url.endsWith(routes.EDITOR)).toBe(true);
+
+      await checkForConsoleErrors(this.app.client);
     });
 
     it("opens an existing project", async () => {
@@ -68,7 +70,9 @@ describe("E2E", function spec() {
 
       const url = await client.getUrl();
 
-      expect(url.endsWith(routes.EDITOR)).toBeTruthy();
+      expect(url.endsWith(routes.EDITOR)).toBe(true);
+
+      await checkForConsoleErrors(this.app.client);
     });
   });
 
@@ -94,9 +98,11 @@ describe("E2E", function spec() {
 
       await editorPage.newCheckpoint(`test_checkpoint_${uuid()}`);
 
-      expect(await editorPage.hasContent(text)).toBeTruthy();
+      expect(await editorPage.hasContent(text)).toBe(true);
 
       expect(await editorPage.historyLength()).toBe(2);
+
+      await checkForConsoleErrors(this.app.client);
     });
 
     it("Deletes a File", async () => {
@@ -115,29 +121,88 @@ describe("E2E", function spec() {
 
       const fileNames = await editorPage.fileNames();
 
-      expect(fileNames.includes(fileName)).toBeTruthy();
+      expect(fileNames.includes(fileName)).toBe(true);
 
       await editorPage.deleteFile(fileName);
 
-      expect(fileNames.includes(fileName)).toBeFalsy();
+      expect(fileNames.includes(fileName)).toBe(false);
+
+      await checkForConsoleErrors(this.app.client);
     });
-  });
 
-  describe("Title Bar", () => {
-    it("uses back button", async () => {
-      const { client } = this.app;
-      const projectPage = new ProjectSetupPage(this.app);
-      const editorPage = new EditorPage(this.app);
+    describe("Title Bar", () => {
+      it("uses back button", async () => {
+        const { client } = this.app;
+        const projectPage = new ProjectSetupPage(this.app);
+        const editorPage = new EditorPage(this.app);
 
-      await client.waitUntilWindowLoaded();
+        await client.waitUntilWindowLoaded();
 
-      await projectPage.selectProject(1);
+        await projectPage.selectProject(1);
 
-      await editorPage.back();
+        await editorPage.back();
 
-      const url = await client.getUrl();
+        const url = await client.getUrl();
 
-      expect(url.endsWith(routes.PROJECT_SETUP)).toBeTruthy();
+        expect(url.endsWith(routes.PROJECT_SETUP)).toBe(true);
+
+        await checkForConsoleErrors(this.app.client);
+      });
+
+      it("toggles files", async () => {
+        const { client } = this.app;
+        const projectPage = new ProjectSetupPage(this.app);
+        const editorPage = new EditorPage(this.app);
+
+        await client.waitUntilWindowLoaded();
+
+        await projectPage.selectProject(1);
+
+        await editorPage.toggleFiles();
+
+        expect(await editorPage.fileListVisible()).toBe(false);
+
+        await editorPage.toggleFiles();
+
+        expect(await editorPage.fileListVisible()).toBe(true);
+
+        await checkForConsoleErrors(this.app.client);
+      });
+
+      it("toggles history", async () => {
+        const text = "history test";
+        const { client } = this.app;
+        const projectPage = new ProjectSetupPage(this.app);
+        const editorPage = new EditorPage(this.app);
+
+        await client.waitUntilWindowLoaded();
+
+        await projectPage.selectProject(1);
+
+        await editorPage.newFile(`test_file_${uuid()}`);
+
+        await editorPage.type(text);
+
+        await editorPage.save();
+
+        await editorPage.newCheckpoint(`test_checkpoint_${uuid()}`);
+
+        await editorPage.newCheckpoint(`test_checkpoint_${uuid()}`);
+
+        expect(await editorPage.historyVisible()).toBe(true);
+
+        await editorPage.toggleHistory();
+
+        expect(await editorPage.historyVisible()).toBe(false);
+
+        await editorPage.toggleHistory();
+
+        expect(await editorPage.historyVisible()).toBe(true);
+
+        expect(await editorPage.historyLength()).toBe(2);
+
+        await checkForConsoleErrors(this.app.client);
+      });
     });
   });
 });
