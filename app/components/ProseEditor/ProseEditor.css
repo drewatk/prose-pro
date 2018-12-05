@@ -4,15 +4,21 @@
  */
 
 .root {
-  background: #fff;
+  background: var(--white-color);
   font-size: 14px;
-  padding: 15px;
+  padding: 0 30px;
+
+  --control-height: 75px;
+  --checkpoint-height: 120px;
+  --editor-height: calc(100vh - 75px - 120px - 60px);
 }
 
 .editor {
   cursor: text;
   font-size: 16px;
   margin-top: 10px;
+  height: var(--editor-height);
+  overflow: auto;
 }
 
 .hidePlaceholder :global(.public-DraftEditorPlaceholder-root) {
@@ -20,8 +26,8 @@
 }
 
 .editor .blockquote {
-  border-left: 5px solid #eee;
-  color: #666;
+  border-left: 5px solid var(--accent-color);
+  color: var(--dark-color);
   font-family: "Hoefler Text", "Georgia", serif;
   font-style: italic;
   margin: 16px 0;
@@ -29,7 +35,6 @@
 }
 
 .editor :global(.public-DraftStyleDefault-pre) {
-  background-color: rgba(0, 0, 0, 0.05);
   font-family: "Inconsolata", "Menlo", "Consolas", monospace;
   font-size: 16px;
   padding: 20px;
@@ -37,12 +42,11 @@
 
 .controls {
   font-size: 14px;
-  margin-bottom: 5px;
   user-select: none;
 }
 
 .styleButton {
-  color: #999;
+  color: var(--muted-text-color);
   cursor: pointer;
   margin-right: 16px;
   padding: 2px 0;
@@ -50,5 +54,21 @@
 }
 
 .activeButton {
-  color: #5890ff;
+  color: var(--primary-color);
+}
+
+.style-controls {
+  background: var(--dark-white-color);
+  padding: 10px 20px;
+  height: var(--control-height);
+}
+
+.checkpoint-container {
+  background: var(--dark-white-color);
+  height: var(--checkpoint-height);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  padding: 5px 20px 10px;
 }

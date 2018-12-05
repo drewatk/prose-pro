@@ -10,24 +10,34 @@ import ErrorModal from "app/components/ErrorModal";
 import projectSelect from "app/actions/project_selection";
 import { showError } from "app/actions/error";
 
+import styles from "./ProjectSetupPage.scss";
+
 const ProjectSetupPage = ({ projects, dispatch }) => (
   <ErrorModal>
-    <div>
+    <div className={styles.container}>
       <TitleBar />
-      <NewProjectForm
-        onSubmit={({ project }) => {
-          createProject(project)
-            .then(() => dispatch(projectSelect(project)))
-            .catch(err => {
-              console.error(err);
-              dispatch(showError(err.message));
-            });
-        }}
-      />
-      <ProjectSelectionForm
-        projects={projects}
-        onSubmit={({ project }) => dispatch(projectSelect(project))}
-      />
+      <div className={styles.formContainer}>
+        <div className={styles.cont}>
+          <h4>Create new project</h4>
+          <NewProjectForm
+            onSubmit={({ project }) => {
+              createProject(project)
+                .then(() => dispatch(projectSelect(project)))
+                .catch(err => {
+                  console.error(err);
+                  dispatch(showError(err.message));
+                });
+            }}
+          />
+        </div>
+        <div className={styles.cont}>
+          <h4>Select previous project</h4>
+          <ProjectSelectionForm
+            projects={projects}
+            onSubmit={({ project }) => dispatch(projectSelect(project))}
+          />
+        </div>
+      </div>
     </div>
   </ErrorModal>
 );

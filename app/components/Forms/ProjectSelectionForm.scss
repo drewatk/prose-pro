@@ -1,0 +1,7 @@
+.button {
+  background: var(--primary-color) !important;
+
+  :global(.disabled) {
+    background: var(--dulled-primary-color) !important;
+  }
+}

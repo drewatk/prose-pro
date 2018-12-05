@@ -15,22 +15,26 @@ const EditorPage = ({ showHistory, showFileList, currentFile }) => (
     <div data-test-id="editor-page">
       <TitleBar />
       <div className={styles.container}>
-        <div className={`${styles.rowHeight} row no-gutters`}>
-          {showFileList && (
-            <div className={`${styles.left} col-2`}>
-              <FileList />
-            </div>
-          )}
+        <div className={`${styles.rowHeight}`}>
+          <div>
+            {showFileList && (
+              <div className={`${styles.left}`}>
+                <FileList />
+              </div>
+            )}
+          </div>
 
-          <div className={`${styles.mid} col`}>
+          <div className={`${styles.mid}`}>
             {currentFile && <EditorPanel />}
           </div>
 
-          {showHistory && (
-            <div className={`${styles.right} col-2`}>
-              <History />
-            </div>
-          )}
+          <div>
+            {showHistory && (
+              <div className={`${styles.right}`}>
+                <History />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

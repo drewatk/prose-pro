@@ -1,0 +1,28 @@
+.label {
+  font-size: 1.3rem;
+  display: inline-block;
+}
+
+.input-field {
+  :global(.form-control) {
+    background: var(--white-color);
+    color: var(--dark-color);
+  }
+
+  :global(.form-control:focus) {
+    background: var(--white-color);
+    color: var(--dark-color);
+    outline-style: none;
+    box-shadow: none;
+    border-color: var(--primary-color);
+  }
+}
+
+.button {
+  margin-top: 10px;
+  background: var(--primary-color) !important;
+
+  :global(.disabled) {
+    background: var(--dulled-primary-color) !important;
+  }
+}

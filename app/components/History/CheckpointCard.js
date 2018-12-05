@@ -12,6 +12,8 @@ import {
   DropdownItem
 } from "reactstrap";
 
+import styles from "./CheckpointCard.scss";
+
 import { EditorState, convertFromRaw } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
@@ -58,9 +60,9 @@ export class CheckpointCard extends React.Component {
 
     return (
       <Card
-        style={{
-          backgroundColor: viewedCheckpoint === commit ? "#E8E9EA" : "#FFF"
-        }}
+        className={`${styles.card} ${
+          viewedCheckpoint === commit ? styles.cardViewed : ""
+        }`}
         data-test-id="history-list-card"
       >
         <CardBody>

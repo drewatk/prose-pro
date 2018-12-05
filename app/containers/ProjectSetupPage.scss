@@ -1,0 +1,29 @@
+.container {
+  background: var(--white-color);
+  color: var(--dark-color);
+}
+
+.form-container {
+  width: 500px;
+  margin: 0 auto;
+
+  height: 100vh;
+  min-height: 400px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  flex-direction: column;
+  padding: 15vh 0;
+}
+
+.cont {
+  background: var(--dark-white-color);
+  padding: 30px 30px;
+  border-radius: 5px;
+
+  h4 {
+    color: var(--accent-color);
+    margin-bottom: 20px;
+  }
+}

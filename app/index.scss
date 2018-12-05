@@ -1,0 +1,15 @@
+.light-theme {
+  --dark-color: #333;
+  --muted-text-color: #777;
+  --primary-color: #0f7173;
+  --accent-color: #54577c;
+  --white-color: #fdfdfd;
+  --dark-white-color: #eee;
+  --muted-blue-color: lighten(#007bff, 25%);
+  --dulled-primary-color: #8fbcbd;
+  --error-color: #ad1e1a;
+}
+
+:global(html) {
+  height: 100vh;
+}

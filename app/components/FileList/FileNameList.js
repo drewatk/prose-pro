@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { ListGroup } from "reactstrap";
 import FileNameListItem from "./FileNameListItem";
 
+import styles from "./FileNameList.scss";
+
 export const FileNameList = props => {
   const { files, onFileItemClick, onFileDeleteClick, currentFile } = props;
   return (
@@ -15,10 +17,9 @@ export const FileNameList = props => {
               key={index}
               onFileItemClick={onFileItemClick}
               file={file}
-              styles={{
-                cursor: "pointer",
-                backgroundColor: currentFile === file ? "#e8e9ea" : "#fff"
-              }}
+              className={`${styles.item} ${
+                currentFile == file ? styles.activeItem : ""
+              }`}
               onFileDeleteClick={onFileDeleteClick}
             />
           );

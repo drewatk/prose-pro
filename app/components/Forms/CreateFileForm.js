@@ -7,7 +7,6 @@ import { required } from "./validators";
 
 export const CreateFileForm = ({ handleSubmit, submitting, pristine }) => (
   <Form onSubmit={handleSubmit}>
-    <h4>New File</h4>
     <Field
       name="fileName"
       component={Input}

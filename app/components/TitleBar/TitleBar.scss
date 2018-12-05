@@ -1,6 +1,7 @@
 .title-bar {
-  background-color: #4f4f4f;
-  color: white;
+  // background-color: #4f4f4f;
+  background: var(--white-color);
+  color: var(--primary-color);
   padding: 0.3rem 0.3rem;
   -webkit-user-select: none;
   position: fixed;
@@ -20,15 +21,13 @@
 
   &-header {
     display: inline-block;
-  }
 
-  &-header {
-    margin-top: 0.4rem;
+    margin-top: 2px;
     margin-bottom: 0;
     font-size: 1.25rem;
 
     :global(.text-muted) {
-      color: #ddd !important;
+      color: var(--muted-text-color) !important;
       margin-left: 0.5rem;
     }
   }
@@ -37,11 +36,16 @@
     font-size: 0.9rem;
 
     a {
-      color: lighten(#007bff, 25%);
+      color: var(--dulled-primary-color);
     }
 
     a:hover {
-      color: lighten(#0056b3, 25%);
+      color: var(--primary-color);
     }
+  }
+
+  .names {
+    margin: 0 auto;
+    color: var(--accent-color);
   }
 }

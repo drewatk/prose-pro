@@ -6,7 +6,6 @@ import {
   getDefaultKeyBinding,
   convertToRaw
 } from "draft-js";
-import { Button } from "reactstrap";
 
 import CheckpointForm from "app/components/Forms/CheckpointForm";
 import LastSaved from "app/components/ProseEditor/LastSaved";
@@ -92,46 +91,16 @@ export class ProseEditor extends React.Component {
     }
     return (
       <div className={styles.root}>
-        <CheckpointForm
-          onSubmit={({ commitMessage }) =>
-            gitAbstractions
-              .saveFile(
-                currentFile,
-                convertToRaw(editorState.getCurrentContent()),
-                commitMessage
-              )
-              .then(() => gitAbstractions.getVersions(currentFile))
-              .then(({ versions }) => dispatch(updateHistory(versions)))
-              .then(() => gitAbstractions.getLatestTime(currentFile))
-              .then(time =>
-                dispatch({ type: UPDATE_LAST_SAVED, payload: time })
-              )
-          }
-        />
-        <Button
-          onClick={() =>
-            gitAbstractions
-              .saveFile(
-                currentFile,
-                convertToRaw(editorState.getCurrentContent())
-              )
-              .then(() => gitAbstractions.getLatestTime(currentFile))
-              .then(time =>
-                dispatch({ type: UPDATE_LAST_SAVED, payload: time })
-              )
-          }
-        >
-          Save
-        </Button>
-        <LastSaved />
-        <BlockStyleControls
-          editorState={editorState}
-          onToggle={this.toggleBlockType}
-        />
-        <InlineStyleControls
-          editorState={editorState}
-          onToggle={this.toggleInlineStyle}
-        />
+        <div className={styles.styleControls}>
+          <BlockStyleControls
+            editorState={editorState}
+            onToggle={this.toggleBlockType}
+          />
+          <InlineStyleControls
+            editorState={editorState}
+            onToggle={this.toggleInlineStyle}
+          />
+        </div>
         <div
           className={`${styles.editor} ${
             hidePlaceholderClass ? styles.hidePlaceholder : ""
@@ -150,6 +119,25 @@ export class ProseEditor extends React.Component {
             spellCheck
           />
         </div>
+        <div className={styles.checkpointContainer}>
+          <LastSaved />
+          <CheckpointForm
+            onSubmit={({ commitMessage }) =>
+              gitAbstractions
+                .saveFile(
+                  currentFile,
+                  convertToRaw(editorState.getCurrentContent()),
+                  commitMessage
+                )
+                .then(() => gitAbstractions.getVersions(currentFile))
+                .then(({ versions }) => dispatch(updateHistory(versions)))
+                .then(() => gitAbstractions.getLatestTime(currentFile))
+                .then(time =>
+                  dispatch({ type: UPDATE_LAST_SAVED, payload: time })
+                )
+            }
+          />
+        </div>
       </div>
     );
   }
@@ -157,12 +145,7 @@ export class ProseEditor extends React.Component {
 
 // Custom overrides for "code" style.
 const styleMap = {
-  CODE: {
-    backgroundColor: "rgba(0, 0, 0, 0.05)",
-    fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
-    fontSize: 16,
-    padding: 2
-  }
+  CODE: {}
 };
 
 function getBlockStyle(block) {
