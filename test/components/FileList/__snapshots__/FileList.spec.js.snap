@@ -6,34 +6,19 @@ exports[`FileNameList matches snapshot 1`] = `
     tag="ul"
   >
     <FileNameListItem
+      className="item "
       file="File1"
       key="0"
-      styles={
-        Object {
-          "backgroundColor": "#fff",
-          "cursor": "pointer",
-        }
-      }
     />
     <FileNameListItem
+      className="item "
       file="file2"
       key="1"
-      styles={
-        Object {
-          "backgroundColor": "#fff",
-          "cursor": "pointer",
-        }
-      }
     />
     <FileNameListItem
+      className="item "
       file="File3"
       key="2"
-      styles={
-        Object {
-          "backgroundColor": "#fff",
-          "cursor": "pointer",
-        }
-      }
     />
   </ListGroup>
 </div>

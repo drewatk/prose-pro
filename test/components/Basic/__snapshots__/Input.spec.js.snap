@@ -13,6 +13,7 @@ exports[`Input matches snapshot (with error) 1`] = `
       label
     </InputGroupAddon>
     <Input
+      className="input"
       type="text"
     />
   </InputGroup>
@@ -37,6 +38,7 @@ exports[`Input matches snapshot 1`] = `
       label
     </InputGroupAddon>
     <Input
+      className="input"
       type="text"
     />
   </InputGroup>
