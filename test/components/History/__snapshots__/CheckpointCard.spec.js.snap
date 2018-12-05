@@ -46,6 +46,7 @@ exports[`CheckpointCard matches snapshot 1`] = `
       >
         <i
           className="fas fa-ellipsis-h"
+          data-test-id="history-list-card-toggle"
           style={
             Object {
               "float": "right",
@@ -58,6 +59,7 @@ exports[`CheckpointCard matches snapshot 1`] = `
         tag="div"
       >
         <DropdownItem
+          data-test-id="history-list-card-view-button"
           onClick={[Function]}
           tag="button"
           toggle={true}
@@ -65,6 +67,7 @@ exports[`CheckpointCard matches snapshot 1`] = `
           View
         </DropdownItem>
         <DropdownItem
+          data-test-id="history-list-card-revert-button"
           onClick={[Function]}
           tag="button"
           toggle={true}
@@ -72,6 +75,7 @@ exports[`CheckpointCard matches snapshot 1`] = `
           Revert
         </DropdownItem>
         <DropdownItem
+          data-test-id="history-list-card-diff-button"
           onClick={[Function]}
           tag="button"
           toggle={true}

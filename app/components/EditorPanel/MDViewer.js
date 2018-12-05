@@ -9,7 +9,10 @@ export const MDViewer = ({ editorState }) => {
   const html = stateToHTML(editorState.getCurrentContent());
   return (
     <Viewer>
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+      <div
+        dangerouslySetInnerHTML={{ __html: html }}
+        data-test-id="md-viewer"
+      />
     </Viewer>
   );
 };

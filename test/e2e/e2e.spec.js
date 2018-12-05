@@ -77,7 +77,7 @@ describe("E2E", function spec() {
   });
 
   describe("Editor Page", () => {
-    it("Enters Text into the editor", async () => {
+    it("Enters Text into the editor, saves two checkpoints", async () => {
       const text =
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque posuere laoreet tristique. Cras ac lacinia nulla, sit amet ultrices libero. Duis sit amet placerat erat. Sed leo massa, semper non ipsum sit amet, ullamcorper consequat eros. Etiam enim neque, mattis ac est in, vehicula tempor lacus. Cras ac porta quam, a porta sem. Vivamus vitae tincidunt eros. Nam sed scelerisque nisl. Mauris semper a nisi et ultricies. Sed quis mi pretium, commodo sapien vitae, condimentum risus. Sed vitae ante iaculis, elementum velit vitae, pretium turpis. Duis aliquam mauris ut arcu egestas, nec venenatis nunc ornare. Integer id est a enim porta rutrum a et mauris. In quis neque nec mauris viverra gravida vitae non dui.";
 
@@ -101,6 +101,90 @@ describe("E2E", function spec() {
       expect(await editorPage.hasContent(text)).toBe(true);
 
       expect(await editorPage.historyLength()).toBe(2);
+
+      await checkForConsoleErrors(this.app.client);
+    });
+
+    it("views a checkpoint", async () => {
+      const text = "View Test";
+
+      const { client } = this.app;
+      const projectPage = new ProjectSetupPage(this.app);
+      const editorPage = new EditorPage(this.app);
+      await client.waitUntilWindowLoaded();
+
+      await projectPage.selectProject(1);
+
+      await editorPage.newFile(`test_file_${uuid()}`);
+
+      await editorPage.type(text);
+
+      await editorPage.newCheckpoint(`test_checkpoint_${uuid()}`);
+
+      await editorPage.type(["Enter", ...text]);
+
+      await editorPage.viewCheckpoint(0);
+
+      expect(
+        await this.app.client.isVisible("[data-test-id='md-viewer']")
+      ).toBe(true);
+
+      await editorPage.closeViewer();
+
+      await checkForConsoleErrors(this.app.client);
+    });
+
+    it("views a diff", async () => {
+      const text = "View Test";
+
+      const { client } = this.app;
+      const projectPage = new ProjectSetupPage(this.app);
+      const editorPage = new EditorPage(this.app);
+      await client.waitUntilWindowLoaded();
+
+      await projectPage.selectProject(1);
+
+      await editorPage.newFile(`test_file_${uuid()}`);
+
+      await editorPage.type(text);
+
+      await editorPage.newCheckpoint(`test_checkpoint_${uuid()}`);
+
+      await editorPage.type(["Enter", ...text]);
+
+      await editorPage.diffCheckpoint(0);
+
+      expect(
+        await this.app.client.isVisible("[data-test-id='diff-added-line']")
+      ).toBe(true);
+
+      await editorPage.closeViewer();
+
+      await checkForConsoleErrors(this.app.client);
+    });
+
+    it("reverts back to a checkpoint", async () => {
+      const text = "Revert Test";
+      const { client } = this.app;
+      const projectPage = new ProjectSetupPage(this.app);
+      const editorPage = new EditorPage(this.app);
+      await client.waitUntilWindowLoaded();
+
+      await projectPage.selectProject(1);
+
+      await editorPage.newFile(`test_file_${uuid()}`);
+
+      await editorPage.type(text);
+
+      await editorPage.newCheckpoint(`test_checkpoint_${uuid()}`);
+
+      await editorPage.type(["Enter", ...text]);
+
+      await editorPage.newCheckpoint(`test_checkpoint_${uuid()}`);
+
+      await editorPage.revertCheckpoint(1);
+
+      expect(await editorPage.historyLength()).toBe(1);
 
       await checkForConsoleErrors(this.app.client);
     });
@@ -192,6 +276,7 @@ describe("E2E", function spec() {
         await editorPage.newCheckpoint(`test_checkpoint_${uuid()}`);
 
         expect(await editorPage.historyVisible()).toBe(true);
+        expect(await editorPage.historyLength()).toBe(2);
 
         await editorPage.toggleHistory();
 
@@ -200,7 +285,6 @@ describe("E2E", function spec() {
         await editorPage.toggleHistory();
 
         expect(await editorPage.historyVisible()).toBe(true);
-
         expect(await editorPage.historyLength()).toBe(2);
 
         await checkForConsoleErrors(this.app.client);
