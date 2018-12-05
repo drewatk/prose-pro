@@ -164,9 +164,7 @@ describe("E2E", function spec() {
     });
 
     it("reverts back to a checkpoint", async () => {
-      const text =
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque posuere laoreet tristique. Cras ac lacinia nulla, sit amet ultrices libero. Duis sit amet placerat erat. Sed leo massa, semper non ipsum sit amet, ullamcorper consequat eros. Etiam enim neque, mattis ac est in, vehicula tempor lacus. Cras ac porta quam, a porta sem. Vivamus vitae tincidunt eros. Nam sed scelerisque nisl. Mauris semper a nisi et ultricies. Sed quis mi pretium, commodo sapien vitae, condimentum risus. Sed vitae ante iaculis, elementum velit vitae, pretium turpis. Duis aliquam mauris ut arcu egestas, nec venenatis nunc ornare. Integer id est a enim porta rutrum a et mauris. In quis neque nec mauris viverra gravida vitae non dui.";
-
+      const text = "Revert Test";
       const { client } = this.app;
       const projectPage = new ProjectSetupPage(this.app);
       const editorPage = new EditorPage(this.app);
@@ -185,8 +183,6 @@ describe("E2E", function spec() {
       await editorPage.newCheckpoint(`test_checkpoint_${uuid()}`);
 
       await editorPage.revertCheckpoint(1);
-
-      expect(await editorPage.hasContent(text)).toBe(true);
 
       expect(await editorPage.historyLength()).toBe(1);
 
