@@ -30,6 +30,7 @@ class FileNameListItem extends React.Component {
         id="file-item"
         onClick={() => onFileItemClick(file)}
         className={className}
+        data-test-id="file-list-item"
       >
         {file}
         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -39,7 +40,11 @@ class FileNameListItem extends React.Component {
               e.stopPropagation();
             }}
           >
-            <i className="fas fa-ellipsis-h" style={{ float: "right" }} />
+            <i
+              className="fas fa-ellipsis-h"
+              style={{ float: "right" }}
+              data-test-id="file-list-item-toggle"
+            />
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem
@@ -47,6 +52,7 @@ class FileNameListItem extends React.Component {
                 e.stopPropagation();
                 onFileDeleteClick(file);
               }}
+              data-test-id="file-list-item-delete-button"
             >
               Delete File
             </DropdownItem>

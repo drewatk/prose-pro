@@ -55,6 +55,7 @@ export const TitleBar = props => {
                 onBackClick();
               }}
               href="#"
+              data-test-id="title-bar-back"
             >
               <i className="fas fa-arrow-left" />
               &nbsp;Back
@@ -67,6 +68,7 @@ export const TitleBar = props => {
                 onFilesClick();
               }}
               href="#"
+              data-test-id="title-bar-files"
             >
               <i className="far fa-file" />
               &nbsp;Files
@@ -79,6 +81,7 @@ export const TitleBar = props => {
                 onHistoryClick();
               }}
               href="#"
+              data-test-id="title-bar-history"
             >
               <i className="fas fa-history" />
               &nbsp;History
