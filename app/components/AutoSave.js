@@ -4,6 +4,7 @@ import { convertToRaw } from "draft-js";
 import _ from "lodash";
 import { UPDATE_LAST_SAVED } from "app/actions/history";
 import { showError } from "app/actions/error";
+import { EDIT_MODE } from "app/reducers/editor";
 
 const AUTOSAVE_WAIT = 5 * 1000;
 
@@ -16,6 +17,7 @@ export class AutoSave extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (
+      this.props.editorMode === EDIT_MODE &&
       prevProps.editorState &&
       prevProps.editorState.getCurrentContent().hasText() &&
       this.props.editorState !== prevProps.editorState &&
@@ -30,7 +32,6 @@ export class AutoSave extends React.Component {
   componentWillUnmount() {
     if (this.debouncedSave) {
       this.debouncedSave.cancel();
-      this.save();
     }
   }
 
@@ -44,8 +45,8 @@ export class AutoSave extends React.Component {
         .then(() => gitAbstractions.getLatestTime(currentFile))
         .then(time => dispatch({ type: UPDATE_LAST_SAVED, payload: time }))
         .catch(err => {
-          console.error("Error autosaving", err);
-          dispatch(showError(err.message));
+          console.error("Error autosaving:", err);
+          dispatch(showError(`Error autosaving: ${err.message}`));
         });
     }
   }
@@ -56,14 +57,15 @@ export class AutoSave extends React.Component {
 }
 
 const mapStateToProps = ({
-  editor: { editorState },
+  editor: { editorState, editorMode },
   currentFile,
   gitAbstractions
 }) => {
   return {
     currentFile,
     gitAbstractions,
-    editorState
+    editorState,
+    editorMode
   };
 };
 
