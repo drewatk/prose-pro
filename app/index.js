@@ -14,9 +14,7 @@ configureMenuActions(store);
 
 render(
   <AppContainer>
-    <div className={styles.lightTheme}>
-      <Root store={store} history={history} />
-    </div>
+    <Root store={store} history={history} />
   </AppContainer>,
   document.getElementById("root")
 );
