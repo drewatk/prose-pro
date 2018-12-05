@@ -27,7 +27,7 @@ exports[`CheckpointCard matches snapshot 1`] = `
     <CardText
       tag="p"
     >
-      12/31/1969, 7:00:10 PM
+      moment_mock_fromNow_10123
     </CardText>
     <Dropdown
       active={false}
