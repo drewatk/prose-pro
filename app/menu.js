@@ -156,6 +156,13 @@ export default class MenuBuilder {
           click: () => {
             this.mainWindow.toggleDevTools();
           }
+        },
+        {
+          label: "Toggle Theme",
+          accelerator: "Alt+Command+T",
+          click: () => {
+            this.mainWindow.webContents.send("toggle-theme");
+          }
         }
       ]
     };
@@ -167,6 +174,13 @@ export default class MenuBuilder {
           accelerator: "Ctrl+Command+F",
           click: () => {
             this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
+          }
+        },
+        {
+          label: "Toggle Theme",
+          accelerator: "Alt+Command+T",
+          click: () => {
+            this.mainWindow.webContents.send("toggle-theme");
           }
         }
       ]
@@ -297,6 +311,13 @@ export default class MenuBuilder {
                   click: () => {
                     this.mainWindow.toggleDevTools();
                   }
+                },
+                {
+                  label: "Toggle Theme",
+                  accelerator: "Alt+Command+T",
+                  click: () => {
+                    this.mainWindow.webContents.send("toggle-theme");
+                  }
                 }
               ]
             : [
@@ -307,6 +328,13 @@ export default class MenuBuilder {
                     this.mainWindow.setFullScreen(
                       !this.mainWindow.isFullScreen()
                     );
+                  }
+                },
+                {
+                  label: "Toggle Theme",
+                  accelerator: "Alt+Command+T",
+                  click: () => {
+                    this.mainWindow.webContents.send("toggle-theme");
                   }
                 }
               ]
