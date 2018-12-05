@@ -97,6 +97,56 @@ export default class Editor {
     await delay(1000);
   }
 
+  async revertCheckpoint(index) {
+    const historyCards = await this.client.$$(
+      "[data-test-id='history-list-card']"
+    );
+
+    const card = historyCards[index];
+
+    const toggle = await this.client.elementIdElement(
+      card.value.ELEMENT,
+      "[data-test-id='history-list-card-toggle']"
+    );
+
+    await this.client.elementIdClick(toggle.value.ELEMENT);
+
+    // Click view button
+    const viewButton = await this.client.elementIdElement(
+      card.value.ELEMENT,
+      "[data-test-id='history-list-card-revert-button']"
+    );
+
+    await this.client.elementIdClick(viewButton.value.ELEMENT);
+
+    await delay(1000);
+  }
+
+  async diffCheckpoint(index) {
+    const historyCards = await this.client.$$(
+      "[data-test-id='history-list-card']"
+    );
+
+    const card = historyCards[index];
+
+    const toggle = await this.client.elementIdElement(
+      card.value.ELEMENT,
+      "[data-test-id='history-list-card-toggle']"
+    );
+
+    await this.client.elementIdClick(toggle.value.ELEMENT);
+
+    // Click view button
+    const viewButton = await this.client.elementIdElement(
+      card.value.ELEMENT,
+      "[data-test-id='history-list-card-diff-button']"
+    );
+
+    await this.client.elementIdClick(viewButton.value.ELEMENT);
+
+    await delay(1000);
+  }
+
   async fileNames() {
     const els = await this.client.$$("[data-test-id='file-list-item']");
 
