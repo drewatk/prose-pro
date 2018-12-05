@@ -125,7 +125,9 @@ describe("E2E", function spec() {
 
       await editorPage.viewCheckpoint(0);
 
-      // TODO: needs a check here
+      expect(
+        await this.app.client.isVisible("[data-test-id='md-viewer']")
+      ).toBe(true);
 
       await editorPage.closeViewer();
 
@@ -152,7 +154,9 @@ describe("E2E", function spec() {
 
       await editorPage.diffCheckpoint(0);
 
-      // TODO: needs a check here
+      expect(
+        await this.app.client.isVisible("[data-test-id='diff-added-line']")
+      ).toBe(true);
 
       await editorPage.closeViewer();
 

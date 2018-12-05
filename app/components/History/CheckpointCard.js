@@ -201,7 +201,7 @@ export class CheckpointCard extends React.Component {
                     )
                     .catch(e => console.error("Error in Checkpoint Diff: ", e));
                 }}
-                data-test-id="history-list-card-revert-button"
+                data-test-id="history-list-card-diff-button"
               >
                 Diff
               </DropdownItem>

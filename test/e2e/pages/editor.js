@@ -112,12 +112,12 @@ export default class Editor {
     await this.client.elementIdClick(toggle.value.ELEMENT);
 
     // Click view button
-    const viewButton = await this.client.elementIdElement(
+    const revertButton = await this.client.elementIdElement(
       card.value.ELEMENT,
       "[data-test-id='history-list-card-revert-button']"
     );
 
-    await this.client.elementIdClick(viewButton.value.ELEMENT);
+    await this.client.elementIdClick(revertButton.value.ELEMENT);
 
     await delay(1000);
   }
@@ -137,12 +137,12 @@ export default class Editor {
     await this.client.elementIdClick(toggle.value.ELEMENT);
 
     // Click view button
-    const viewButton = await this.client.elementIdElement(
+    const diffButton = await this.client.elementIdElement(
       card.value.ELEMENT,
       "[data-test-id='history-list-card-diff-button']"
     );
 
-    await this.client.elementIdClick(viewButton.value.ELEMENT);
+    await this.client.elementIdClick(diffButton.value.ELEMENT);
 
     await delay(1000);
   }
