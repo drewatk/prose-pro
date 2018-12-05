@@ -280,6 +280,7 @@ describe("E2E", function spec() {
         await editorPage.newCheckpoint(`test_checkpoint_${uuid()}`);
 
         expect(await editorPage.historyVisible()).toBe(true);
+        expect(await editorPage.historyLength()).toBe(2);
 
         await editorPage.toggleHistory();
 
@@ -288,7 +289,6 @@ describe("E2E", function spec() {
         await editorPage.toggleHistory();
 
         expect(await editorPage.historyVisible()).toBe(true);
-
         expect(await editorPage.historyLength()).toBe(2);
 
         await checkForConsoleErrors(this.app.client);

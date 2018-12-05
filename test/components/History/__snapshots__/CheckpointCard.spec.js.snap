@@ -75,7 +75,7 @@ exports[`CheckpointCard matches snapshot 1`] = `
           Revert
         </DropdownItem>
         <DropdownItem
-          data-test-id="history-list-card-revert-button"
+          data-test-id="history-list-card-diff-button"
           onClick={[Function]}
           tag="button"
           toggle={true}
