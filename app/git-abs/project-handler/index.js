@@ -25,7 +25,11 @@ async function createProject(projName) {
     await editFile.createFileJson({});
   } catch (e) {
     // clean up in case of error
-    utils.removeDir(projPath);
+    try {
+      utils.removeDir(projPath);
+    } catch (e) {
+      // Do nothing
+    }
     throw e;
   }
 }
