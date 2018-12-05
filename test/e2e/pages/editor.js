@@ -49,16 +49,36 @@ export default class Editor {
   async deleteFile(fileName) {
     const els = await this.client.$$("[data-test-id='file-list-item']");
 
-    els.forEach(async element => {
-      console.log(element);
-      console.log(element.prototype);
-      const text = await element.getText();
-      if (text === fileName) {
-        await element.click("[data-test-id='file-list-item-toggle']");
-        await element.click("[data-test-id='file-list-item-delete-button']");
-      }
-    });
+    for (const element of els) {
+      const text = await this.client.elementIdText(element.value.ELEMENT);
 
-    await delay(500);
+      if (text.value === fileName) {
+        const toggle = await this.client.elementIdElement(
+          element.value.ELEMENT,
+          "[data-test-id='file-list-item-toggle']"
+        );
+
+        await this.client.elementIdClick(toggle.value.ELEMENT);
+
+        const button = await this.client.elementIdElement(
+          element.value.ELEMENT,
+          "[data-test-id='file-list-item-delete-button']"
+        );
+
+        await this.client.elementIdClick(button.value.ELEMENT);
+      }
+    }
+
+    await delay(1000);
+  }
+
+  async fileNames() {
+    const els = await this.client.$$("[data-test-id='file-list-item']");
+
+    return await Promise.all(
+      els.map(async element => {
+        return (await this.client.elementIdText(element.value.ELEMENT)).value;
+      })
+    );
   }
 }
