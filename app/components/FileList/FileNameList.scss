@@ -1,23 +1,36 @@
 .item {
   cursor: pointer;
-  background-color: var(--white-color) !important;
+  background-color: var(--dark-white-color) !important;
   color: var(--dark-color) !important;
   border: none !important;
   border-radius: 0 !important;
+  padding-right: 5px;
 
   overflow-x: scroll;
 
   &:hover,
   &:focus {
-    background-color: var(--dark-white-color) !important;
-    color: var(--dark-color) !important;
+    background-color: var(--accent-color) !important;
+    color: var(--dark-white-color) !important;
   }
   &:active {
     background-color: var(--dulled-primary-color) !important;
     color: var(--white-color) !important;
   }
-  margin: 2px 0;
+  margin: 2px 0px !important;
   padding: 3px 10px !important;
+
+  h6 {
+    overflow: scroll;
+    margin: 0;
+    display: flex;
+    margin-right: 5px;
+    font-size: 1rem;
+  }
+
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .item,

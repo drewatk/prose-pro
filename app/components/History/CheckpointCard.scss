@@ -27,6 +27,7 @@
 
 :global(.dropdown-menu) {
   background-color: var(--accent-color) !important;
+  border-color: var(--dark-white-color) !important;
 }
 
 :global(.dropdown-item) {
