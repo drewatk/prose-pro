@@ -7,7 +7,9 @@ exports[`FileNameListItem matches snapshot 1`] = `
   onClick={[Function]}
   tag="li"
 >
-  file1
+  <h6>
+    file1
+  </h6>
   <Dropdown
     active={false}
     addonType={false}
@@ -27,11 +29,6 @@ exports[`FileNameListItem matches snapshot 1`] = `
       <i
         className="fas fa-ellipsis-h"
         data-test-id="file-list-item-toggle"
-        style={
-          Object {
-            "float": "right",
-          }
-        }
       />
     </DropdownToggle>
     <DropdownMenu

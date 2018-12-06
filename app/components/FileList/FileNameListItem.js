@@ -32,7 +32,7 @@ class FileNameListItem extends React.Component {
         className={className}
         data-test-id="file-list-item"
       >
-        {file}
+        <h6>{file}</h6>
         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
           <DropdownToggle
             tag="span"
@@ -42,7 +42,6 @@ class FileNameListItem extends React.Component {
           >
             <i
               className="fas fa-ellipsis-h"
-              style={{ float: "right" }}
               data-test-id="file-list-item-toggle"
             />
           </DropdownToggle>

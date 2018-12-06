@@ -32,6 +32,10 @@ $editor-width: 700px;
   max-height: 100%;
 }
 
+.left {
+  background-color: var(--dark-white-color);
+}
+
 /*Remove the scrollbar from Chrome, Safari, Edge and IE*/
 ::-webkit-scrollbar {
   width: 0px;

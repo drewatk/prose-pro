@@ -9,17 +9,24 @@
   padding: 0 30px;
 
   --control-height: 75px;
-  --checkpoint-height: 120px;
-  --editor-height: calc(100vh - 75px - 120px - 60px);
+  --checkpoint-height: 130px;
+  --editor-bottom-margin: 10px;
+  --editor-height: calc(100vh - 75px - 130px - 60px - 10px);
 }
 
 .editor {
   cursor: text;
-  font-size: 16px;
+
+  font-size: 15.5px;
+  line-height: calc(17px * 1.5);
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: subpixel-antialiased;
+
   margin-top: 10px;
   height: var(--editor-height);
   overflow: auto;
   color: var(--dark-color);
+  margin-bottom: var(--editor-bottom-margin);
 }
 
 .hidePlaceholder :global(.public-DraftEditorPlaceholder-root) {
@@ -28,7 +35,7 @@
 
 .editor .blockquote {
   border-left: 5px solid var(--accent-color);
-  color: var(--dark-color);
+  color: var(--muted-text-color);
   font-family: "Hoefler Text", "Georgia", serif;
   font-style: italic;
   margin: 16px 0;
@@ -72,5 +79,5 @@
   flex-direction: column;
   color: var(--dark-color);
 
-  padding: 5px 20px 10px;
+  padding: 10px 20px 10px;
 }
