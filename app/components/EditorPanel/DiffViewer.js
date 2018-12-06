@@ -3,11 +3,16 @@ import { connect } from "react-redux";
 
 import Viewer from "./Viewer";
 
+import styles from "./Viewer.scss";
+
 export const DiffViewer = ({ diffData }) => {
   // TODO: Bring blockquote & code styles from editor
   return (
     <Viewer>
-      <div dangerouslySetInnerHTML={{ __html: diffData }} />
+      <div
+        className={styles.diff}
+        dangerouslySetInnerHTML={{ __html: diffData }}
+      />
     </Viewer>
   );
 };
