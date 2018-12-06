@@ -73,78 +73,48 @@ export default class Editor {
   }
 
   async viewCheckpoint(index) {
-    const historyCards = await this.client.$$(
-      "[data-test-id='history-list-card']"
+    await this.client.click(
+      `div[data-test-id="history-list"] div:nth-of-type(${index + 1}) i`
     );
 
-    const card = historyCards[index];
+    await delay(2000);
 
-    const toggle = await this.client.elementIdElement(
-      card.value.ELEMENT,
-      "[data-test-id='history-list-card-toggle']"
+    await this.client.click(
+      `div[data-test-id="history-list"] div:nth-of-type(${index +
+        1}) [data-test-id="history-list-card-view-button"]`
     );
 
-    await this.client.elementIdClick(toggle.value.ELEMENT);
-
-    // Click view button
-    const viewButton = await this.client.elementIdElement(
-      card.value.ELEMENT,
-      "[data-test-id='history-list-card-view-button']"
-    );
-
-    await this.client.elementIdClick(viewButton.value.ELEMENT);
-
-    await delay(1000);
+    await delay(2000);
   }
 
   async revertCheckpoint(index) {
-    const historyCards = await this.client.$$(
-      "[data-test-id='history-list-card']"
+    await this.client.click(
+      `div[data-test-id="history-list"] div:nth-of-type(${index + 1}) i`
     );
 
-    const card = historyCards[index];
+    await delay(2000);
 
-    const toggle = await this.client.elementIdElement(
-      card.value.ELEMENT,
-      "[data-test-id='history-list-card-toggle']"
+    await this.client.click(
+      `div[data-test-id="history-list"] div:nth-of-type(${index +
+        1}) [data-test-id="history-list-card-revert-button"]`
     );
 
-    await this.client.elementIdClick(toggle.value.ELEMENT);
-
-    // Click view button
-    const revertButton = await this.client.elementIdElement(
-      card.value.ELEMENT,
-      "[data-test-id='history-list-card-revert-button']"
-    );
-
-    await this.client.elementIdClick(revertButton.value.ELEMENT);
-
-    await delay(1000);
+    await delay(2000);
   }
 
   async diffCheckpoint(index) {
-    const historyCards = await this.client.$$(
-      "[data-test-id='history-list-card']"
+    await this.client.click(
+      `div[data-test-id="history-list"] div:nth-of-type(${index + 1}) i`
     );
 
-    const card = historyCards[index];
+    await delay(2000);
 
-    const toggle = await this.client.elementIdElement(
-      card.value.ELEMENT,
-      "[data-test-id='history-list-card-toggle']"
+    await this.client.click(
+      `div[data-test-id="history-list"] div:nth-of-type(${index +
+        1}) [data-test-id="history-list-card-diff-button"]`
     );
 
-    await this.client.elementIdClick(toggle.value.ELEMENT);
-
-    // Click view button
-    const diffButton = await this.client.elementIdElement(
-      card.value.ELEMENT,
-      "[data-test-id='history-list-card-diff-button']"
-    );
-
-    await this.client.elementIdClick(diffButton.value.ELEMENT);
-
-    await delay(1000);
+    await delay(2000);
   }
 
   async fileNames() {

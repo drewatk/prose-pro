@@ -16,7 +16,8 @@ describe("E2E", function spec() {
   beforeEach(async () => {
     this.app = new Application({
       path: electronPath,
-      args: [path.join(__dirname, "..", "..", "app")]
+      args: [path.join(__dirname, "..", "..", "app")],
+      webdriverOptions: { deprecationWarnings: false }
     });
 
     return this.app.start();
@@ -297,7 +298,9 @@ const checkForConsoleErrors = async client => {
   const logs = await client.getRenderProcessLogs();
   // Print renderer process logs
   logs.forEach(log => {
-    console.log(log.level, log.message, log.source);
+    if (!log.message.includes("Electron Security Warning")) {
+      console.log(log.level, log.message, log.source);
+    }
   });
   logs.forEach(log => {
     expect(log.level).not.toEqual("SEVERE");
