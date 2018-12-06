@@ -21,7 +21,6 @@ Version.prototype.getTimestamp = function() {
 };
 
 /* Object to store config for a specific file's version history */
-
 function FileObject(object) {
   if (object) {
     this[VERSIONS] = object[VERSIONS].map(

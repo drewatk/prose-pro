@@ -1,5 +1,9 @@
 const BRANCHES = "branches";
 
+/**
+ * Represents the config file in the metadata folder
+ * @param {Object} object
+ */
 function CfgObject(object) {
   this.cfg = {};
   if (object) {

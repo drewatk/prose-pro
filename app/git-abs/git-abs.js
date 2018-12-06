@@ -177,7 +177,8 @@ class GitAbs {
   };
 
   /**
-   *
+   * Switches the file to the latest commit in the branch
+   * @param {String} fileName
    */
   switchToCurrentVersion = async fileName => {
     if (!this.git.branch.isDetachedHead(this.repository)) {
@@ -200,6 +201,10 @@ class GitAbs {
     }
   };
 
+  /**
+   * Returns the latest commit time in the given file name
+   * @param {String} fileName
+   */
   getLatestTime = async fileName => {
     const currentBranch = await this.git.getCurrentBranch();
     const branchName = this.metadata.getBranchName(fileName);
@@ -223,6 +228,11 @@ class GitAbs {
     return await this.metadata.getAllVersions(fileName);
   };
 
+  /**
+   * Update stored versions with the given object
+   * @param {String} fileName
+   * @param {FileObject} fileObj
+   */
   updateVersions = async (fileName, fileObj) => {
     return await this.metadata.overwriteVersions(fileName, fileObj);
   };
@@ -245,6 +255,10 @@ class GitAbs {
   };
 }
 
+/**
+ * Returns a String, that doesn't exit in the given branch list
+ * @param {List[String]} branchList
+ */
 const getUniqueBranchName = branchList => {
   let newName;
   do {
@@ -254,6 +268,10 @@ const getUniqueBranchName = branchList => {
   return newName;
 };
 
+/**
+ * Returns a GitAbs object initialised to work on the given project
+ * @param {String} projName
+ */
 const openProject = async projName => {
   const projPath = getProjectPath(projName);
 

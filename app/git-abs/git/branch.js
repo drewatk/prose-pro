@@ -14,6 +14,11 @@ const create = repo => branchName => {
     });
 };
 
+/**
+ * Removes the given branch from the repo
+ * @param {Repository (nodegit)} repo
+ * @param {String} branchName
+ */
 const remove = repo => branchName => {
   return repo
     .getBranch(branchName)
@@ -37,6 +42,11 @@ const checkOut = repo => branchName => {
     });
 };
 
+/**
+ * Checks out a commit with the given commit hash in the given repo
+ * @param {Repository (nodegit)} repo
+ * @param {String} branchName
+ */
 const checkOutCommit = repo => commitHash => {
   return repo.getCommit(commitHash).then(commit =>
     Checkout.tree(repo, commit, {
@@ -51,14 +61,26 @@ const checkOutCommit = repo => commitHash => {
   );
 };
 
+/**
+ * Checks out the master branch in the given repo
+ * @param {Repository (nodegit)} repo
+ */
 const checkOutMasterBranch = repo => () => {
   return checkOut(repo)("master");
 };
 
+/**
+ * Checks if the given repository is in a detatched head state
+ * @param {Repository (nodegit)} repo
+ */
 const isDetachedHead = repo => () => {
   return repo.headDetached() ? true : false;
 };
 
+/**
+ * Returns the list of branch names in the given repository
+ * @param {Repository (nodegit)} repo
+ */
 const getBranchList = repo => async () => {
   const localRef = "refs/heads/";
   return repo
