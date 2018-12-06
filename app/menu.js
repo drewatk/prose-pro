@@ -43,58 +43,13 @@ export default class MenuBuilder {
   }
 
   buildDarwinTemplate() {
-    const subMenuFile = {
-      label: "File",
-      submenu: [
-        {
-          label: "Save",
-          accelerator: "Command+S",
-          click: () => this.mainWindow.webContents.send("save-file")
-        },
-        {
-          label: "Quick Checkpoint",
-          accelerator: "Command+Shift+S",
-          click: () => this.mainWindow.webContents.send("quick-checkpoint")
-        },
-        {
-          label: "Export",
-          accelerator: "Command+E",
-          click: () => {
-            dialog.showOpenDialog(
-              this.mainWindow,
-              {
-                properties: ["openDirectory"]
-              },
-              selection => {
-                if (selection) {
-                  const [filePath] = selection;
-                  this.mainWindow.webContents.send("export-project", filePath);
-                }
-              }
-            );
-          }
-        },
-        {
-          label: "Toggle Files View",
-          accelerator: "Command+F",
-          click: () => this.mainWindow.webContents.send("toggle-file-view")
-        },
-        {
-          label: "Toggle History View",
-          accelerator: "Command+J",
-          click: () => this.mainWindow.webContents.send("toggle-history-view")
-        }
-      ]
-    };
-    const subMenuAbout = {
+    const subMenuMain = {
       label: "About",
       submenu: [
         {
           label: "About ProsePro",
           selector: "orderFrontStandardAboutPanel:"
         },
-        { type: "separator" },
-        { label: "Services", submenu: [] },
         { type: "separator" },
         {
           label: "Hide ProsePro",
@@ -113,6 +68,40 @@ export default class MenuBuilder {
           accelerator: "Command+Q",
           click: () => {
             app.quit();
+          }
+        }
+      ]
+    };
+    const subMenuFile = {
+      label: "File",
+      submenu: [
+        {
+          label: "Save",
+          accelerator: "Command+S",
+          click: () => this.mainWindow.webContents.send("save-file")
+        },
+        {
+          label: "Quick Checkpoint",
+          accelerator: "Command+Shift+S",
+          click: () => this.mainWindow.webContents.send("quick-checkpoint")
+        },
+        { type: "separator" },
+        {
+          label: "Export Project",
+          accelerator: "Command+E",
+          click: () => {
+            dialog.showOpenDialog(
+              this.mainWindow,
+              {
+                properties: ["openDirectory"]
+              },
+              selection => {
+                if (selection) {
+                  const [filePath] = selection;
+                  this.mainWindow.webContents.send("export-project", filePath);
+                }
+              }
+            );
           }
         }
       ]
@@ -157,12 +146,24 @@ export default class MenuBuilder {
             this.mainWindow.toggleDevTools();
           }
         },
+        { type: "separator" },
         {
-          label: "Toggle Theme",
+          label: "Toggle Dark/Light Theme",
           accelerator: "Alt+Command+T",
           click: () => {
             this.mainWindow.webContents.send("toggle-theme");
           }
+        },
+        { type: "separator" },
+        {
+          label: "Toggle Files View",
+          accelerator: "Command+F",
+          click: () => this.mainWindow.webContents.send("toggle-file-view")
+        },
+        {
+          label: "Toggle History View",
+          accelerator: "Command+J",
+          click: () => this.mainWindow.webContents.send("toggle-history-view")
         }
       ]
     };
@@ -176,12 +177,24 @@ export default class MenuBuilder {
             this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
           }
         },
+        { type: "separator" },
         {
-          label: "Toggle Theme",
+          label: "Toggle Dark/Light Theme",
           accelerator: "Alt+Command+T",
           click: () => {
             this.mainWindow.webContents.send("toggle-theme");
           }
+        },
+        { type: "separator" },
+        {
+          label: "Toggle Files View",
+          accelerator: "Command+F",
+          click: () => this.mainWindow.webContents.send("toggle-file-view")
+        },
+        {
+          label: "Toggle History View",
+          accelerator: "Command+J",
+          click: () => this.mainWindow.webContents.send("toggle-history-view")
         }
       ]
     };
@@ -208,16 +221,11 @@ export default class MenuBuilder {
           }
         },
         {
-          label: "Documentation",
+          label: "User Guide",
           click() {
-            shell.openExternal("https://github.com/drewatk/prose-pro#readme");
-          }
-        },
-
-        {
-          label: "Search Issues",
-          click() {
-            shell.openExternal("https://github.com/drewatk/prose-pro/issues");
+            shell.openExternal(
+              "https://docs.google.com/document/d/1tNcAGUl0imNhBc8PYXgrGgAZyjQtddXKddNmSctoLH0/edit?usp=sharing"
+            );
           }
         }
       ]
@@ -227,8 +235,8 @@ export default class MenuBuilder {
       process.env.NODE_ENV === "development" ? subMenuViewDev : subMenuViewProd;
 
     return [
+      subMenuMain,
       subMenuFile,
-      subMenuAbout,
       subMenuEdit,
       subMenuView,
       subMenuWindow,
@@ -251,8 +259,9 @@ export default class MenuBuilder {
             accelerator: "CommandOrControl+Shift+S",
             click: () => this.mainWindow.webContents.send("quick-checkpoint")
           },
+          { type: "separator" },
           {
-            label: "Export",
+            label: "Export Project",
             accelerator: "CommandOrControl+E",
             click: () => {
               dialog.showOpenDialog(
@@ -271,16 +280,6 @@ export default class MenuBuilder {
                 }
               );
             }
-          },
-          {
-            label: "Toggle Files View",
-            accelerator: "CommandOrControl+F",
-            click: () => this.mainWindow.webContents.send("toggle-file-view")
-          },
-          {
-            label: "Toggle History View",
-            accelerator: "CommandOrControl+J",
-            click: () => this.mainWindow.webContents.send("toggle-history-view")
           }
         ]
       },
@@ -305,18 +304,32 @@ export default class MenuBuilder {
                     );
                   }
                 },
+                { type: "separator" },
+                {
+                  label: "Toggle Dark/Light Theme",
+                  accelerator: "Alt+Command+T",
+                  click: () => {
+                    this.mainWindow.webContents.send("toggle-theme");
+                  }
+                },
+                {
+                  label: "Toggle Files View",
+                  accelerator: "CommandOrControl+F",
+                  click: () =>
+                    this.mainWindow.webContents.send("toggle-file-view")
+                },
+                {
+                  label: "Toggle History View",
+                  accelerator: "CommandOrControl+J",
+                  click: () =>
+                    this.mainWindow.webContents.send("toggle-history-view")
+                },
+                { type: "separator" },
                 {
                   label: "Toggle &Developer Tools",
                   accelerator: "Alt+Ctrl+I",
                   click: () => {
                     this.mainWindow.toggleDevTools();
-                  }
-                },
-                {
-                  label: "Toggle Theme",
-                  accelerator: "Alt+Command+T",
-                  click: () => {
-                    this.mainWindow.webContents.send("toggle-theme");
                   }
                 }
               ]
@@ -330,12 +343,25 @@ export default class MenuBuilder {
                     );
                   }
                 },
+                { type: "separator" },
                 {
-                  label: "Toggle Theme",
+                  label: "Toggle Dark/Light Theme",
                   accelerator: "Alt+Command+T",
                   click: () => {
                     this.mainWindow.webContents.send("toggle-theme");
                   }
+                },
+                {
+                  label: "Toggle Files View",
+                  accelerator: "CommandOrControl+F",
+                  click: () =>
+                    this.mainWindow.webContents.send("toggle-file-view")
+                },
+                {
+                  label: "Toggle History View",
+                  accelerator: "CommandOrControl+J",
+                  click: () =>
+                    this.mainWindow.webContents.send("toggle-history-view")
                 }
               ]
       },
@@ -349,16 +375,11 @@ export default class MenuBuilder {
             }
           },
           {
-            label: "Documentation",
+            label: "User Guide",
             click() {
-              shell.openExternal("https://github.com/drewatk/prose-pro#readme");
-            }
-          },
-
-          {
-            label: "Search Issues",
-            click() {
-              shell.openExternal("https://github.com/drewatk/prose-pro/issues");
+              shell.openExternal(
+                "https://docs.google.com/document/d/1tNcAGUl0imNhBc8PYXgrGgAZyjQtddXKddNmSctoLH0/edit?usp=sharing"
+              );
             }
           }
         ]
