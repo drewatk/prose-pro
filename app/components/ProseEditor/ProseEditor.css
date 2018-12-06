@@ -16,7 +16,12 @@
 
 .editor {
   cursor: text;
-  font-size: 16px;
+
+  font-size: 15.5px;
+  line-height: calc(17px * 1.5);
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: subpixel-antialiased;
+
   margin-top: 10px;
   height: var(--editor-height);
   overflow: auto;
@@ -30,7 +35,7 @@
 
 .editor .blockquote {
   border-left: 5px solid var(--accent-color);
-  color: var(--dark-color);
+  color: var(--muted-text-color);
   font-family: "Hoefler Text", "Georgia", serif;
   font-style: italic;
   margin: 16px 0;
